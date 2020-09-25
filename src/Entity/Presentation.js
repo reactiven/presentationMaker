@@ -2,25 +2,30 @@ const Presentation = {
     name: "Презентация 1",
     slides: [
         {
-            elements: [
-                SlideElement,
-            ],
-            slideId: 1,
-            background: Null,
-            slidePreview: null, 
+            Slide,
         },
     ],
     currentSlide: 1,
 }
 
-presentation = Presentation{
-    
+function changeName(state, newName){
+    return state;
 }
-
-function changeName(state, newName): state {}
-function addSlide(state): state {}
-function deleteSlides(state): state {}
-function goToSlide(state, slideId): state {}
-function getCurrentSlideInfo(state): Slide {}
-function moveSlides(state, newPosition): state {}
-function selectSlides(state): state
+function addSlide(state){
+    return state;
+}
+function deleteSlides(state){
+    return state;
+}
+function goToSlide(state, slideId){
+    return state;
+}
+function getCurrentSlideInfo(state) {
+    return Slide;
+}
+function moveSlides(state, newPosition){
+    return state;
+}
+function selectSlides(state){
+    return state;
+}

@@ -6,7 +6,15 @@ const state = {
     onPreview: false,
 }   
 
-function exportPresentation(state) {}
-function savePresentation(state) {}
-function uploadPresentation(filepath): state {}
-function goToPreview(state): state {}
+function exportPresentation(state) {
+    return state;
+}
+function savePresentation(state) {
+    return state;
+}
+function uploadPresentation(filepath){
+    return state;
+}
+function goToPreview(state){
+    return state;
+}

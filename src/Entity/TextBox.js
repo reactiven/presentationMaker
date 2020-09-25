@@ -5,5 +5,9 @@ const TextBox = {
     italic: false,
 }
 
-function changeFont(state, newFont): state {}
-function updateTextBox(state, text): state {}
+function changeFont(state, newFont){
+    return state;
+}
+function updateTextBox(state, text){
+    return state;
+}

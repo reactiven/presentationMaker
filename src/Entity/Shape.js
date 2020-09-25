@@ -4,4 +4,6 @@ const Shape = {
     strokeColor: '#4567',
 }
 
-function setColor(state, newColor): state {}
+function setColor(state, newColor){
+    return state;
+}
