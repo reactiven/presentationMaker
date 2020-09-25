@@ -1,9 +1,11 @@
 const state = {
-    selectedSlides: []slideId,
-    presentation: Presentation,
+    selectedSlides: [
+        1,
+    ],
+    presentationInfo: Presentation,
+    onPreview: false,
 }   
 
-function createPresentation(): state {}
 function exportPresentation(state) {}
 function savePresentation(state) {}
 function uploadPresentation(filepath): state {}

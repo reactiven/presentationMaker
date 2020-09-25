@@ -1,7 +1,7 @@
 const Shape = {
-    shapeType: ShapeType,
-    fillColor: string,
-    strokeColor: string,
+    shapeType: 'circle',
+    fillColor: '#123',
+    strokeColor: '#4567',
 }
 
 function setColor(state, newColor): state {}

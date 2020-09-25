@@ -1,8 +1,8 @@
 const TextBox = {
-    fontStyle: string,
-    fontSize: number,
-    bold: bool,
-    italic: bool,
+    fontStyle: 'Times New Roman',
+    fontSize: '2px',
+    bold: true,
+    italic: false,
 }
 
 function changeFont(state, newFont): state {}

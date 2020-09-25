@@ -1,3 +1,3 @@
 const Image = {
-    src: string,
+    src: '/images/image.jpg',
 }

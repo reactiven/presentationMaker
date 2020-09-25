@@ -3,14 +3,7 @@ const Presentation = {
     slides: [
         {
             elements: [
-                {
-                    type: TextBox,
-                    width: 1000,
-                    height: 1000,
-                    xPos: 200,
-                    yPos: 300,
-                    elementId: 1,
-                }
+                SlideElement,
             ],
             slideId: 1,
             background: Null,

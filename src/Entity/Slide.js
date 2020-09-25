@@ -1,7 +1,9 @@
 const Slide = {
-    elements: []SlideElement,
-    slideId: number(string),
-    background: backgroundType,
+    elements: [
+        SlideElement
+    ],
+    slideId: 1,
+    background: 'image',
     slidePreview: previewType,
 }
 

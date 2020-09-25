@@ -1,10 +1,10 @@
 const SlideElement = {
-    type: string,
-    width: string,
-    heigth: string,
-    xPos: string,
-    yPos: string,
-    elementId: number,
+    type: 'texBox',
+    width: 1000,
+    height: 1000,
+    xPos: 200,
+    yPos: 300,
+    elementId: 1,
 }
 
 function moveElement(state, newX, newY): state {}
