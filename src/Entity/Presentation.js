@@ -4,27 +4,27 @@ const Presentation = {
     currentSlide: slideId,
 }
 
-presentation = new Presentation{
+presentation = new Presentation({
     name: "Презентация 1",
     slides: [
-        new Slide{
+        new Slide({
             elements: [
-                new SlideElement{
+                new SlideElement({
                     type: TextBox,
                     width: 1000,
                     height: 1000,
                     xPos: 200,
                     yPos: 300,
                     elementId: 1,
-                }
+                })
             ],
             slideId: 1,
             background: Null,
             slidePreview: null, 
-        },
+        }),
     ],
     currentSlide: 1,
-}
+})
 
 function changeName(state, newName): state {}
 function addSlide(state): state {}
