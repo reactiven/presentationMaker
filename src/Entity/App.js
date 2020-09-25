@@ -1,4 +1,7 @@
-
+const state = {
+    selectedSlides: []slideId,
+    presentation: Presentation,
+}   
 
 function createPresentation(): state {}
 function exportPresentation(state) {}

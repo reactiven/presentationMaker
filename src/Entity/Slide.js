@@ -1,8 +1,5 @@
 const Slide = {
-    width: number,
-    height: inumber,
-    slideNumber: number,
-    elements: []SlideEmenent,
+    elements: []SlideElement,
     slideId: number(string),
     background: backgroundType,
     slidePreview: previewType,
