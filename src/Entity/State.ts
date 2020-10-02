@@ -18,7 +18,10 @@ function uploadPresentation(filepath: string): State{
     return state;
 }
 function goToPreview(state: State): State{
-    return state;
+    return {
+        ...state,
+        onPreview: true
+    };
 }
 
 function undo(): State {

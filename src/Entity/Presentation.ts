@@ -9,25 +9,86 @@ const presentation: Presentation = {
 }
 
 function changeName(state: State, newName: string): State {
-    return state;
+    return {
+        ...state,
+        presentationInfo: {
+            ...state.presentationInfo,
+            name: newName
+        }
+    };
 }
 function addSlide(state: State): State{
-    return state;
+    const defaultSlide = {
+        slideId: state.presentationInfo.slides.length,
+        elements: [],
+        background: '#fff',
+    }
+    return {
+        ...state,
+        presentationInfo: {
+            ...state.presentationInfo,
+            slides: [
+                ...state.presentationInfo.slides,
+                defaultSlide,
+            ],
+        }
+    };
 }
 function deleteSlides(state: State): State{
-    return state;
+    return {
+        ...state,
+        presentationInfo: {
+            ...state.presentationInfo,
+            slides: state.presentationInfo.slides.filter((slide, index) => (state.selectedSlides.indexOf(index))).map((slide, index) => {
+                slide.slideId = index
+                return slide
+            })
+        }
+    };
 }
 function goToSlide(state: State, slideId: number): State{
-    return state;
+    return {
+        ...state,
+        currentSlide: slideId,
+    };
 }
 function getCurrentSlideInfo(state: State): Slide {
-    return slide;
+    return state.presentationInfo.slides[state.currentSlide]
 }
 function moveSlides(state: State, newPosition: number): State{
-    return state;
+    const newState = { ...state };
+    const selectedSlides = [...state.selectedSlides]
+    const slides = [...state.presentationInfo.slides]
+    const movedSlides = slides.filter((slide, index) => (selectedSlides.indexOf(index)))
+    const staticSlides = slides.filter((slide, index) => (!selectedSlides.indexOf(index)))
+    const firtsPart = staticSlides.slice(0, newPosition)
+    const secondPart = staticSlides.slice(newPosition)
+    const concatArray = firtsPart.concat(movedSlides).concat(secondPart)
+    const finalArray = concatArray.map((slide, index) => {
+        slide.slideId = index
+        return slide
+    })
+    let newSelectedSlides = []
+    for (let i = newPosition; i < newPosition + selectedSlides.length; i++) {
+        newSelectedSlides.push(i)
+    }
+    return {
+        ...state,
+        selectedSlides: newSelectedSlides,
+        presentationInfo: {
+            ...state.presentationInfo,
+            slides: finalArray,
+        }
+    }
 }
-function selectSlides(state: State): State{
-    return state;
+function selectSlides(state: State, slideId: number): State{
+    return {
+        ...state,
+        selectedSlides: [
+            ...state.selectedSlides,
+            slideId,
+        ]
+    };
 }
 
 export {
