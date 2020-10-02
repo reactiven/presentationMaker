@@ -1,3 +1,4 @@
+import { presentation } from "./Presentation";
 import { Presentation, State } from "./types";
 
 
@@ -7,7 +8,7 @@ const state: State = {
     ],
     selectedSlideElements: [1, 2],
     currentSlide: 1,
-    presentationInfo: Presentation,
+    presentationInfo: presentation,
     onPreview: false,
 }
 

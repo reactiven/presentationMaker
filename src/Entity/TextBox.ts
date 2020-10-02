@@ -1,6 +1,6 @@
 import { FontType, State, TextBox } from "./types";
 
-const TextBox: TextBox = {
+const textBox: TextBox = {
     font: {
         fontStyle: 'Times New Roman',
         fontSize: '2px',
@@ -14,4 +14,8 @@ function changeFont(state: State, newFont: FontType): State{
 }
 function updateTextBox(state: State, text: string): State{
     return state;
+}
+
+export {
+    textBox,
 }

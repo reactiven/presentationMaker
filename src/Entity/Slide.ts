@@ -1,10 +1,13 @@
+import { image } from "./Image";
+import { shape } from "./Shape";
+import { textBox } from "./TextBox";
 import { BackgroundType, Slide, State } from "./types";
 
-const Slide: Slide = {
+const slide: Slide = {
     elements: [
         {
             type: 'image',
-            dataElement: Image,
+            dataElement: image,
             width: 1000,
             height: 1000,
             xPos: 200,
@@ -13,7 +16,7 @@ const Slide: Slide = {
         },
         {
             type: 'textBox',
-            dataElement: TextBox,
+            dataElement: textBox,
             width: 1000,
             height: 1000,
             xPos: 200,
@@ -22,7 +25,7 @@ const Slide: Slide = {
         },
         {
             type: 'shape',
-            dataElement: Shape,
+            dataElement: shape,
             width: 1000,
             height: 1000,
             xPos: 200,
@@ -51,4 +54,8 @@ function MoveObject(state: State): State{
 }
 function SetBackgroud(state: State, newBackground: BackgroundType): State{
     return state;
+}
+
+export {
+    slide,
 }

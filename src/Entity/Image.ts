@@ -1,5 +1,9 @@
 import { Image } from "./types";
 
-const Image: Image = {
+const image: Image = {
     src: '/images/image.jpg',
+}
+
+export {
+    image,
 }

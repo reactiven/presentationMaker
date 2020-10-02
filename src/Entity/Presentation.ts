@@ -1,11 +1,10 @@
+import { slide } from "./Slide";
 import { Slide, Presentation, State } from "./types";
 
-const Presentation: Presentation = {
+const presentation: Presentation = {
     name: "Презентация 1",
     slides: [
-        {
-            Slide,
-        },
+        slide,
     ],
 }
 
@@ -22,11 +21,15 @@ function goToSlide(state: State, slideId: number): State{
     return state;
 }
 function getCurrentSlideInfo(state: State): Slide {
-    return Slide;
+    return slide;
 }
 function moveSlides(state: State, newPosition: number): State{
     return state;
 }
 function selectSlides(state: State): State{
     return state;
+}
+
+export {
+    presentation,
 }

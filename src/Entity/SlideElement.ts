@@ -1,8 +1,9 @@
+import { textBox } from "./TextBox";
 import { State } from "./types";
 
-const SlideElement = {
+const slideElement = {
     type: 'texBox',
-    dataElement: TextBox,
+    dataElement: textBox,
     width: 1000,
     height: 1000,
     xPos: 200,
@@ -15,4 +16,8 @@ function moveElement(state: State, newX: number, newY: number): State {
 }
 function resizeElement(state: State, newWidth: number, newHeight: number): State {
     return state;
+}
+
+export {
+    slideElement,
 }
