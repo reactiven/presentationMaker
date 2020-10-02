@@ -4,7 +4,7 @@ const state = {
     ],
     presentationInfo: Presentation,
     onPreview: false,
-}   
+}
 
 function exportPresentation(state) {
     return state;
@@ -16,5 +16,12 @@ function uploadPresentation(filepath){
     return state;
 }
 function goToPreview(state){
+    return state;
+}
+
+function undo() {
+    return state;
+}
+function redo() {
     return state;
 }
