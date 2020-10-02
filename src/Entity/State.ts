@@ -1,27 +1,28 @@
-const state = {
+import { Presentation, State } from "./types";
+
+
+const state: State = {
     selectedSlides: [
         1,
     ],
+    selectedSlideElements: [1, 2],
+    currentSlide: 1,
     presentationInfo: Presentation,
     onPreview: false,
 }
 
-function exportPresentation(state) {
+function exportPresentation(state: State): void {}
+function savePresentation(state: State): void {}
+function uploadPresentation(filepath: string): State{
     return state;
 }
-function savePresentation(state) {
-    return state;
-}
-function uploadPresentation(filepath){
-    return state;
-}
-function goToPreview(state){
+function goToPreview(state: State): State{
     return state;
 }
 
-function undo() {
+function undo(): State {
     return state;
 }
-function redo() {
+function redo(): State {
     return state;
 }

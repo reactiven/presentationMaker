@@ -1,3 +1,5 @@
+import { State } from "./types";
+
 const SlideElement = {
     type: 'texBox',
     dataElement: TextBox,
@@ -8,9 +10,9 @@ const SlideElement = {
     elementId: 1,
 }
 
-function moveElement(state, newX, newY){
+function moveElement(state: State, newX: number, newY: number): State {
     return state;
 }
-function resizeElement(state, newWidth, newHeight){
+function resizeElement(state: State, newWidth: number, newHeight: number): State {
     return state;
 }

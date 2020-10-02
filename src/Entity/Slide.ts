@@ -1,4 +1,6 @@
-const Slide = {
+import { BackgroundType, Slide, State } from "./types";
+
+const Slide: Slide = {
     elements: [
         {
             type: 'image',
@@ -10,7 +12,7 @@ const Slide = {
             elementId: 1,
         },
         {
-            type: 'TextBox',
+            type: 'textBox',
             dataElement: TextBox,
             width: 1000,
             height: 1000,
@@ -19,7 +21,7 @@ const Slide = {
             elementId: 1,
         },
         {
-            type: 'Shape',
+            type: 'shape',
             dataElement: Shape,
             width: 1000,
             height: 1000,
@@ -30,24 +32,23 @@ const Slide = {
     ],
     slideId: 1,
     background: 'image',
-    slidePreview: previewType,
 }
 
-function AddImage(state, filepath){
+function AddImage(state: State, filepath: string): State {
     return state;
 }
-function AddTextBox(state){
+function AddTextBox(state: State): State{
     return state;
 }
-function AddShape(state){
+function AddShape(state: State): State{
     return state;
 }
-function DeleteObject(state){
+function DeleteObject(state: State): State{
     return state;
 }
-function MoveObject(state){
+function MoveObject(state: State): State{
     return state;
 }
-function SetBackgroud(state, newBackground){
+function SetBackgroud(state: State, newBackground: BackgroundType): State{
     return state;
 }
