@@ -39,6 +39,7 @@ type Shape = {
 
 type TextBox = {
   font: FontType,
+  text: string,
 }
 
 type ElementType = ('textBox' | 'shape' | 'image')
@@ -49,6 +50,10 @@ type FontType = {
   fontSize: string,
   bold: boolean,
   italic: boolean,
+}
+type ShapeColorType = {
+  fillColor: string,
+  strokeColor: string,
 }
 
 export {
@@ -63,4 +68,5 @@ export {
   ShapeType,
   BackgroundType,
   FontType,
+  ShapeColorType,
 }

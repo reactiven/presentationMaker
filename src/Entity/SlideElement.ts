@@ -1,7 +1,7 @@
 import { presentation } from "./Presentation";
 import { slide } from "./Slide";
 import { textBox } from "./TextBox";
-import { State } from "./types";
+import { SlideElement, State } from "./types";
 
 const slideElement = {
     type: 'texBox',
@@ -14,23 +14,91 @@ const slideElement = {
 }
 
 function moveElement(state: State, elementId: number, newX: number, newY: number): State {
-    const newState = { ...state }
-    const slideElement = { ...state.presentationInfo.slides[state.currentSlide].elements}
+    const slides = [...state.presentationInfo.slides]
+    const slide = {...slides[state.currentSlide]}
+    const elements = [...slide.elements]
+    const element = {...elements[state.selectedSlideElements[elementId]]}
+    element.xPos = newX
+    element.yPos = newY
+    elements[state.selectedSlideElements[elementId]] = element
+    slide.elements = elements
+    slides[state.currentSlide] = slide
+    return {
+        ...state,
+        presentationInfo: {
+            ...state.presentationInfo,
+            slides,
+        }
+    }
 }
-function resizeElement(state: State, newWidth: number, newHeight: number): State {
-    const currentSlide = { ...state.presentationInfo.slides[state.currentSlide] }
-    const currentElement = { ...currentSlide.elements[state.selectedSlideElements[0]] }
-    currentElement.width = newWidth
-    currentElement.height = newHeight
-    // return {
-    //     ...state,
-    //     presentationInfo: {
-    //         ...state.presentationInfo,
-    //         slides: [
-    //             ...state.presentationInfo.slides,
-    //         ]
-    //     }
-    // }
+function resizeElement(state: State, elementId: number, newWidth: number, newHeight: number): State {
+    const slides = [...state.presentationInfo.slides]
+    const slide = {...slides[state.currentSlide]}
+    const elements = [...slide.elements]
+    const element = {...elements[state.selectedSlideElements[elementId]]}
+    element.width = newWidth
+    element.height = newHeight
+    elements[state.selectedSlideElements[elementId]] = element
+    slide.elements = elements
+    slides[state.currentSlide] = slide
+    return {
+        ...state,
+        presentationInfo: {
+            ...state.presentationInfo,
+            slides,
+        }
+    }
+}
+
+function addElement(state: State, element: SlideElement) {
+    const slides = [...state.presentationInfo.slides]
+    const slide = {...slides[state.currentSlide]}
+    const elements = [
+        ...slide.elements,
+        element
+    ]
+    slide.elements = elements
+    slides[state.currentSlide] = slide
+    return {
+        ...state,
+        presentationInfo: {
+            ...state.presentationInfo,
+            slides
+        }
+    }
+}
+
+function deleteElements(state: State) {
+    const slides = [...state.presentationInfo.slides]
+    const slide = {...slides[state.currentSlide]}
+    const elements = [...slide.elements].filter((element, index) => (state.selectedSlideElements.indexOf(element.elementId)))
+    
+    slide.elements = elements
+    slides[state.currentSlide] = slide
+    return {
+        ...state,
+        presentationInfo: {
+            ...state.presentationInfo,
+            slides
+        }
+    }
+}
+
+function selectElement(state: State, elementId: number): State {
+    return {
+        ...state,
+        selectedSlideElements: [
+            ...state.selectedSlideElements,
+            elementId,
+        ]
+    }
+}
+
+function deleteSelect(state: State): State {
+    return {
+        ...state,
+        selectedSlideElements: []
+    }
 }
 
 export {

@@ -96,6 +96,12 @@ function selectSlides(state: State, slideId: number): State {
         ]
     };
 }
+function deleteSelect(state: State): State {
+    return {
+        ...state,
+        selectedSlides: []
+    };
+}
 
 export {
     presentation,
