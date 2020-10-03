@@ -1,5 +1,5 @@
 import { textBox } from './TextBox'
-import { SlideElement, State } from './types'
+import { State } from './types'
 
 const slideElement = {
 	type: 'texBox',
@@ -48,40 +48,6 @@ function resizeElement(state: State, elementId: number, newWidth: number, newHei
 	}
 }
 
-function addElement(state: State, element: SlideElement): State {
-	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[state.currentSlide]}
-	const elements = [
-		...slide.elements,
-		element
-	]
-	slide.elements = elements
-	slides[state.currentSlide] = slide
-	return {
-		...state,
-		presentationInfo: {
-			...state.presentationInfo,
-			slides
-		}
-	}
-}
-
-function deleteElements(state: State): State {
-	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[state.currentSlide]}
-	const elements = [...slide.elements].filter((element) => (state.selectedSlideElements.indexOf(element.elementId)))
-    
-	slide.elements = elements
-	slides[state.currentSlide] = slide
-	return {
-		...state,
-		presentationInfo: {
-			...state.presentationInfo,
-			slides
-		}
-	}
-}
-
 function selectElement(state: State, elementId: number): State {
 	return {
 		...state,
@@ -103,8 +69,6 @@ export {
 	slideElement,
 	deleteSelect,
 	selectElement,
-	deleteElements,
-	addElement,
 	resizeElement,
 	moveElement,
 }
