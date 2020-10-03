@@ -1,9 +1,9 @@
-import { Image } from "./types";
+import { Image } from './types'
 
 const image: Image = {
-    src: '/images/image.jpg',
+	src: '/images/image.jpg',
 }
 
 export {
-    image,
+	image,
 }

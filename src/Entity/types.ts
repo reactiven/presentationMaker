@@ -46,7 +46,7 @@ type ElementType = ('textBox' | 'shape' | 'image')
 type ShapeType = ('circle'|'rect'|'triangle')
 type BackgroundType = (Image | string)
 type FontType = {
-  fontStyle: String,
+  fontStyle: string,
   fontSize: string,
   bold: boolean,
   italic: boolean,
@@ -57,16 +57,16 @@ type ShapeColorType = {
 }
 
 export {
-  State,
-  Presentation,
-  Slide,
-  SlideElement,
-  Image,
-  Shape,
-  TextBox,
-  ElementType,
-  ShapeType,
-  BackgroundType,
-  FontType,
-  ShapeColorType,
+	State,
+	Presentation,
+	Slide,
+	SlideElement,
+	Image,
+	Shape,
+	TextBox,
+	ElementType,
+	ShapeType,
+	BackgroundType,
+	FontType,
+	ShapeColorType,
 }
