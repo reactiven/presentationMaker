@@ -1,3 +1,5 @@
+import { presentation } from "./Presentation";
+import { slide } from "./Slide";
 import { textBox } from "./TextBox";
 import { State } from "./types";
 
@@ -11,11 +13,24 @@ const slideElement = {
     elementId: 1,
 }
 
-function moveElement(state: State, newX: number, newY: number): State {
-    return state;
+function moveElement(state: State, elementId: number, newX: number, newY: number): State {
+    const newState = { ...state }
+    const slideElement = { ...state.presentationInfo.slides[state.currentSlide].elements}
 }
 function resizeElement(state: State, newWidth: number, newHeight: number): State {
-    return state;
+    const currentSlide = { ...state.presentationInfo.slides[state.currentSlide] }
+    const currentElement = { ...currentSlide.elements[state.selectedSlideElements[0]] }
+    currentElement.width = newWidth
+    currentElement.height = newHeight
+    // return {
+    //     ...state,
+    //     presentationInfo: {
+    //         ...state.presentationInfo,
+    //         slides: [
+    //             ...state.presentationInfo.slides,
+    //         ]
+    //     }
+    // }
 }
 
 export {
