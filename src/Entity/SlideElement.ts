@@ -15,10 +15,10 @@ function moveElement(state: State, elementId: number, newX: number, newY: number
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[state.currentSlide]}
 	const elements = [...slide.elements]
-	const element = {...elements[state.selectedSlideElements[elementId]]}
+	const element = {...elements[elementId]}
 	element.xPos = newX
 	element.yPos = newY
-	elements[state.selectedSlideElements[elementId]] = element
+	elements[elementId] = element
 	slide.elements = elements
 	slides[state.currentSlide] = slide
 	return {
@@ -33,10 +33,10 @@ function resizeElement(state: State, elementId: number, newWidth: number, newHei
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[state.currentSlide]}
 	const elements = [...slide.elements]
-	const element = {...elements[state.selectedSlideElements[elementId]]}
+	const element = {...elements[elementId]}
 	element.width = newWidth
 	element.height = newHeight
-	elements[state.selectedSlideElements[elementId]] = element
+	elements[elementId] = element
 	slide.elements = elements
 	slides[state.currentSlide] = slide
 	return {
