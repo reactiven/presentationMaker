@@ -29,8 +29,8 @@ function setColor(state: State, newColor: ShapeColorType): State {
 	}
 }
 
-function isShape(element: any): element is Shape {
-	return element.dataElement.shapeType !== undefined && element.dataElement.fillColor !== undefined && element.dataElement.strokeColor !== undefined
+function isShape(dataElement: any): dataElement is Shape {
+	return dataElement.shapeType !== undefined && dataElement.fillColor !== undefined && dataElement.strokeColor !== undefined
 }
 
 export {

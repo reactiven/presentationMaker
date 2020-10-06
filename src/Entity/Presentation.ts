@@ -58,8 +58,8 @@ function getCurrentSlideInfo(state: State): Slide {
 function moveSlides(state: State, newPosition: number): State{
 	const selectedSlides = [...state.selectedSlides]
 	const slides = [...state.presentationInfo.slides]
-	const movedSlides = slides.filter((slide, index) => (selectedSlides.indexOf(index)))
-	const staticSlides = slides.filter((slide, index) => (!selectedSlides.indexOf(index)))
+	const movedSlides = slides.filter((slide, index) => (selectedSlides.indexOf(index) !== -1))
+	const staticSlides = slides.filter((slide, index) => (selectedSlides.indexOf(index) === -1))
 	let insertPosition: number
 	staticSlides.forEach((slide, index) => {
 		if (slide.slideId == newPosition) {
@@ -74,9 +74,10 @@ function moveSlides(state: State, newPosition: number): State{
 		return slide
 	})
 	const newSelectedSlides = []
-	for (let i = newPosition; i < newPosition + selectedSlides.length; i++) {
+	for (let i = insertPosition; i < insertPosition + selectedSlides.length; i++) {
 		newSelectedSlides.push(i)
 	}
+
 	return {
 		...state,
 		selectedSlides: newSelectedSlides,

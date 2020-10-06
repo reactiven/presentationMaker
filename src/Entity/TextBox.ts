@@ -53,8 +53,8 @@ function updateTextBox(state: State, text: string): State{
 	}
 }
 
-function isTextBox(element: any): element is TextBox {
-	return element.dataElement.font !== undefined
+function isTextBox(dataElement: any): dataElement is TextBox {
+	return dataElement.font !== undefined
 }
 
 export {
