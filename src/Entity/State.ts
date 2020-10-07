@@ -43,7 +43,7 @@ function undo(): State {
 function redo(): State {
 	const newState: State = stateList.redoStateList.pop()
 
-	return state
+	return newState
 }
 
 export {
