@@ -10,10 +10,12 @@ describe('Shape test', () => {
 			selectedSlides: [],
 			presentationInfo: {
 				name: 'presentation1',
+				slidesOrder: [0],
 				slides: [
 					{
 						background: '#000',
 						slideId: 0,
+						elementsOrder: [0],
 						elements: [
 							{
 								type: 'shape',
@@ -40,10 +42,12 @@ describe('Shape test', () => {
 			selectedSlides: [],
 			presentationInfo: {
 				name: 'presentation1',
+				slidesOrder: [0],
 				slides: [
 					{
 						background: '#000',
 						slideId: 0,
+						elementsOrder: [0],
 						elements: [
 							{
 								type: 'shape',
@@ -54,8 +58,8 @@ describe('Shape test', () => {
 								yPos: 50,
 								dataElement: {
 									shapeType: 'rect',
-									fillColor: '#fff',
-									strokeColor: '#fff', 
+									fillColor: '#123456',
+									strokeColor: '#654321', 
 								}
 							}
 						]
@@ -64,8 +68,8 @@ describe('Shape test', () => {
 			}
 		}
 		expect(setColor(initialState, {
-			fillColor: '#fff',
-			strokeColor: '#fff',
+			fillColor: '#123456',
+			strokeColor: '#654321',
 		})).toEqual(newState)
 	})
 })

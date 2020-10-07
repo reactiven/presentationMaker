@@ -8,11 +8,13 @@ type State = {
 
 type Presentation = {
   name: string,
+  slidesOrder: Array<number>,
   slides: Array<Slide>,
 }
 
 type Slide = {
   elements: Array<SlideElement>
+  elementsOrder: Array<number>
   slideId: number,
   background: BackgroundType,
 }

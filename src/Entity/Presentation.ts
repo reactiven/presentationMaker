@@ -6,6 +6,7 @@ const presentation: Presentation = {
 	slides: [
 		slide,
 	],
+	slidesOrder: [1],
 }
 
 function changeName(state: State, newName: string): State {
@@ -17,32 +18,59 @@ function changeName(state: State, newName: string): State {
 		}
 	}
 }
+
 function addSlide(state: State): State{
-	const defaultSlide = {
-		slideId: state.presentationInfo.slides.length,
+	const defaultSlide: Slide = {
+		slideId: generateSlideId(),
 		elements: [],
+		elementsOrder: [],
 		background: '#fff',
 	}
+	const slides = [...state.presentationInfo.slides]
+	slides.push(defaultSlide)
+	const slidesOrder: Array<number> = [...state.presentationInfo.slidesOrder]
+	slidesOrder.push(defaultSlide.slideId)
+
 	return {
 		...state,
 		presentationInfo: {
 			...state.presentationInfo,
-			slides: [
-				...state.presentationInfo.slides,
-				defaultSlide,
-			],
+			slidesOrder,
+			slides,
 		}
 	}
 }
 function deleteSlides(state: State): State{
+	let currentSlide = state.currentSlide
+	let slides = [...state.presentationInfo.slides]
+	let slidesOrder = [...state.presentationInfo.slidesOrder]
+	let selectedSlides = [...state.selectedSlides]
+	let firstSelected
+	for (let i = 0; i < slidesOrder.length; i++) {
+		if (selectedSlides.indexOf(slidesOrder[i]) !== -1)
+		{
+			firstSelected = i
+			break
+		}
+	}
+	for (let i = firstSelected; i < slidesOrder.length; i++) {
+		if (selectedSlides.indexOf(slidesOrder[i]) === -1)
+		{
+			currentSlide = i
+			break
+		}
+	}
+	slides = slides.filter((slide) => (selectedSlides.indexOf(slide.slideId) === -1))
+	slidesOrder = slidesOrder.filter(slideId => (selectedSlides.indexOf(slideId) === -1))
+	selectedSlides = []
 	return {
 		...state,
+		selectedSlides,
+		currentSlide,
 		presentationInfo: {
 			...state.presentationInfo,
-			slides: state.presentationInfo.slides.filter((slide, index) => (state.selectedSlides.indexOf(index))).map((slide, index) => {
-				slide.slideId = index
-				return slide
-			})
+			slides,
+			slidesOrder,
 		}
 	}
 }
@@ -53,54 +81,52 @@ function goToSlide(state: State, slideId: number): State{
 	}
 }
 function getCurrentSlideInfo(state: State): Slide {
-	return state.presentationInfo.slides[state.currentSlide]
+	const slides = [...state.presentationInfo.slides]
+	return slides.find(slide => slide.slideId === state.currentSlide)
 }
 function moveSlides(state: State, newPosition: number): State{
 	const selectedSlides = [...state.selectedSlides]
 	const slides = [...state.presentationInfo.slides]
-	const movedSlides = slides.filter((slide, index) => (selectedSlides.indexOf(index) !== -1))
-	const staticSlides = slides.filter((slide, index) => (selectedSlides.indexOf(index) === -1))
+	const slidesOrder = [...state.presentationInfo.slidesOrder]
+	const insertSlideId = slides[newPosition].slideId
+	const movedSlidesOrder = slidesOrder.filter((slideId) => (selectedSlides.indexOf(slideId) !== -1))
+	const staticSlidesOrder = slidesOrder.filter((slideId) => (selectedSlides.indexOf(slideId) === -1))
 	let insertPosition: number
-	staticSlides.forEach((slide, index) => {
-		if (slide.slideId == newPosition) {
+	staticSlidesOrder.forEach((slideId, index) => {
+		if (slideId === insertSlideId)
+		{
 			insertPosition = index
 		}
 	})
-	const firtsPart = staticSlides.slice(0, insertPosition)
-	const secondPart = staticSlides.slice(insertPosition)
-	const concatArray = firtsPart.concat(movedSlides).concat(secondPart)
-	const finalArray = concatArray.map((slide, index) => {
-		slide.slideId = index
-		return slide
-	})
-	const newSelectedSlides = []
-	for (let i = insertPosition; i < insertPosition + selectedSlides.length; i++) {
-		newSelectedSlides.push(i)
-	}
+	const firtsPart = staticSlidesOrder.slice(0, insertPosition)
+	const secondPart = staticSlidesOrder.slice(insertPosition)
+	const concatArray = firtsPart.concat(movedSlidesOrder).concat(secondPart)
 
 	return {
 		...state,
-		selectedSlides: newSelectedSlides,
 		presentationInfo: {
 			...state.presentationInfo,
-			slides: finalArray,
+			slidesOrder: concatArray,
 		}
 	}
 }
 function selectSlides(state: State, slideId: number): State {
+	const selectedSlides = [...state.selectedSlides]
+	selectedSlides.push(slideId)
 	return {
 		...state,
-		selectedSlides: [
-			...state.selectedSlides,
-			slideId,
-		]
+		selectedSlides
 	}
 }
 function deleteSelect(state: State): State {
 	return {
 		...state,
-		selectedSlides: []
+		selectedSlides: [],
 	}
+}
+
+function generateSlideId(): number {
+	return Math.random() * 10
 }
 
 export {

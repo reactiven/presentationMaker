@@ -1,5 +1,6 @@
 import { image } from './Image'
 import { shape } from './Shape'
+import { generateElementId } from './SlideElement'
 import { textBox } from './TextBox'
 import { BackgroundType, Slide, State, SlideElement, ShapeType } from './types'
 
@@ -12,7 +13,7 @@ const slide: Slide = {
 			height: 1000,
 			xPos: 200,
 			yPos: 300,
-			elementId: 1,
+			elementId: 0,
 		},
 		{
 			type: 'textBox',
@@ -30,46 +31,48 @@ const slide: Slide = {
 			height: 1000,
 			xPos: 200,
 			yPos: 300,
-			elementId: 1,
+			elementId: 2,
 		},
 	],
-	slideId: 1,
+	elementsOrder: [0, 1, 2],
+	slideId: 0,
 	background: 'image',
 }
 
 function AddImage(state: State, filepath: string): State {
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[state.currentSlide]}
-	let elements = [...slide.elements]
+	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const elements = [...slide.elements]
+	const elementsOrder = [...slide.elementsOrder]
 	const defaultImage: SlideElement = {
 		type: 'image',
 		dataElement: {
 			src: filepath,
 		},
-		elementId: elements.length,
+		elementId: generateElementId(),
 		width: 200,
 		height: 200,
 		xPos: 400,
 		yPos: 400,
 	}
-	elements = [
-		...elements,
-		defaultImage,
-	]
+	elements.push(defaultImage)
+	elementsOrder.push(defaultImage.elementId)
 	slide.elements = elements
-	slides[state.currentSlide] = slide
+	slide.elementsOrder = elementsOrder
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {
 			...state.presentationInfo,
-			slides
+			slides,
 		}
 	}
 }
 function AddTextBox(state: State): State{
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[state.currentSlide]}
-	let elements = [...slide.elements]
+	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const elements = [...slide.elements]
+	const elementsOrder = [...slide.elementsOrder]
 	const defaultTextBox: SlideElement = {
 		type: 'image',
 		dataElement: {
@@ -81,18 +84,17 @@ function AddTextBox(state: State): State{
 			},
 			text: '',
 		},
-		elementId: elements.length,
+		elementId: generateElementId(),
 		width: 200,
 		height: 200,
 		xPos: 400,
 		yPos: 400,
 	}
-	elements = [
-		...elements,
-		defaultTextBox,
-	]
+	elements.push(defaultTextBox)
+	elementsOrder.push(defaultTextBox.elementId)
 	slide.elements = elements
-	slides[state.currentSlide] = slide
+	slide.elementsOrder = elementsOrder
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {
@@ -103,8 +105,9 @@ function AddTextBox(state: State): State{
 }
 function AddShape(state: State, type: ShapeType): State{
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[state.currentSlide]}
-	let elements = [...slide.elements]
+	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const elements = [...slide.elements]
+	const elementsOrder = [...slide.elementsOrder]
 	const defaultShape: SlideElement = {
 		type: 'shape',
 		dataElement: {
@@ -118,12 +121,11 @@ function AddShape(state: State, type: ShapeType): State{
 		xPos: 400,
 		yPos: 400,
 	}
-	elements = [
-		...elements,
-		defaultShape,
-	]
+	elements.push(defaultShape)
+	elementsOrder.push(defaultShape.elementId)
 	slide.elements = elements
-	slides[state.currentSlide] = slide
+	slide.elementsOrder = elementsOrder
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {
@@ -133,14 +135,29 @@ function AddShape(state: State, type: ShapeType): State{
 	}
 }
 function DeleteElements(state: State): State{
+	let selectedSlideElements = [...state.selectedSlideElements]
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[state.currentSlide]}
-	const elements = [...slide.elements].filter((element) => (state.selectedSlideElements.indexOf(element.elementId)))
-    
+	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	let elementsOrder = [...slide.elementsOrder]
+	let elements = [...slide.elements]
+	
+	elements = elements.filter((element) => {
+		const elementId = element.elementId
+		const isSelected = selectedSlideElements.indexOf(elementId) !== -1
+		return !isSelected
+	})
+	elementsOrder = elementsOrder.filter(elementId => {
+		const isSelected = selectedSlideElements.indexOf(elementId) !== -1
+		return !isSelected
+	}) 
+	selectedSlideElements = []
+	
+	slide.elementsOrder = elementsOrder
 	slide.elements = elements
-	slides[state.currentSlide] = slide
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
+		selectedSlideElements,
 		presentationInfo: {
 			...state.presentationInfo,
 			slides
@@ -149,9 +166,9 @@ function DeleteElements(state: State): State{
 }
 function SetBackgroud(state: State, newBackground: BackgroundType): State{
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[state.currentSlide]}
+	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
 	slide.background = newBackground
-	slides[state.currentSlide] = slide
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {

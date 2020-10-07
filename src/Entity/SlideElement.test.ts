@@ -8,10 +8,12 @@ const initialState: State = {
 	selectedSlides: [],
 	presentationInfo: {
 		name: 'presentation1',
+		slidesOrder: [0],
 		slides: [
 			{
 				background: '#000',
 				slideId: 0,
+				elementsOrder: [0, 1],
 				elements: [
 					{
 						type: 'image',
@@ -49,11 +51,13 @@ describe('SlideElements test', () => {
 			selectedSlideElements: [0],
 			selectedSlides: [],
 			presentationInfo: {
+				slidesOrder: [0],
 				name: 'presentation1',
 				slides: [
 					{
 						background: '#000',
 						slideId: 0,
+						elementsOrder: [0, 1],
 						elements: [
 							{
 								type: 'image',
@@ -85,7 +89,7 @@ describe('SlideElements test', () => {
 		expect(moveElement(initialState, 1, 40, 70)).toEqual(newState)
 	})
     
-	test('move element', () => {
+	test('resize element', () => {
 		const newState: State = {
 			currentSlide: 0,
 			onPreview: false,
@@ -93,16 +97,18 @@ describe('SlideElements test', () => {
 			selectedSlides: [],
 			presentationInfo: {
 				name: 'presentation1',
+				slidesOrder: [0],
 				slides: [
 					{
 						background: '#000',
 						slideId: 0,
+						elementsOrder: [0, 1],
 						elements: [
 							{
 								type: 'image',
 								elementId: 0,
-								height: 200,
-								width: 200,
+								height: 300,
+								width: 150,
 								xPos: 50,
 								yPos: 50,
 								dataElement: {
@@ -112,8 +118,8 @@ describe('SlideElements test', () => {
 							{
 								type: 'image',
 								elementId: 1,
-								height: 300,
-								width: 150,
+								height: 200,
+								width: 200,
 								xPos: 50,
 								yPos: 50,
 								dataElement: {
@@ -125,7 +131,7 @@ describe('SlideElements test', () => {
 				]
 			}
 		}
-		expect(resizeElement(initialState, 1, 150, 300)).toEqual(newState)
+		expect(resizeElement(initialState, 150, 300)).toEqual(newState)
 	})
 	test('add element to select', () => {
 		const newState: State = {
@@ -135,10 +141,12 @@ describe('SlideElements test', () => {
 			selectedSlides: [],
 			presentationInfo: {
 				name: 'presentation1',
+				slidesOrder: [0],
 				slides: [
 					{
 						background: '#000',
 						slideId: 0,
+						elementsOrder: [0, 1],
 						elements: [
 							{
 								type: 'image',
@@ -180,10 +188,12 @@ describe('SlideElements test', () => {
 			selectedSlides: [],
 			presentationInfo: {
 				name: 'presentation1',
+				slidesOrder: [0],
 				slides: [
 					{
 						background: '#000',
 						slideId: 0,
+						elementsOrder: [0, 1],
 						elements: [
 							{
 								type: 'image',

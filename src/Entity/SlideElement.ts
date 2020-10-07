@@ -13,14 +13,14 @@ const slideElement = {
 
 function moveElement(state: State, elementId: number, newX: number, newY: number): State {
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[state.currentSlide]}
+	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
 	const elements = [...slide.elements]
-	const element = {...elements[elementId]}
+	const element = {...elements.find(element => element.elementId === elementId)}
 	element.xPos = newX
 	element.yPos = newY
-	elements[elementId] = element
+	elements[elements.findIndex(element => element.elementId === elementId)] = element
 	slide.elements = elements
-	slides[state.currentSlide] = slide
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {
@@ -29,16 +29,16 @@ function moveElement(state: State, elementId: number, newX: number, newY: number
 		}
 	}
 }
-function resizeElement(state: State, elementId: number, newWidth: number, newHeight: number): State {
+function resizeElement(state: State, newWidth: number, newHeight: number): State {
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[state.currentSlide]}
+	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
 	const elements = [...slide.elements]
-	const element = {...elements[elementId]}
+	const element = {...elements.find(element => element.elementId === state.selectedSlideElements[0])}
 	element.width = newWidth
 	element.height = newHeight
-	elements[elementId] = element
+	elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])] = element
 	slide.elements = elements
-	slides[state.currentSlide] = slide
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {
@@ -49,12 +49,11 @@ function resizeElement(state: State, elementId: number, newWidth: number, newHei
 }
 
 function selectElement(state: State, elementId: number): State {
+	const selectedSlideElements = [...state.selectedSlideElements]
+	selectedSlideElements.push(elementId)
 	return {
 		...state,
-		selectedSlideElements: [
-			...state.selectedSlideElements,
-			elementId,
-		]
+		selectedSlideElements,
 	}
 }
 
@@ -65,10 +64,15 @@ function deleteSelect(state: State): State {
 	}
 }
 
+function generateElementId(): number {
+	return (Math.random() * 10)
+}
+
 export {
 	slideElement,
 	deleteSelect,
 	selectElement,
 	resizeElement,
 	moveElement,
+	generateElementId,
 }

@@ -13,7 +13,7 @@ const state: State = {
 	currentSlide: 1,
 	presentationInfo: presentation,
 	onPreview: false,
-}
+} 
 
 function exportPresentation(state: State): void {}
 function savePresentation(state: State): void {}

@@ -8,18 +8,18 @@ const shape: Shape = {
 
 function setColor(state: State, newColor: ShapeColorType): State {
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[state.currentSlide]}
+	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
 	const elements = [...slide.elements]
-	const element = {...elements[state.selectedSlideElements[0]]}
+	const element = {...elements.find(element => element.elementId === state.selectedSlideElements[0])}
 	const dataElement = {...element.dataElement}
 	if (isShape(dataElement)){
 		dataElement.fillColor = newColor.fillColor
 		dataElement.strokeColor = newColor.strokeColor
 	}
 	element.dataElement = dataElement
-	elements[state.selectedSlideElements[0]] = element
+	elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])] = element
 	slide.elements = elements
-	slides[state.currentSlide] = slide
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {

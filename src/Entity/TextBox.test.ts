@@ -8,10 +8,12 @@ const initialState: State = {
 	selectedSlides: [],
 	presentationInfo: {
 		name: 'presentation1',
+		slidesOrder: [0],
 		slides: [
 			{
 				background: '#000',
 				slideId: 0,
+				elementsOrder: [0],
 				elements: [
 					{
 						type: 'textBox',
@@ -45,10 +47,12 @@ describe('TextBox test', () => {
 			selectedSlides: [],
 			presentationInfo: {
 				name: 'presentation1',
+				slidesOrder: [0],
 				slides: [
 					{
 						background: '#000',
 						slideId: 0,
+						elementsOrder: [0],
 						elements: [
 							{
 								type: 'textBox',
@@ -87,10 +91,12 @@ describe('TextBox test', () => {
 			selectedSlides: [],
 			presentationInfo: {
 				name: 'presentation1',
+				slidesOrder: [0],
 				slides: [
 					{
 						background: '#000',
 						slideId: 0,
+						elementsOrder: [0],
 						elements: [
 							{
 								type: 'textBox',
