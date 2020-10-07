@@ -1,9 +1,11 @@
 import { presentation } from './Presentation'
-import { State } from './types'
+import { State, StateList } from './types'
 
 // Не уверен что так мы будем задавать массивы, тут вопросик
-const undoStateList = []
-const redoStateList = []
+const stateList: StateList = {
+	undoStateList: [],
+	redoStateList: [],
+}
 
 const state: State = {
 	selectedSlides: [
@@ -29,17 +31,17 @@ function goToPreview(state: State): State{
 
 // Вызывать эту функцию в конце всех функций, которые изменяют состояние
 function saveStateForUndo(state: State) {
-	undoStateList.push(state)
+	stateList.undoStateList.push(state)
 }
 
 function undo(): State {
-	const newState: State = undoStateList.pop()
-	redoStateList.push(newState)
+	const newState: State = stateList.undoStateList.pop()
+	stateList.redoStateList.push(newState)
 
 	return newState
 }
 function redo(): State {
-	const newState: State = redoStateList.pop()
+	const newState: State = stateList.redoStateList.pop()
 
 	return state
 }
@@ -49,6 +51,8 @@ export {
 	savePresentation,
 	uploadPresentation,
 	goToPreview,
+	saveStateForUndo,
 	undo,
 	redo,
+	stateList,
 }

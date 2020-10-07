@@ -1,54 +1,135 @@
-import { presentation } from './Presentation'
-import { State } from './types'
+import { saveStateForUndo, undo } from "./State"
+import { State, StateList } from "./types"
 
-// Не уверен что так мы будем задавать массивы, тут вопросик
-const undoStateList = []
-const redoStateList = []
-
-const state: State = {
-	selectedSlides: [
-		1,
-	],
-	selectedSlideElements: [1, 2],
-	currentSlide: 1,
-	presentationInfo: presentation,
+const initialState: State = {
+	currentSlide: 0,
 	onPreview: false,
-} 
-
-function exportPresentation(state: State): void {}
-function savePresentation(state: State): void {}
-function uploadPresentation(filepath: string): State{
-	return state
-}
-function goToPreview(state: State): State{
-	return {
-		...state,
-		onPreview: true
+	selectedSlideElements: [0],
+	selectedSlides: [],
+	presentationInfo: {
+		name: 'presentation1',
+		slidesOrder: [0],
+		slides: [
+			{
+				background: '#000',
+				slideId: 0,
+				elementsOrder: [0, 1],
+				elements: [
+					{
+						type: 'image',
+						elementId: 0,
+						height: 200,
+						width: 200,
+						xPos: 50,
+						yPos: 50,
+						dataElement: {
+							src: '/src/images/img.png',
+						}
+					},
+					{
+						type: 'image',
+						elementId: 1,
+						height: 200,
+						width: 200,
+						xPos: 50,
+						yPos: 50,
+						dataElement: {
+							src: '/src/images/img.png',
+						}
+					}
+				]
+			}
+		]
 	}
 }
 
-// Вызывать эту функцию в конце всех функций, которые изменяют состояние
-function saveStateForUndo(state: State) {
-	undoStateList.push(state)
+const newState: State = {
+	currentSlide: 0,
+	onPreview: false,
+	selectedSlideElements: [0],
+	selectedSlides: [],
+	presentationInfo: {
+		slidesOrder: [0],
+		name: 'presentation1',
+		slides: [
+			{
+				background: '#000',
+				slideId: 0,
+				elementsOrder: [0, 1],
+				elements: [
+					{
+						type: 'image',
+						elementId: 0,
+						height: 200,
+						width: 200,
+						xPos: 50,
+						yPos: 50,
+						dataElement: {
+							src: '/src/images/img.png',
+						}
+					},
+					{
+						type: 'image',
+						elementId: 1,
+						height: 200,
+						width: 200,
+						xPos: 40,
+						yPos: 70,
+						dataElement: {
+							src: '/src/images/img.png',
+						}
+					}
+				]
+			}
+		]
+	}
 }
 
-function undo(): State {
-	const newState: State = undoStateList.pop()
-	redoStateList.push(newState)
-
-	return newState
-}
-function redo(): State {
-	const newState: State = redoStateList.pop()
-
-	return state
-}
-
-export {
-	exportPresentation,
-	savePresentation,
-	uploadPresentation,
-	goToPreview,
-	undo,
-	redo,
-}
+describe('State test', () => {
+	
+	test('save state for undo test', () => {
+		const newState: State = {
+			currentSlide: 0,
+			onPreview: false,
+			selectedSlideElements: [0],
+			selectedSlides: [],
+			presentationInfo: {
+				slidesOrder: [0],
+				name: 'presentation1',
+				slides: [
+					{
+						background: '#000',
+						slideId: 0,
+						elementsOrder: [0, 1],
+						elements: [
+							{
+								type: 'image',
+								elementId: 0,
+								height: 200,
+								width: 200,
+								xPos: 50,
+								yPos: 50,
+								dataElement: {
+									src: '/src/images/img.png',
+								}
+							},
+							{
+								type: 'image',
+								elementId: 1,
+								height: 200,
+								width: 200,
+								xPos: 40,
+								yPos: 70,
+								dataElement: {
+									src: '/src/images/img.png',
+								}
+							}
+						]
+					}
+				]
+			}
+		}
+		saveStateForUndo(newState)
+		expect(undo()).toEqual(newState)
+	})
+})

@@ -6,6 +6,11 @@ type State = {
   onPreview: boolean,
 }
 
+type StateList = {
+  undoStateList: Array<State>,
+  redoStateList: Array<State>,
+}
+
 type Presentation = {
   name: string,
   slidesOrder: Array<number>,
@@ -70,5 +75,6 @@ export {
 	ShapeType,
 	BackgroundType,
 	FontType,
-	ShapeColorType,
+  ShapeColorType,
+  StateList, 
 }
