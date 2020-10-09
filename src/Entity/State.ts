@@ -30,7 +30,7 @@ function goToPreview(state: State): State{
 }
 
 // Вызывать эту функцию в конце всех функций, которые изменяют состояние
-function saveStateForUndo(state: State) {
+function saveStateForUndo(state: State): void {
 	stateList.undoStateList.push(state)
 }
 
