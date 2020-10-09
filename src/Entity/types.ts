@@ -75,6 +75,6 @@ export {
 	ShapeType,
 	BackgroundType,
 	FontType,
-  ShapeColorType,
-  StateList, 
+	ShapeColorType,
+	StateList, 
 }
