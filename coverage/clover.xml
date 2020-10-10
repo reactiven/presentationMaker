@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1602227600931" clover="3.2.0">
-  <project timestamp="1602227600931" name="All files">
-    <metrics statements="221" coveredstatements="176" conditionals="15" coveredconditionals="11" methods="69" coveredmethods="53" elements="305" coveredelements="240" complexity="0" loc="221" ncloc="221" packages="1" files="7" classes="7"/>
+<coverage generated="1602235347997" clover="3.2.0">
+  <project timestamp="1602235347998" name="All files">
+    <metrics statements="223" coveredstatements="178" conditionals="17" coveredconditionals="13" methods="69" coveredmethods="53" elements="309" coveredelements="244" complexity="0" loc="223" ncloc="223" packages="1" files="7" classes="7"/>
     <file name="Image.ts" path="E:\Study_work\PM\presentationMaker\src\Entity\Image.ts">
       <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
       <line num="3" count="3" type="stmt"/>
       <line num="8" count="3" type="stmt"/>
     </file>
     <file name="Presentation.ts" path="E:\Study_work\PM\presentationMaker\src\Entity\Presentation.ts">
-      <metrics statements="55" coveredstatements="46" conditionals="6" coveredconditionals="5" methods="15" coveredmethods="13"/>
+      <metrics statements="57" coveredstatements="48" conditionals="8" coveredconditionals="7" methods="15" coveredmethods="13"/>
       <line num="1" count="2" type="stmt"/>
       <line num="4" count="2" type="stmt"/>
       <line num="13" count="1" type="stmt"/>
@@ -37,33 +37,35 @@
       <line num="78" count="1" type="stmt"/>
       <line num="84" count="1" type="stmt"/>
       <line num="85" count="2" type="stmt"/>
-      <line num="88" count="2" type="stmt"/>
-      <line num="89" count="2" type="stmt"/>
-      <line num="90" count="2" type="stmt"/>
-      <line num="91" count="2" type="stmt"/>
-      <line num="92" count="10" type="stmt"/>
-      <line num="93" count="10" type="stmt"/>
-      <line num="95" count="2" type="stmt"/>
-      <line num="96" count="6" type="cond" truecount="2" falsecount="0"/>
-      <line num="98" count="2" type="stmt"/>
-      <line num="101" count="2" type="stmt"/>
-      <line num="102" count="2" type="stmt"/>
-      <line num="103" count="2" type="stmt"/>
-      <line num="105" count="2" type="stmt"/>
-      <line num="114" count="1" type="stmt"/>
-      <line num="115" count="1" type="stmt"/>
-      <line num="116" count="1" type="stmt"/>
+      <line num="88" count="4" type="stmt"/>
+      <line num="89" count="4" type="stmt"/>
+      <line num="90" count="4" type="stmt"/>
+      <line num="91" count="4" type="stmt"/>
+      <line num="92" count="20" type="stmt"/>
+      <line num="93" count="20" type="stmt"/>
+      <line num="95" count="4" type="cond" truecount="2" falsecount="0"/>
+      <line num="97" count="1" type="stmt"/>
+      <line num="101" count="3" type="stmt"/>
+      <line num="102" count="10" type="cond" truecount="2" falsecount="0"/>
+      <line num="104" count="3" type="stmt"/>
+      <line num="109" count="4" type="stmt"/>
+      <line num="110" count="4" type="stmt"/>
+      <line num="111" count="4" type="stmt"/>
+      <line num="113" count="4" type="stmt"/>
       <line num="122" count="1" type="stmt"/>
-      <line num="129" count="0" type="stmt"/>
-      <line num="133" count="2" type="stmt"/>
-      <line num="134" count="2" type="stmt"/>
-      <line num="135" count="2" type="stmt"/>
-      <line num="136" count="2" type="stmt"/>
-      <line num="137" count="2" type="stmt"/>
-      <line num="138" count="2" type="stmt"/>
-      <line num="139" count="2" type="stmt"/>
-      <line num="140" count="2" type="stmt"/>
-      <line num="141" count="2" type="stmt"/>
+      <line num="123" count="1" type="stmt"/>
+      <line num="124" count="1" type="stmt"/>
+      <line num="131" count="1" type="stmt"/>
+      <line num="138" count="0" type="stmt"/>
+      <line num="142" count="2" type="stmt"/>
+      <line num="143" count="2" type="stmt"/>
+      <line num="144" count="2" type="stmt"/>
+      <line num="145" count="2" type="stmt"/>
+      <line num="146" count="2" type="stmt"/>
+      <line num="147" count="2" type="stmt"/>
+      <line num="148" count="2" type="stmt"/>
+      <line num="149" count="2" type="stmt"/>
+      <line num="150" count="2" type="stmt"/>
     </file>
     <file name="Shape.ts" path="E:\Study_work\PM\presentationMaker\src\Entity\Shape.ts">
       <metrics statements="17" coveredstatements="17" conditionals="5" coveredconditionals="4" methods="6" coveredmethods="6"/>

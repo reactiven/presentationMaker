@@ -178,7 +178,96 @@ describe('move selected slides ', () => {
 			}
 		}
 
-		expect(moveSlides(initialState, 4)).toEqual(newState)
+		expect(moveSlides(initialState, 5)).toEqual(newState)
+	})
+
+	test('move slide 1', () => {
+		const initialState: State = {
+			currentSlide: 0,
+			onPreview: false,
+			selectedSlideElements: [],
+			selectedSlides: [3],
+			presentationInfo: {
+				name: 'presentation1',
+				slidesOrder: [0,1,2,3,4],
+				slides: [
+					{
+						background: '#000',
+						slideId: 0,
+						elementsOrder: [],
+						elements: []
+					},
+					{
+						background: '#001',
+						slideId: 1,
+						elementsOrder: [],
+						elements: []
+					},
+					{
+						background: '#002',
+						slideId: 2,
+						elementsOrder: [],
+						elements: []
+					},
+					{
+						background: '#003',
+						slideId: 3,
+						elementsOrder: [],
+						elements: []
+					},
+					{
+						background: '#004',
+						slideId: 4,
+						elementsOrder: [],
+						elements: []
+					}
+				]
+			}
+		}
+		const newState: State = {
+			currentSlide: 0,
+			onPreview: false,
+			selectedSlideElements: [],
+			selectedSlides: [3],
+			presentationInfo: {
+				name: 'presentation1',
+				slidesOrder: [3,0,1,2,4],
+				slides: [
+					{
+						background: '#000',
+						slideId: 0,
+						elementsOrder: [],
+						elements: []
+					},
+					{
+						background: '#001',
+						slideId: 1,
+						elementsOrder: [],
+						elements: []
+					},
+					{
+						background: '#002',
+						slideId: 2,
+						elementsOrder: [],
+						elements: []
+					},
+					{
+						background: '#003',
+						slideId: 3,
+						elementsOrder: [],
+						elements: []
+					},
+					{
+						background: '#004',
+						slideId: 4,
+						elementsOrder: [],
+						elements: []
+					}
+				]
+			}
+		}
+
+		expect(moveSlides(initialState, 0)).toEqual(newState)
 	})
 
 	test('move 2 and 4 slide to 1 position', () => {

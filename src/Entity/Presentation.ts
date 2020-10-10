@@ -88,16 +88,24 @@ function moveSlides(state: State, newPosition: number): State{
 	const selectedSlides = [...state.selectedSlides]
 	const slides = [...state.presentationInfo.slides]
 	const slidesOrder = [...state.presentationInfo.slidesOrder]
-	const insertSlideId = slides[newPosition].slideId
+	const insertSlide = slides[newPosition]
 	const movedSlidesOrder = slidesOrder.filter((slideId) => (selectedSlides.indexOf(slideId) !== -1))
 	const staticSlidesOrder = slidesOrder.filter((slideId) => (selectedSlides.indexOf(slideId) === -1))
 	let insertPosition: number
-	staticSlidesOrder.forEach((slideId, index) => {
-		if (slideId === insertSlideId)
-		{
-			insertPosition = index
-		}
-	})
+	if (insertSlide === undefined)
+	{
+		insertPosition = staticSlidesOrder.length
+	}
+	else
+	{
+		staticSlidesOrder.forEach((slideId, index) => {
+			if (slideId === insertSlide.slideId)
+			{
+				insertPosition = index
+			}
+		})
+	}
+	
 	const firtsPart = staticSlidesOrder.slice(0, insertPosition)
 	const secondPart = staticSlidesOrder.slice(insertPosition)
 	const concatArray = firtsPart.concat(movedSlidesOrder).concat(secondPart)
@@ -118,6 +126,7 @@ function selectSlides(state: State, slideId: number): State {
 		selectedSlides
 	}
 }
+
 function deleteSelect(state: State): State {
 	return {
 		...state,
