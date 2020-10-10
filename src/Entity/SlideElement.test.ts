@@ -1,4 +1,4 @@
-import { moveElement, resizeElement, selectElement, deleteSelect } from './SlideElement'
+import { moveElement, resizeElement, selectElement, addElementToSelected } from './SlideElement'
 import { State } from './types'
 
 const initialState: State = {
@@ -176,15 +176,15 @@ describe('SlideElements test', () => {
 			}
 		}
 
-		expect(selectElement(initialState, 1)).toEqual(newState)
+		expect(addElementToSelected(initialState, 1)).toEqual(newState)
 	})
     
 
-	test('delete selection of elements', () => {
+	test('select one element', () => {
 		const newState: State = {
 			currentSlide: 0,
 			onPreview: false,
-			selectedSlideElements: [],
+			selectedSlideElements: [1],
 			selectedSlides: [],
 			presentationInfo: {
 				name: 'presentation1',
@@ -223,6 +223,6 @@ describe('SlideElements test', () => {
 			}
 		}
         
-		expect(deleteSelect(initialState)).toEqual(newState)
+		expect(selectElement(initialState, 1)).toEqual(newState)
 	})
 })

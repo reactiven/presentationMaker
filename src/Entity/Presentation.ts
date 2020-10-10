@@ -118,7 +118,8 @@ function moveSlides(state: State, newPosition: number): State{
 		}
 	}
 }
-function selectSlides(state: State, slideId: number): State {
+
+function addSlideToSelected(state: State, slideId: number): State {
 	const selectedSlides = [...state.selectedSlides]
 	selectedSlides.push(slideId)
 	return {
@@ -127,10 +128,11 @@ function selectSlides(state: State, slideId: number): State {
 	}
 }
 
-function deleteSelect(state: State): State {
+function selectSlide(state: State, slideId: number): State {
+	const selectedSlides = [slideId]
 	return {
 		...state,
-		selectedSlides: [],
+		selectedSlides
 	}
 }
 
@@ -141,8 +143,8 @@ function generateSlideId(): number {
 export {
 	presentation,
 	changeName,
-	deleteSelect,
-	selectSlides,
+	addSlideToSelected,
+	selectSlide,
 	moveSlides,
 	goToSlide,
 	getCurrentSlideInfo,

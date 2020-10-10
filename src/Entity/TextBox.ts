@@ -31,7 +31,7 @@ function changeFont(state: State, newFont: FontType): State{
 		}
 	}
 }
-function updateTextBox(state: State, text: string): State{
+function updateTextBox(state: State, text: string): State {
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
 	const elements = [...slide.elements]

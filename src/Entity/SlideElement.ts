@@ -48,7 +48,7 @@ function resizeElement(state: State, newWidth: number, newHeight: number): State
 	}
 }
 
-function selectElement(state: State, elementId: number): State {
+function addElementToSelected(state: State, elementId: number): State {
 	const selectedSlideElements = [...state.selectedSlideElements]
 	selectedSlideElements.push(elementId)
 	return {
@@ -57,10 +57,11 @@ function selectElement(state: State, elementId: number): State {
 	}
 }
 
-function deleteSelect(state: State): State {
+function selectElement(state: State, elementId: number): State {
+	const selectedSlideElements = [elementId]
 	return {
 		...state,
-		selectedSlideElements: []
+		selectedSlideElements,
 	}
 }
 
@@ -70,8 +71,8 @@ function generateElementId(): number {
 
 export {
 	slideElement,
-	deleteSelect,
 	selectElement,
+	addElementToSelected,
 	resizeElement,
 	moveElement,
 	generateElementId,

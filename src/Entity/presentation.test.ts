@@ -1,5 +1,5 @@
 import { State } from './types'
-import { changeName, deleteSelect, deleteSlides, getCurrentSlideInfo, goToSlide, moveSlides, selectSlides } from './Presentation'
+import { addSlideToSelected, changeName, deleteSlides, getCurrentSlideInfo, goToSlide, moveSlides, selectSlide } from './Presentation'
 
 
 describe('move selected slides ', () => {
@@ -543,7 +543,7 @@ describe('move selected slides ', () => {
 		expect(getCurrentSlideInfo(initialState)).toEqual(slideInfo)
 	})
     
-	test('add slide to selectde', () => {
+	test('add slide to selected', () => {
 		const initialState: State = {
 			currentSlide: 1,
 			onPreview: false,
@@ -605,10 +605,10 @@ describe('move selected slides ', () => {
 			}
 		}
         
-		expect(selectSlides(initialState, 0)).toEqual(newState)
+		expect(addSlideToSelected(initialState, 0)).toEqual(newState)
 	})
 
-	test('delete selectio of slide', () => {
+	test('select one slide', () => {
 		const initialState: State = {
 			currentSlide: 1,
 			onPreview: false,
@@ -643,7 +643,7 @@ describe('move selected slides ', () => {
 			currentSlide: 1,
 			onPreview: false,
 			selectedSlideElements: [],
-			selectedSlides: [],
+			selectedSlides: [0],
 			presentationInfo: {
 				name: 'presentation',
 				slidesOrder: [0, 1, 2],
@@ -669,6 +669,6 @@ describe('move selected slides ', () => {
 				],
 			}
 		}
-		expect(deleteSelect(initialState)).toEqual(newState)
+		expect(selectSlide(initialState, 0)).toEqual(newState)
 	})
 })
