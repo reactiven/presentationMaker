@@ -45,7 +45,7 @@ function deleteSlides(state: State): State{
 	let slides = [...state.presentationInfo.slides]
 	let slidesOrder = [...state.presentationInfo.slidesOrder]
 	let selectedSlides = [...state.selectedSlides]
-	let firstSelected
+	let firstSelected: number = -1
 	for (let i = 0; i < slidesOrder.length; i++) {
 		if (selectedSlides.indexOf(slidesOrder[i]) !== -1)
 		{
@@ -80,8 +80,8 @@ function goToSlide(state: State, slideId: number): State{
 		currentSlide: slideId,
 	}
 }
-function getCurrentSlideInfo(state: State): Slide {
-	const slides = [...state.presentationInfo.slides]
+function getCurrentSlideInfo(state: State): Slide|undefined {
+	const slides: Array<Slide> = [...state.presentationInfo.slides]
 	return slides.find(slide => slide.slideId === state.currentSlide)
 }
 function moveSlides(state: State, newPosition: number): State{
@@ -91,7 +91,7 @@ function moveSlides(state: State, newPosition: number): State{
 	const insertSlide = slides[newPosition]
 	const movedSlidesOrder = slidesOrder.filter((slideId) => (selectedSlides.indexOf(slideId) !== -1))
 	const staticSlidesOrder = slidesOrder.filter((slideId) => (selectedSlides.indexOf(slideId) === -1))
-	let insertPosition: number
+	let insertPosition: number = -1
 	if (insertSlide === undefined)
 	{
 		insertPosition = staticSlidesOrder.length

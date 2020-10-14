@@ -17,7 +17,8 @@ function setColor(state: State, newColor: ShapeColorType): State {
 		dataElement.strokeColor = newColor.strokeColor
 	}
 	element.dataElement = dataElement
-	elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])] = element
+	let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0]) 
+	elements[elementNumber] = element
 	slide.elements = elements
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
