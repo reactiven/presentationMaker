@@ -150,4 +150,5 @@ export {
 	getCurrentSlideInfo,
 	deleteSlides,
 	addSlide,
+	generateSlideId,
 }
