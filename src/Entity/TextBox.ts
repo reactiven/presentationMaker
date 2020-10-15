@@ -12,9 +12,9 @@ const textBox: TextBox = {
 
 function changeFont(state: State, newFont: FontType): State{
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
-	const element = {...elements.find(element => element.elementId === state.selectedSlideElements[0])}
+	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
 	const dataElement = {...element.dataElement}
 	if (isTextBox(dataElement)){
 		dataElement.font = {...newFont}
@@ -33,9 +33,9 @@ function changeFont(state: State, newFont: FontType): State{
 }
 function updateTextBox(state: State, text: string): State {
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
-	const element = {...elements.find(element => element.elementId === state.selectedSlideElements[0])}
+	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
 	const dataElement = {...element.dataElement}
 	if (isTextBox(dataElement)){
 		dataElement.text = text

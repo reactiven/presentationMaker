@@ -34,15 +34,16 @@ function saveStateForUndo(state: State): void {
 	stateList.undoStateList.push(state)
 }
 
-function undo(): State {
-	const newState: State = stateList.undoStateList.pop()
-	stateList.redoStateList.push(newState)
-
+function undo(): State|undefined {
+	const newState = stateList.undoStateList.pop()
+	if (newState)
+	{
+		stateList.redoStateList.push(newState)
+	}
 	return newState
 }
-function redo(): State {
-	const newState: State = stateList.redoStateList.pop()
-
+function redo(): State|undefined {
+	const newState = stateList.redoStateList.pop()
 	return newState
 }
 

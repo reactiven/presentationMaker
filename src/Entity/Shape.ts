@@ -8,9 +8,9 @@ const shape: Shape = {
 
 function setColor(state: State, newColor: ShapeColorType): State {
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
-	const element = {...elements.find(element => element.elementId === state.selectedSlideElements[0])}
+	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
 	const dataElement = {...element.dataElement}
 	if (isShape(dataElement)){
 		dataElement.fillColor = newColor.fillColor
@@ -18,7 +18,10 @@ function setColor(state: State, newColor: ShapeColorType): State {
 	}
 	element.dataElement = dataElement
 	let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0]) 
-	elements[elementNumber] = element
+	if (elementNumber < elements.length)
+	{
+		elements[elementNumber] = element
+	}
 	slide.elements = elements
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {

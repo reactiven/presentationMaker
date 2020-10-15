@@ -13,9 +13,9 @@ const slideElement = {
 
 function moveElement(state: State, elementId: number, newX: number, newY: number): State {
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
-	const element = {...elements.find(element => element.elementId === elementId)}
+	const element = {...elements[elements.findIndex(element => element.elementId === elementId)]}
 	element.xPos = newX
 	element.yPos = newY
 	elements[elements.findIndex(element => element.elementId === elementId)] = element
@@ -31,9 +31,9 @@ function moveElement(state: State, elementId: number, newX: number, newY: number
 }
 function resizeElement(state: State, newWidth: number, newHeight: number): State {
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
-	const element = {...elements.find(element => element.elementId === state.selectedSlideElements[0])}
+	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
 	element.width = newWidth
 	element.height = newHeight
 	elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])] = element

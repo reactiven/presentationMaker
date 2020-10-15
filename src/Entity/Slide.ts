@@ -41,7 +41,7 @@ const slide: Slide = {
 
 function AddImage(state: State, filepath: string): State {
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const elementsOrder = [...slide.elementsOrder]
 	const defaultImage: SlideElement = {
@@ -70,7 +70,7 @@ function AddImage(state: State, filepath: string): State {
 }
 function AddTextBox(state: State): State{
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const elementsOrder = [...slide.elementsOrder]
 	const defaultTextBox: SlideElement = {
@@ -105,7 +105,7 @@ function AddTextBox(state: State): State{
 }
 function AddShape(state: State, type: ShapeType): State{
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const elementsOrder = [...slide.elementsOrder]
 	const defaultShape: SlideElement = {
@@ -137,7 +137,7 @@ function AddShape(state: State, type: ShapeType): State{
 function DeleteElements(state: State): State{
 	let selectedSlideElements = [...state.selectedSlideElements]
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	let elementsOrder = [...slide.elementsOrder]
 	let elements = [...slide.elements]
 	
@@ -166,7 +166,7 @@ function DeleteElements(state: State): State{
 }
 function SetBackgroud(state: State, newBackground: BackgroundType): State{
 	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides.find(slide => slide.slideId === state.currentSlide)}
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	slide.background = newBackground
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
