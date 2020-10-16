@@ -16,6 +16,7 @@ function SideBar(props: PropsType): JSX.Element {
     const sildes = [...props.state.presentationInfo.slides]
     const listItems = sildes.map((slide, index) =>
         <SideBarItem 
+            key={slide.slideId}
             slide={slide}
             index={index} 
             changeSlide={changeSlide}
@@ -37,7 +38,13 @@ type SidebarItemType = {
 
 function SideBarItem(props: SidebarItemType): JSX.Element {
     return (
-        <li key={props.slide.slideId} onClick={() => props.changeSlide(props.slide.slideId)}>
+        <li 
+            onClick={() => {
+                console.log('test')
+                props.changeSlide(props.slide.slideId)
+            }}
+            className="sidebar-item"
+        >
             Слайд {props.index}
         </li>
     )

@@ -1,17 +1,23 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
 import { Workspace } from './components/Workspace';
 import { SideBar } from './components/Sidebar';
 import { State } from './Entity/types';
 import { TopPanel } from './components/TopPanel';
+import { state } from './Entity/State';
 
-function App(state: State): JSX.Element {
+type PropsType = {
+  state: State
+}
+
+function App(props: PropsType): JSX.Element {
   return (
     <div>
-      <TopPanel />
+      <TopPanel 
+       state={state} 
+      />
       <div className="presentation-block">
-        <SideBar state={state}/>
+        <SideBar state={props.state}/>
         <Workspace />
       </div>
     </div>
