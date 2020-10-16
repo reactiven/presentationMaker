@@ -63,7 +63,7 @@ type ShapeColorType = {
   strokeColor: string,
 }
 
-export {
+export type {
 	State,
 	Presentation,
 	Slide,
