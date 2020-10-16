@@ -587,10 +587,8 @@ describe('move selected slides ', () => {
 				],
 			}
 		}
-		const generateSlideId = jest.fn()
-		.mockImplementationOnce(cb => cb(0))
-		.mockImplementationOnce(cb => cb(1));
-	  
+		mockedModule = jest.mock('./Presentation')
+		mockedModule.generateSlideId.mockResolvedValue(1)
 		
 		expect(addSlide(initialState)).toEqual(newState)
 	})
