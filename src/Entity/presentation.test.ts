@@ -1,5 +1,5 @@
 import { State } from './types'
-import { addSlide, addSlideToSelected, changeName, deleteSlides, generateSlideId, getCurrentSlideInfo, goToSlide, moveSlides, selectSlide } from './Presentation'
+import { addSlide, addSlideToSelected, changeName, deleteSlides, getCurrentSlideInfo, goToSlide, moveSlides, selectSlide } from './Presentation'
 
 
 describe('move selected slides ', () => {
@@ -587,7 +587,11 @@ describe('move selected slides ', () => {
 				],
 			}
 		}
-
+		const generateSlideId = jest.fn()
+		.mockImplementationOnce(cb => cb(0))
+		.mockImplementationOnce(cb => cb(1));
+	  
+		
 		expect(addSlide(initialState)).toEqual(newState)
 	})
 
