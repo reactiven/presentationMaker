@@ -3,13 +3,17 @@ import { selectSlide } from '../Entity/Presentation';
 import { Slide, State } from '../Entity/types'
 import './Sidebar.css';
 
-function SideBar(state: State): JSX.Element {
+type PropsType = {
+    state: State
+}
+
+function SideBar(props: PropsType): JSX.Element {
 
     function changeSlide(slideId: number) {
-        selectSlide(state, slideId)
+        selectSlide(props.state, slideId)
     }
 
-    const sildes = [...state.presentationInfo.slides]
+    const sildes = [...props.state.presentationInfo.slides]
     const listItems = sildes.map((slide, index) =>
         <SideBarItem 
             slide={slide}

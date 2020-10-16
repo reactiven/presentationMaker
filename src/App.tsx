@@ -2,15 +2,16 @@ import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { Workspace } from './components/Workspace';
-import { TopPanel } from './components/TopPanel';
 import { SideBar } from './components/Sidebar';
+import { State } from './Entity/types';
+import { TopPanel } from './components/TopPanel';
 
-function App(): JSX.Element {
+function App(state: State): JSX.Element {
   return (
     <div>
       <TopPanel />
       <div className="presentation-block">
-        <SideBar />
+        <SideBar state={state}/>
         <Workspace />
       </div>
     </div>

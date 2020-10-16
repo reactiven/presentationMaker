@@ -56,4 +56,5 @@ export {
 	undo,
 	redo,
 	stateList,
+	state,
 }
