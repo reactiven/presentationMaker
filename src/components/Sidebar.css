@@ -1,0 +1,4 @@
+.side-bar {
+    max-width: 200px;
+    overflow-y: scroll;
+}
