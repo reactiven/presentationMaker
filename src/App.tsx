@@ -4,7 +4,6 @@ import { Workspace } from './components/Workspace';
 import { SideBar } from './components/Sidebar';
 import { State } from './Entity/types';
 import { TopPanel } from './components/TopPanel';
-import { state } from './Entity/State';
 
 type PropsType = {
   state: State
@@ -12,13 +11,13 @@ type PropsType = {
 
 function App(props: PropsType): JSX.Element {
   return (
-    <div>
-      <TopPanel 
-       state={state} 
+    <div className="app-layout">
+      <TopPanel
+        state={props.state} 
       />
       <div className="presentation-block">
         <SideBar state={props.state}/>
-        <Workspace />
+        <Workspace state={props.state}/>
       </div>
     </div>
   )

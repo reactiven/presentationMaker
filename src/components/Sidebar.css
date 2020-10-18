@@ -1,8 +1,8 @@
 .side-bar {
-    max-width: 200px;
-    width: 200px;
+    border-right: 1px solid #d9d9d9;
+    width: 220px;
     height: 100%;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 
 .sidebar-item:hover {

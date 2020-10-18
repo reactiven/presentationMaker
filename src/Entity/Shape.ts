@@ -1,6 +1,6 @@
-import { Shape, ShapeColorType, State } from './types'
+import { ShapeType, ShapeColorType, State } from './types'
 
-const shape: Shape = {
+const shape: ShapeType = {
 	shapeType: 'circle',
 	fillColor: '#123',
 	strokeColor: '#4567',
@@ -33,7 +33,7 @@ function setColor(state: State, newColor: ShapeColorType): State {
 	}
 }
 
-function isShape(dataElement: any): dataElement is Shape {
+function isShape(dataElement: any): dataElement is ShapeType {
 	return dataElement.shapeType !== undefined && dataElement.fillColor !== undefined && dataElement.strokeColor !== undefined
 }
 

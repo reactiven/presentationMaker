@@ -1,6 +1,6 @@
-import { FontType, State, TextBox } from './types'
+import { FontType, State, TextBoxType } from './types'
 
-const textBox: TextBox = {
+const textBox: TextBoxType = {
 	font: {
 		fontStyle: 'Times New Roman',
 		fontSize: '2px',
@@ -53,7 +53,7 @@ function updateTextBox(state: State, text: string): State {
 	}
 }
 
-function isTextBox(dataElement: any): dataElement is TextBox {
+function isTextBox(dataElement: any): dataElement is TextBoxType {
 	return dataElement.font !== undefined
 }
 

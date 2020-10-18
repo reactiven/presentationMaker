@@ -2,9 +2,9 @@ import { image } from './Image'
 import { shape } from './Shape'
 import { generateElementId } from './SlideElement'
 import { textBox } from './TextBox'
-import { BackgroundType, Slide, State, SlideElement, ShapeType } from './types'
+import { BackgroundType, SlideType, State, SlideElementType, ShapeType, ShapeTypeType } from './types'
 
-const slide: Slide = {
+const slide: SlideType = {
 	elements: [
 		{
 			type: 'image',
@@ -36,7 +36,7 @@ const slide: Slide = {
 	],
 	elementsOrder: [0, 1, 2],
 	slideId: 0,
-	background: 'image',
+	background: '#123123',
 }
 
 function AddImage(state: State, filepath: string): State {
@@ -44,7 +44,7 @@ function AddImage(state: State, filepath: string): State {
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const elementsOrder = [...slide.elementsOrder]
-	const defaultImage: SlideElement = {
+	const defaultImage: SlideElementType = {
 		type: 'image',
 		dataElement: {
 			src: filepath,
@@ -73,7 +73,7 @@ function AddTextBox(state: State): State{
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const elementsOrder = [...slide.elementsOrder]
-	const defaultTextBox: SlideElement = {
+	const defaultTextBox: SlideElementType = {
 		type: 'image',
 		dataElement: {
 			font: {
@@ -103,12 +103,12 @@ function AddTextBox(state: State): State{
 		}
 	}
 }
-function AddShape(state: State, type: ShapeType): State{
+function AddShape(state: State, type: ShapeTypeType): State{
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const elementsOrder = [...slide.elementsOrder]
-	const defaultShape: SlideElement = {
+	const defaultShape: SlideElementType = {
 		type: 'shape',
 		dataElement: {
 			shapeType: type,

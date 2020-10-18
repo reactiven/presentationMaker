@@ -1,6 +1,6 @@
-import { Image } from './types'
+import { ImageType } from './types'
 
-const image: Image = {
+const image: ImageType = {
 	src: '/images/image.jpg',
 }
 

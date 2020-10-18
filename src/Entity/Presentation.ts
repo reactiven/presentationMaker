@@ -1,7 +1,7 @@
 import { slide } from './Slide'
-import { Slide, Presentation, State } from './types'
+import { SlideType, PresentationType, State } from './types'
 
-const presentation: Presentation = {
+const presentation: PresentationType = {
 	name: 'Презентация 1',
 	slides: [
 		slide,
@@ -20,7 +20,7 @@ function changeName(state: State, newName: string): State {
 }
 
 function addSlide(state: State): State{
-	const defaultSlide: Slide = {
+	const defaultSlide: SlideType = {
 		slideId: generateSlideId(),
 		elements: [],
 		elementsOrder: [],
@@ -80,9 +80,10 @@ function goToSlide(state: State, slideId: number): State{
 		currentSlide: slideId,
 	}
 }
-function getCurrentSlideInfo(state: State): Slide|undefined {
-	const slides: Array<Slide> = [...state.presentationInfo.slides]
-	return slides.find(slide => slide.slideId === state.currentSlide)
+function getCurrentSlideInfo(state: State): SlideType|undefined {
+	const slides: Array<SlideType> = [...state.presentationInfo.slides]
+	const slide = slides.find(slide => slide.slideId === state.currentSlide)
+	return slide
 }
 function moveSlides(state: State, newPosition: number): State{
 	const selectedSlides = [...state.selectedSlides]

@@ -2,7 +2,7 @@ type State = {
   selectedSlides: Array<number>,
   selectedSlideElements: Array<number>,
   currentSlide: number,
-  presentationInfo: Presentation,
+  presentationInfo: PresentationType,
   onPreview: boolean,
 }
 
@@ -11,22 +11,22 @@ type StateList = {
   redoStateList: Array<State>,
 }
 
-type Presentation = {
+type PresentationType = {
   name: string,
   slidesOrder: Array<number>,
-  slides: Array<Slide>,
+  slides: Array<SlideType>,
 }
 
-type Slide = {
-  elements: Array<SlideElement>
+type SlideType = {
+  elements: Array<SlideElementType>
   elementsOrder: Array<number>
   slideId: number,
   background: BackgroundType,
 }
 
-type SlideElement = {
+type SlideElementType = {
   type: ElementType,
-  dataElement: (TextBox|Image|Shape),
+  dataElement: (TextBoxType|ImageType|ShapeType),
   width: number,
   height: number,
   xPos: number,
@@ -34,24 +34,24 @@ type SlideElement = {
   elementId: number,
 }
 
-type Image = {
+type ImageType = {
   src: string,
 }
 
-type Shape = {
-  shapeType: ShapeType,
+type ShapeType = {
+  shapeType: ShapeTypeType,
   fillColor: string,
   strokeColor: string,
 }
 
-type TextBox = {
+type TextBoxType = {
   font: FontType,
   text: string,
 }
 
 type ElementType = ('textBox' | 'shape' | 'image')
-type ShapeType = ('circle'|'rect'|'triangle')
-type BackgroundType = (Image | string)
+type ShapeTypeType = ('circle'|'rect'|'triangle')
+type BackgroundType = (string)
 type FontType = {
   fontStyle: string,
   fontSize: string,
@@ -65,14 +65,14 @@ type ShapeColorType = {
 
 export type {
 	State,
-	Presentation,
-	Slide,
-	SlideElement,
-	Image,
-	Shape,
-	TextBox,
-	ElementType,
+	PresentationType,
+	SlideType,
+	SlideElementType,
+	ImageType,
 	ShapeType,
+	TextBoxType,
+	ElementType,
+	ShapeTypeType,
 	BackgroundType,
 	FontType,
 	ShapeColorType,

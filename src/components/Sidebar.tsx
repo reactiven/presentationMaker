@@ -1,6 +1,6 @@
 import React from 'react'
 import { selectSlide } from '../Entity/Presentation';
-import { Slide, State } from '../Entity/types'
+import { SlideType, State } from '../Entity/types'
 import './Sidebar.css';
 
 type PropsType = {
@@ -31,7 +31,7 @@ function SideBar(props: PropsType): JSX.Element {
 }
 
 type SidebarItemType = {
-    slide: Slide,
+    slide: SlideType,
     index: number,
     changeSlide: (slideId: number) => void, 
 }

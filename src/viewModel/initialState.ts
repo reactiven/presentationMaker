@@ -12,21 +12,35 @@ const initialState: State = {
         slides: [
             {
                 slideId: 0,
-                background: '#000',
-                elementsOrder: [],
+                background: '456',
+                elementsOrder: [0],
                 elements: []
             },
             {
                 slideId: 1,
-                background: '#000',
+                background: '#123',
                 elementsOrder: [],
                 elements: []
             },
             {
                 slideId: 2,
-                background: '#000',
-                elementsOrder: [],
-                elements: []
+                background: '#fff',
+                elementsOrder: [0],
+                elements: [
+                    {
+                        elementId: 0,
+                        type: 'shape',
+                        dataElement: {
+                            fillColor: '#000',
+                            shapeType: 'rect',
+                            strokeColor: '#000',
+                        },
+                        height: 200,
+                        width: 200,
+                        xPos: 100,
+                        yPos: 100,
+                    },
+                ]
             },
         ],
     }
