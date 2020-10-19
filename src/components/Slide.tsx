@@ -1,6 +1,7 @@
 import React from 'react';
 import { SlideElementType, SlideType } from "../Entity/types";
 import './Slide.css';
+import { SlideElement } from './SlideElements/Element';
 
 type PropsType = {
     slideInfo: SlideType,
@@ -20,38 +21,18 @@ function Slide(props: PropsType) {
 }
 
 function renderElements(elements: Array<SlideElementType>, elementsOrder: Array<number>) {
-    console.log(elementsOrder)
     const elementsList = elementsOrder.map((elementId, index) => {
         const element = elements.find(element => element.elementId === elementId)
         if (!!element)
         {
-            return <Element 
+            return <SlideElement 
                 key={elementId}
                 element={element}
                 index={index}
             />
         }
     });
-    console.log(elementsList)
     return elementsList
-}
-
-type ElementPropsType = {
-    element: SlideElementType,
-    index: number,
-}
-function Element(props: ElementPropsType) {
-    const element = {...props.element}
-    const style = {
-        top: element.yPos,
-        left: element.xPos,
-        height: element.height,
-        width: element.width,
-        background: '#456',
-    } 
-    return(
-        <div style={style} className='element'></div>
-    )
 }
 
 export {

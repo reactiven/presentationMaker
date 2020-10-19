@@ -49,6 +49,13 @@ type TextBoxType = {
   text: string,
 }
 
+type ElementStyleType = {
+  top: number,
+  left: number,
+  height: number,
+  width: number,
+}
+
 type ElementType = ('textBox' | 'shape' | 'image')
 type ShapeTypeType = ('circle'|'rect'|'triangle')
 type BackgroundType = (string)
@@ -74,7 +81,8 @@ export type {
 	ElementType,
 	ShapeTypeType,
 	BackgroundType,
-	FontType,
+  FontType,
+  ElementStyleType,
 	ShapeColorType,
 	StateList, 
 }
