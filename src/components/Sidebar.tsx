@@ -1,4 +1,5 @@
 import React from 'react'
+import { renderApp } from '..';
 import { selectSlide } from '../Entity/Presentation';
 import { SlideType, State } from '../Entity/types'
 import './Sidebar.css';
@@ -10,7 +11,10 @@ type PropsType = {
 function SideBar(props: PropsType): JSX.Element {
 
     function changeSlide(slideId: number) {
-        selectSlide(props.state, slideId)
+        console.log(slideId)
+        const newState = selectSlide(props.state, slideId)
+        debugger
+        renderApp(newState)
     }
 
     const sildes = [...props.state.presentationInfo.slides]
@@ -40,7 +44,6 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
     return (
         <li 
             onClick={() => {
-                console.log('test')
                 props.changeSlide(props.slide.slideId)
             }}
             className="sidebar-item"

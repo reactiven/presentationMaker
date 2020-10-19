@@ -133,6 +133,7 @@ function selectSlide(state: State, slideId: number): State {
 	const selectedSlides = [slideId]
 	return {
 		...state,
+		currentSlide: slideId,
 		selectedSlides
 	}
 }

@@ -12,15 +12,60 @@ const initialState: State = {
         slides: [
             {
                 slideId: 0,
-                background: '456',
-                elementsOrder: [0],
-                elements: []
+                background: '#821',
+                elementsOrder: [0, 1],
+                elements: [
+                    {
+                        elementId: 0,
+                        type: 'shape',
+                        dataElement: {
+                            fillColor: '#123',
+                            shapeType: 'circle',
+                            strokeColor: '#456',
+                        },
+                        height: 200,
+                        width: 200,
+                        xPos: 50,
+                        yPos: 50,
+                    },
+                    {
+                        elementId: 1,
+                        type: 'shape',
+                        dataElement: {
+                            fillColor: '#123',
+                            shapeType: 'triangle',
+                            strokeColor: '#456',
+                        },
+                        height: 100,
+                        width: 500,
+                        xPos: 50,
+                        yPos: 150,
+                    },
+                ]
             },
             {
                 slideId: 1,
-                background: '#123',
-                elementsOrder: [],
-                elements: []
+                background: '#439',
+                elementsOrder: [0],
+                elements: [
+                    {
+                        elementId: 0,
+                        type: 'textBox',
+                        dataElement: {
+                            font: {
+                                bold: false,
+                                italic: true,
+                                fontSize: '50px',
+                                fontStyle: 'Calibri',
+                            },
+                            text: 'Жопа'
+                        },
+                        height: 100,
+                        width: 200,
+                        xPos: 100,
+                        yPos: 150,
+                    }
+                ]
             },
             {
                 slideId: 2,
