@@ -8,3 +8,47 @@
     position: absolute;
     border: 2px solid blue;
 }
+
+.resize-handle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background-color: blue;
+}
+
+.resize-handle-tl {
+    top: -5px;
+    left: -5px;
+}
+.resize-handle-tr {
+    top: -5px;
+    right: -5px;
+}
+.resize-handle-bl {
+    bottom: -5px;
+    left: -5px;
+}
+.resize-handle-br {
+    bottom: -5px;
+    right: -5px;
+}
+
+.resize-handle-ts {
+    top: -5px;
+    left: calc(50% - 5px);
+}
+
+.resize-handle-rs {
+    right: -5px;
+    top: calc(50% - 5px);
+}
+
+.resize-handle-bs {
+    bottom: -5px;
+    left: calc(50% - 5px);
+}
+
+.resize-handle-ls {
+    top: calc(50% - 5px);
+    left: -5px;
+}

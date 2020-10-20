@@ -25,7 +25,7 @@ function Circle(props: PropsType) {
                 cy={height/2}
                 fill={data.fillColor} 
                 stroke={data.strokeColor}
-                stroke-width="5"
+                strokeWidth="5"
             />
         </svg>
     )

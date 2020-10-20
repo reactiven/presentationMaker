@@ -1,6 +1,6 @@
 import React from 'react'
 import { renderApp } from '..';
-import { selectSlide } from '../Entity/Presentation';
+import { goToSlide, selectSlide } from '../Entity/Presentation';
 import { SlideType, State } from '../Entity/types'
 import './Sidebar.css';
 
@@ -12,7 +12,7 @@ function SideBar(props: PropsType): JSX.Element {
 
     function changeSlide(slideId: number) {
         console.log(slideId)
-        const newState = selectSlide(props.state, slideId)
+        const newState = goToSlide(props.state, slideId)
         renderApp(newState)
     }
 

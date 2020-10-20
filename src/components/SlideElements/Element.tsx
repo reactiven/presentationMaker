@@ -22,6 +22,14 @@ function SlideElement(props: ElementPropsType) {
     const className = props.isSelected ? 'element_selected' : 'element'
     return(
         <div style={style} className={className}>
+            {props.isSelected &&  <div className='resize-handle resize-handle-tl'></div>}
+            {props.isSelected &&  <div className='resize-handle resize-handle-tr'></div>}
+            {props.isSelected &&  <div className='resize-handle resize-handle-bl'></div>}
+            {props.isSelected &&  <div className='resize-handle resize-handle-br'></div>}  
+            {props.isSelected &&  <div className='resize-handle resize-handle-ts'></div>}
+            {props.isSelected &&  <div className='resize-handle resize-handle-rs'></div>}
+            {props.isSelected &&  <div className='resize-handle resize-handle-bs'></div>}
+            {props.isSelected &&  <div className='resize-handle resize-handle-ls'></div>} 
             {renderElement(element, style)}
         </div>
     )
