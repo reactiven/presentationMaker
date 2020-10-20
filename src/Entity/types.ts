@@ -69,6 +69,11 @@ type ShapeColorType = {
   fillColor: string,
   strokeColor: string,
 }
+type ButtonProps = {
+  onClick: () => void,
+  label: string,
+  img: string,
+}
 
 export type {
 	State,
@@ -84,5 +89,6 @@ export type {
   FontType,
   ElementStyleType,
 	ShapeColorType,
-	StateList, 
+  StateList, 
+  ButtonProps,
 }
