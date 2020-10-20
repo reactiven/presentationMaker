@@ -14,6 +14,7 @@ function Workspace(props: PropsType) {
         <div className="workspace">
             {slideInfo && <Slide 
                 slideInfo={slideInfo}
+                selectedElements={props.state.selectedSlideElements}
             />}
         </div>
     )

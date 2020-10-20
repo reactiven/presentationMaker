@@ -6,18 +6,19 @@ import { Triangle } from './Triangle';
 
 type PropsType = {
     data: any,
-    style: ElementStyleType,
+    width: number,
+    height: number,
 }
 
 function Shape(props: PropsType) {
 
     switch (props.data.shapeType) {
         case 'rect':
-            return <Rect data={props.data} style={props.style}/>
+            return <Rect data={props.data} width={props.width} height={props.height} />
         case 'circle':
-            return <Circle data={props.data} style={props.style} />
+            return <Circle data={props.data} width={props.width} height={props.height} />
         case 'triangle':
-            return <Triangle data={props.data} style={props.style}/>
+            return <Triangle data={props.data} width={props.width} height={props.height} />
         default:
             return null
     }

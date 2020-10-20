@@ -4,23 +4,25 @@ import './Element.css';
 
 type PropsType = {
     data: ShapeType,
-    style: ElementStyleType,
+    width: number,
+    height: number,
 }
 
 function Circle(props: PropsType) {
-    const style = {...props.style}
+    const {
+        width,
+        height,
+    } = props
     const data = {...props.data}
-    const viewBox = [0, 0, style.width, style.height]
+    const viewBox = [0, 0, width, height]
     return(
         <svg 
-            style={style}
             viewBox={String(viewBox)}
-            className="element"
         >
             <circle 
-                r={style.width/2 - 5} 
-                cx={style.width/2} 
-                cy={style.height/2}
+                r={width/2 - 5} 
+                cx={width/2} 
+                cy={height/2}
                 fill={data.fillColor} 
                 stroke={data.strokeColor}
                 stroke-width="5"

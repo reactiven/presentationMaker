@@ -4,19 +4,21 @@ import './Element.css';
 
 type PropsType = {
     data: ShapeType,
-    style: ElementStyleType,
+    width: number,
+    height: number,
 }
 
 function Triangle(props: PropsType) {
-    const style = {...props.style}
+    const {
+        width,
+        height,
+      } = props
     const data = {...props.data}
-    const viewBox = [0, 0, style.width, style.height]
-    const points = `5,${style.height - 5} ${style.width/2},5 ${style.width-5},${style.height-5}`
+    const viewBox = [0, 0, width, height]
+    const points = `5,${height - 5} ${width/2},5 ${width-5},${height-5}`
     return(
         <svg
-            style={style}
             viewBox={String(viewBox)}
-            className="element"
         >
             <polygon 
                 points={points}

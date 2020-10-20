@@ -13,20 +13,23 @@ function SideBar(props: PropsType): JSX.Element {
     function changeSlide(slideId: number) {
         console.log(slideId)
         const newState = selectSlide(props.state, slideId)
-        debugger
         renderApp(newState)
     }
 
-    const sildes = [...props.state.presentationInfo.slides]
-    const listItems = sildes.map((slide, index) =>
-        <SideBarItem 
-            key={slide.slideId}
-            slide={slide}
-            index={index} 
-            changeSlide={changeSlide}
-        />
-    );
-
+    const slides = [...props.state.presentationInfo.slides]
+    const slidesOrder = [...props.state.presentationInfo.slidesOrder]
+    const listItems = slidesOrder.map((slideId, index) => {
+        const slide = slides.find(slide => slide.slideId === slideId)
+        if (!!slide)
+        {
+            return <SideBarItem 
+                key={slideId}
+                slide={slide}
+                index={index} 
+                changeSlide={changeSlide}
+            />
+        }
+    })
     return (
         <div className='side-bar'>
             <ul>{listItems}</ul>

@@ -8,7 +8,7 @@ const initialState: State = {
     selectedSlides: [2],
     presentationInfo: {
         name: 'new presentation',
-        slidesOrder: [0, 1, 2],
+        slidesOrder: [0, 2, 1],
         slides: [
             {
                 slideId: 0,

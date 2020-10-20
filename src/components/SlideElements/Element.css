@@ -1,4 +1,10 @@
 
 .element {
     position: absolute;
+    border: 2px solid transparent;
+}
+
+.element_selected {
+    position: absolute;
+    border: 2px solid blue;
 }

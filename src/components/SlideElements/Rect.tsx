@@ -4,24 +4,26 @@ import './Element.css';
 
 type PropsType = {
     data: ShapeType,
-    style: ElementStyleType,
+    width: number,
+    height: number,
 }
 
 function Rect(props: PropsType) {
-    const style = {...props.style}
     const data = {...props.data}
-    const viewBox = [0, 0, style.width, style.height]
+    const {
+      width,
+      height,
+    } = props
+    const viewBox = [0, 0, width, height]
     return (
         <svg 
-          style={style}
           viewBox={String(viewBox)}
-          className="element"
         >
           <rect 
             x="0"
             y="0"
-            width={style.width}
-            height={style.height}
+            width={width}
+            height={height}
             fill={data.fillColor}
             stroke={data.strokeColor}
             strokeWidth="5"
