@@ -1,5 +1,5 @@
 import React from 'react';
-import { ElementStyleType, ShapeType } from '../../Entity/types';
+import { ShapeType } from '../../Entity/types';
 import './Element.css';
 
 type PropsType = {

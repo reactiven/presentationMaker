@@ -2,7 +2,7 @@ import { image } from './Image'
 import { shape } from './Shape'
 import { generateElementId } from './SlideElement'
 import { textBox } from './TextBox'
-import { BackgroundType, SlideType, State, SlideElementType, ShapeType, ShapeTypeType } from './types'
+import { BackgroundType, SlideType, State, SlideElementType, ShapeTypeType } from './types'
 
 const slide: SlideType = {
 	elements: [

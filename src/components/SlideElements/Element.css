@@ -4,8 +4,11 @@
     border: 2px solid transparent;
 }
 
+.element:focus {
+    outline: none;
+}
+
 .element_selected {
-    position: absolute;
     border: 2px solid blue;
 }
 
@@ -20,10 +23,12 @@
     top: -5px;
     left: -5px;
 }
+
 .resize-handle-tr {
     top: -5px;
     right: -5px;
 }
+
 .resize-handle-bl {
     bottom: -5px;
     left: -5px;
@@ -51,4 +56,24 @@
 .resize-handle-ls {
     top: calc(50% - 5px);
     left: -5px;
+}
+
+.resize-handle-tl:hover,
+.resize-handle-br:hover {
+    cursor: se-resize;
+}
+
+.resize-handle-tr:hover,
+.resize-handle-bl:hover {
+    cursor: ne-resize;
+}
+
+.resize-handle-ts:hover,
+.resize-handle-bs:hover {
+    cursor: n-resize;
+}
+
+.resize-handle-rs:hover,
+.resize-handle-ls:hover {
+    cursor: e-resize;
 }

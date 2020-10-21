@@ -3,16 +3,16 @@ import { State } from "../Entity/types";
 
 const initialState: State = {
     onPreview: false,
-    currentSlide: 0,
+    currentSlide: 2,
     selectedSlideElements: [1],
-    selectedSlides: [0],
+    selectedSlides: [2],
     presentationInfo: {
         name: 'new presentation',
         slidesOrder: [0, 2, 1],
         slides: [
             {
                 slideId: 0,
-                background: '#821',
+                background: '#fed',
                 elementsOrder: [0, 1],
                 elements: [
                     {

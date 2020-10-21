@@ -1,11 +1,11 @@
 import React from 'react';
-import { ElementStyleType } from '../../Entity/types';
+import { ShapeType } from '../../Entity/types';
 import { Circle } from './Circle';
 import { Rect } from './Rect';
 import { Triangle } from './Triangle';
 
 type PropsType = {
-    data: any,
+    data: ShapeType,
     width: number,
     height: number,
 }

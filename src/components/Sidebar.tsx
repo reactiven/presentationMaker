@@ -1,6 +1,6 @@
 import React from 'react'
 import { renderApp } from '..';
-import { goToSlide, selectSlide } from '../Entity/Presentation';
+import { goToSlide } from '../Entity/Presentation';
 import { SlideType, State } from '../Entity/types'
 import './Sidebar.css';
 
@@ -29,6 +29,7 @@ function SideBar(props: PropsType): JSX.Element {
                 changeSlide={changeSlide}
             />
         }
+        return null
     })
     return (
         <div className='side-bar'>

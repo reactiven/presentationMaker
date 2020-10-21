@@ -1,9 +1,9 @@
-import { ElementStyleType } from "../../Entity/types";
 import React from 'react';
-import './Element.css';
+import { TextBoxType } from '../../Entity/types';
+import './Textbox.css';
 
 type PropsType = {
-    data: any,
+    data: TextBoxType,
 }
 
 function Textbox(props: PropsType) {
@@ -14,9 +14,7 @@ function Textbox(props: PropsType) {
         fontFamily: data.font.fontStyle,
     }
     return(
-        <div
-            style={inputStyle}
-        >
+        <div className='textBox-block richtext' style={inputStyle} contentEditable='true' suppressContentEditableWarning={true}>
             {data.text}
         </div>
     )

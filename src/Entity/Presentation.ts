@@ -78,6 +78,8 @@ function goToSlide(state: State, slideId: number): State{
 	return {
 		...state,
 		currentSlide: slideId,
+		selectedSlides: [],
+		selectedSlideElements: [],
 	}
 }
 function getCurrentSlideInfo(state: State): SlideType|undefined {

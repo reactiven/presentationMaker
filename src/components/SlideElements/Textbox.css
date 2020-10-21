@@ -1,0 +1,14 @@
+.textBox-block {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding: 5px;
+}
+
+.textBox-block:focus {
+    outline: none;
+}
+
+.richtext {
+    margin: 0;
+}

@@ -1,9 +1,9 @@
 import React from 'react';
-import { ElementStyleType } from '../../Entity/types';
+import { ImageType } from '../../Entity/types';
 import './Element.css';
 
 type PropsType = {
-    data: any,
+    data: ImageType,
 }
 
 function ImageBlock(props: PropsType) {

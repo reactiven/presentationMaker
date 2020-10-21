@@ -40,4 +40,5 @@ function isShape(dataElement: any): dataElement is ShapeType {
 export {
 	shape,
 	setColor,
+	isShape,
 }

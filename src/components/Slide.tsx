@@ -27,7 +27,7 @@ function renderElements(elements: Array<SlideElementType>, elementsOrder: Array<
         const element = elements.find(element => element.elementId === elementId)
         if (!!element)
         {
-            const isSelected = selectedElements.findIndex(slideId => slideId === element.elementId) != -1
+            const isSelected = selectedElements.findIndex(slideId => slideId === element.elementId) !== -1
             return <SlideElement 
                 key={elementId}
                 element={element}
@@ -35,6 +35,7 @@ function renderElements(elements: Array<SlideElementType>, elementsOrder: Array<
                 index={index}
             />
         }
+        return null
     });
     return elementsList
 }

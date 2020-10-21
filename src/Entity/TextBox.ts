@@ -61,4 +61,5 @@ export {
 	textBox,
 	changeFont,
 	updateTextBox,
+	isTextBox,
 }
