@@ -48,14 +48,13 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
     return (
         <div
             className="sidebar-item"
-        >
-        <div 
             onClick={() => {
                 props.changeSlide(props.slide.slideId)
             }}
         >
-            Слайд {props.index}
-        </div>
+            <div>
+                Слайд {props.index}
+            </div>
         </div>
     )
 }
