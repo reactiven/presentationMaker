@@ -1,6 +1,6 @@
 import React from 'react';
 import { state } from '../Entity/State';
-import { ButtonProps, State } from '../Entity/types';
+import { State } from '../Entity/types';
 import { Button } from './Button';
 import './TopPanel.css';
 
@@ -8,10 +8,17 @@ type PropsType = {
     state: State,
 }
 
-function printNewShape(): void {
+function printNewSquare(): void {
     console.log('New shape')
 }
 
+function printNewCircle(): void {
+    console.log('New shape')
+}
+
+function printNewTriangle(): void {
+    console.log('New shape')
+}
 
 function printNewTextBox(): void {
     console.log('New textBox')
@@ -23,27 +30,34 @@ function printNewImage(): void {
 }
 
 function TopPanel(props: PropsType) {
-    let addShapeButtonProps: ButtonProps = {
-        onClick: printNewShape,
-        img:'',
-        label:'Shape',
-    }
-    let addTextBoxProps: ButtonProps = {
-        onClick: printNewTextBox,
-        img:'',
-        label:'TextBox',
-    }
-    let addImageProps: ButtonProps = {
-        onClick: printNewImage,
-        img:'',
-        label:'Image',
-    }
     return(
         <div className="top-panel">
             <div className="first-row">
-                {Button(addShapeButtonProps)}
-                {Button(addTextBoxProps)}
-                {Button(addImageProps)}
+                <Button 
+                    onClick={printNewImage}
+                    img={''}
+                    label={'Image'}
+                />
+                <Button 
+                    onClick={printNewTextBox}
+                    img={''}
+                    label={'TextBox'}
+                />
+                <Button 
+                    onClick={printNewSquare}
+                    img={''}
+                    label={'Square'}
+                />
+                <Button 
+                    onClick={printNewCircle}
+                    img={''}
+                    label={'Circle'}
+                />
+                <Button 
+                    onClick={printNewTriangle}
+                    img={''}
+                    label={'Triangle'}
+                />
             </div>
             {state.presentationInfo.name}
         </div>
