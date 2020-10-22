@@ -32,31 +32,36 @@ function printNewImage(): void {
 function TopPanel(props: PropsType) {
     return(
         <div className="top-panel">
-            <div className="first-row">
+            <div className="second-row">
                 <Button 
                     onClick={printNewImage}
                     img={''}
                     label={'Image'}
+                    disabled={false}
                 />
                 <Button 
                     onClick={printNewTextBox}
                     img={''}
                     label={'TextBox'}
+                    disabled={false}
                 />
                 <Button 
                     onClick={printNewSquare}
                     img={''}
                     label={'Square'}
+                    disabled={false}
                 />
                 <Button 
                     onClick={printNewCircle}
                     img={''}
                     label={'Circle'}
+                    disabled={false}
                 />
                 <Button 
                     onClick={printNewTriangle}
                     img={''}
                     label={'Triangle'}
+                    disabled={true}
                 />
             </div>
             {state.presentationInfo.name}
