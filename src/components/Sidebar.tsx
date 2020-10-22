@@ -33,7 +33,7 @@ function SideBar(props: PropsType): JSX.Element {
     })
     return (
         <div className='side-bar'>
-            <ul>{listItems}</ul>
+            {listItems}
         </div>
     )
 }
@@ -46,14 +46,17 @@ type SidebarItemType = {
 
 function SideBarItem(props: SidebarItemType): JSX.Element {
     return (
-        <li 
+        <div
+            className="sidebar-item"
+        >
+        <div 
             onClick={() => {
                 props.changeSlide(props.slide.slideId)
             }}
-            className="sidebar-item"
         >
             Слайд {props.index}
-        </li>
+        </div>
+        </div>
     )
 }
 
