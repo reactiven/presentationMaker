@@ -9,15 +9,15 @@ type PropsType = {
 }
 
 function printNewSquare(): void {
-    console.log('New shape')
+    console.log('New square')
 }
 
 function printNewCircle(): void {
-    console.log('New shape')
+    console.log('New circle')
 }
 
 function printNewTriangle(): void {
-    console.log('New shape')
+    console.log('New triangle')
 }
 
 function printNewTextBox(): void {
