@@ -1,13 +1,48 @@
 .top-panel {
-    margin-left: 5px;
-    margin-top: 5px;
     height: 100px;
     width: 100%;
     border-bottom: 1px solid #d9d9d9;
+    box-sizing: border-box;
+    padding: 10px 10px 0 10px;
 }
 
 .second-row {
-    max-width: 720px;
+    max-width: 425px;
     display: flex;
     justify-content: space-between;
+    margin-top: 6px;
+}
+
+.header-panel {
+    display: flex;
+    width: 100%;
+}
+.logo {
+    width: 64px;
+    height: 64px;
+    margin-right: 15px;
+}
+
+.tool-bar {
+    width: 100%;
+}
+
+.presentation-title {
+    border: 2px solid transparent;
+    white-space: nowrap;
+    font-size: 18px;
+    height: 20px;
+    line-height: 22px;
+    margin: 0;
+}
+
+.presentation-title:hover {
+    border: 2px solid #e5e5e5;
+    box-shadow: none;
+    border-radius: 4px;
+}
+
+.presentation-title:focus {
+    outline: none;
+    border: 2px solid #1a73e8;
 }

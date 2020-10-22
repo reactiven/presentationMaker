@@ -13,6 +13,7 @@
 
 .standard-button:hover:not(:disabled) {
     background: #dcdcdc;
+    cursor: pointer;
 }
 
 /* .standard-button:focus {

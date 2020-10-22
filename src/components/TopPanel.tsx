@@ -3,6 +3,7 @@ import { state } from '../Entity/State';
 import { State } from '../Entity/types';
 import { Button } from './Button';
 import './TopPanel.css';
+import logo from '../images/logo_tcaer.png';
 
 type PropsType = {
     state: State,
@@ -32,39 +33,34 @@ function printNewImage(): void {
 function TopPanel(props: PropsType) {
     return(
         <div className="top-panel">
-            <div className="second-row">
-                <Button 
-                    onClick={printNewImage}
-                    img={''}
-                    label={'Image'}
-                    disabled={false}
-                />
-                <Button 
-                    onClick={printNewTextBox}
-                    img={''}
-                    label={'TextBox'}
-                    disabled={false}
-                />
-                <Button 
-                    onClick={printNewSquare}
-                    img={''}
-                    label={'Square'}
-                    disabled={false}
-                />
-                <Button 
-                    onClick={printNewCircle}
-                    img={''}
-                    label={'Circle'}
-                    disabled={false}
-                />
-                <Button 
-                    onClick={printNewTriangle}
-                    img={''}
-                    label={'Triangle'}
-                    disabled={true}
-                />
+            <div className='header-panel'>
+                <img src={logo} className='logo'/>
+                <div className='tool-bar'>
+                    <input type="text" defaultValue={state.presentationInfo.name} className='presentation-title'/>
+                    <div className="second-row">
+                        <Button 
+                            onClick={printNewImage}
+                            label={'Image'}
+                        />
+                        <Button 
+                            onClick={printNewTextBox}
+                            label={'TextBox'}
+                        />
+                        <Button 
+                            onClick={printNewSquare}
+                            label={'Square'}
+                        />
+                        <Button 
+                            onClick={printNewCircle}
+                            label={'Circle'}
+                        />
+                        <Button 
+                            onClick={printNewTriangle}
+                            label={'Triangle'}
+                        />
+                    </div>
+                </div>
             </div>
-            {state.presentationInfo.name}
         </div>
     )
 }
