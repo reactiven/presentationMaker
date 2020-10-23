@@ -12,7 +12,9 @@ function SideBar(props: PropsType): JSX.Element {
 
     function changeSlide(slideId: number) {
         console.log(slideId)
-        const newState = goToSlide(props.state, slideId)
+        const newState = goToSlide(props.state, {
+            slideId
+        })
         renderApp(newState)
     }
 

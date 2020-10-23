@@ -9,12 +9,14 @@ const presentation: PresentationType = {
 	slidesOrder: [1],
 }
 
-function changeName(state: State, newName: string): State {
+function changeName(state: State, payload: {
+	newName: string,
+}): State {
 	return {
 		...state,
 		presentationInfo: {
 			...state.presentationInfo,
-			name: newName
+			name: payload.newName
 		}
 	}
 }
@@ -74,10 +76,12 @@ function deleteSlides(state: State): State{
 		}
 	}
 }
-function goToSlide(state: State, slideId: number): State{
+function goToSlide(state: State, payload: {
+	slideId: number,
+}): State{
 	return {
 		...state,
-		currentSlide: slideId,
+		currentSlide: payload.slideId,
 		selectedSlides: [],
 		selectedSlideElements: [],
 	}
@@ -87,11 +91,13 @@ function getCurrentSlideInfo(state: State): SlideType|undefined {
 	const slide = slides.find(slide => slide.slideId === state.currentSlide)
 	return slide
 }
-function moveSlides(state: State, newPosition: number): State{
+function moveSlides(state: State, payload: {
+	newPosition: number
+}): State{
 	const selectedSlides = [...state.selectedSlides]
 	const slides = [...state.presentationInfo.slides]
 	const slidesOrder = [...state.presentationInfo.slidesOrder]
-	const insertSlide = slides[newPosition]
+	const insertSlide = slides[payload.newPosition]
 	const movedSlidesOrder = slidesOrder.filter((slideId) => (selectedSlides.indexOf(slideId) !== -1))
 	const staticSlidesOrder = slidesOrder.filter((slideId) => (selectedSlides.indexOf(slideId) === -1))
 	let insertPosition: number = -1
@@ -122,20 +128,24 @@ function moveSlides(state: State, newPosition: number): State{
 	}
 }
 
-function addSlideToSelected(state: State, slideId: number): State {
+function addSlideToSelected(state: State, payload: {
+	slideId: number
+}): State {
 	const selectedSlides = [...state.selectedSlides]
-	selectedSlides.push(slideId)
+	selectedSlides.push(payload.slideId)
 	return {
 		...state,
 		selectedSlides
 	}
 }
 
-function selectSlide(state: State, slideId: number): State {
-	const selectedSlides = [slideId]
+function selectSlide(state: State, payload: {
+	slideId: number
+}): State {
+	const selectedSlides = [payload.slideId]
 	return {
 		...state,
-		currentSlide: slideId,
+		currentSlide: payload.slideId,
 		selectedSlides
 	}
 }

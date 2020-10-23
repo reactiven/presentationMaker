@@ -12,7 +12,8 @@
     color: gray;
 }
 
-.standard-button:hover:not(:disabled) {
+.standard-button:hover:not(:disabled),
+.standard-button:hover:not(:focus) {
     background: #dcdcdc;
     cursor: pointer;
 }
@@ -26,6 +27,3 @@
     outline: none;
     border: 3px solid #87CEFA;
 }
-
-
-
