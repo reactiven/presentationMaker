@@ -5,6 +5,7 @@ import { Button } from './Button';
 import './TopPanel.css';
 import logo from '../images/logo_tcaer.png';
 import { dispatch } from '../state/state-manager';
+import { changeName } from '../Entity/Presentation';
 
 type PropsType = {
     state: State,
@@ -32,12 +33,19 @@ function printNewImage(): void {
 }
 
 function TopPanel(props: PropsType) {
+
+    function onBlur(event: any) {
+        dispatch(changeName, {
+            newName: event.currentTarget.value,
+        })
+    }
+
     return(
         <div className="top-panel">
             <div className='header-panel'>
                 <img src={logo} className='logo'/>
                 <div className='tool-bar'>
-                    <input type="text" defaultValue={state.presentationInfo.name} className='presentation-title'/>
+                    <input type="text" defaultValue={state.presentationInfo.name} onBlur={onBlur} className='presentation-title'/>
                     <div className="second-row">
                         <Button 
                             onClick={printNewImage}

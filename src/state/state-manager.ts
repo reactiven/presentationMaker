@@ -8,7 +8,7 @@ type fnType = (state: State, payload: any) => State|undefined
 let state = initialState
 
 function dispatch(fn: fnType, payload?: any) {
-    const newState = fn(state, payload) 
+    const newState = fn(state, payload)
     if (JSON.stringify(state) !== JSON.stringify(newState)) {
         console.log(state)
         saveStateForUndo(state)
