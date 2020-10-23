@@ -39,7 +39,7 @@ const slide: SlideType = {
 	background: '#123123',
 }
 
-function AddImage(state: State, filepath: string): State {
+function AddImage(state: State, payload: {filepath: string}): State {
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
@@ -47,7 +47,7 @@ function AddImage(state: State, filepath: string): State {
 	const defaultImage: SlideElementType = {
 		type: 'image',
 		dataElement: {
-			src: filepath,
+			src: payload.filepath,
 		},
 		elementId: generateElementId(),
 		width: 200,
@@ -103,7 +103,7 @@ function AddTextBox(state: State): State{
 		}
 	}
 }
-function AddShape(state: State, type: ShapeTypeType): State{
+function AddShape(state: State, payload: {type: ShapeTypeType}): State{
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
@@ -111,7 +111,7 @@ function AddShape(state: State, type: ShapeTypeType): State{
 	const defaultShape: SlideElementType = {
 		type: 'shape',
 		dataElement: {
-			shapeType: type,
+			shapeType: payload.type,
 			fillColor: '#000',
 			strokeColor: '#000',
 		},
@@ -164,10 +164,10 @@ function DeleteElements(state: State): State{
 		}
 	}
 }
-function SetBackgroud(state: State, newBackground: BackgroundType): State{
+function SetBackgroud(state: State, payload: {newBackground: BackgroundType}): State{
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
-	slide.background = newBackground
+	slide.background = payload.newBackground
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,

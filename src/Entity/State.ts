@@ -19,7 +19,7 @@ const state: State = {
 
 function exportPresentation(state: State): void {}
 function savePresentation(state: State): void {}
-function uploadPresentation(filepath: string): State{
+function uploadPresentation(payload: {filepath: string}): State{
 	return state
 }
 function goToPreview(state: State): State{

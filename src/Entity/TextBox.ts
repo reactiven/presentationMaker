@@ -10,14 +10,17 @@ const textBox: TextBoxType = {
 	text: 'text',
 }
 
-function changeFont(state: State, newFont: FontType): State{
+function changeFont(state: State, payload: {
+	newFont: FontType
+}): State {
+
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
 	const dataElement = {...element.dataElement}
 	if (isTextBox(dataElement)){
-		dataElement.font = {...newFont}
+		dataElement.font = {...payload.newFont}
 	}
 	element.dataElement = dataElement
 	elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])] = element
@@ -31,14 +34,14 @@ function changeFont(state: State, newFont: FontType): State{
 		}
 	}
 }
-function updateTextBox(state: State, text: string): State {
+function updateTextBox(state: State, payload: {text: string}): State {
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
 	const dataElement = {...element.dataElement}
 	if (isTextBox(dataElement)){
-		dataElement.text = text
+		dataElement.text = payload.text
 	}
 	element.dataElement = dataElement
 	elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])] = element
