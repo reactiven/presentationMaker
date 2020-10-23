@@ -17,11 +17,11 @@ const state: State = {
 	onPreview: false,
 }
 
-function exportPresentation(state: State): void {}
-function savePresentation(state: State): void {}
-function uploadPresentation(payload: {filepath: string}): State{
-	return state
-}
+// function exportPresentation(state: State): void {}
+// function savePresentation(state: State): void {}
+// function uploadPresentation(filepath: string): State{
+// 	return state
+// }
 function goToPreview(state: State): State{
 	return {
 		...state,
@@ -48,9 +48,6 @@ function redo(): State|undefined {
 }
 
 export {
-	exportPresentation,
-	savePresentation,
-	uploadPresentation,
 	goToPreview,
 	saveStateForUndo,
 	undo,

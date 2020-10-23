@@ -1,8 +1,21 @@
-import { state } from "../Entity/State";
+import { renderApp } from "..";
+import { saveStateForUndo, stateList } from "../Entity/State";
 import { State } from "../Entity/types";
+import { initialState } from "../viewModel/initialState";
 
-type fnType<T> = (state: State, payload: T) => State
+type fnType = (state: State, payload: any) => State|undefined
 
-function dispatch<T>(fn: fnType<T>, payload: T): State {
-    return fn(state, payload)
+let state = initialState
+
+function dispatch(fn: fnType, payload?: any) {
+    const newState = fn(state, payload) 
+    console.log(state)
+    saveStateForUndo(state)
+    state = newState !== undefined ? newState : state
+    renderApp(state)
+}
+
+export {
+    dispatch,
+    state,
 }

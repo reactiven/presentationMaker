@@ -2,6 +2,7 @@ import React from 'react'
 import { renderApp } from '..';
 import { goToSlide } from '../Entity/Presentation';
 import { SlideType, State } from '../Entity/types'
+import { dispatch } from '../state/state-manager';
 import './Sidebar.css';
 
 type PropsType = {
@@ -12,10 +13,9 @@ function SideBar(props: PropsType): JSX.Element {
 
     function changeSlide(slideId: number) {
         console.log(slideId)
-        const newState = goToSlide(props.state, {
-            slideId
+        dispatch(goToSlide, {
+            slideId,
         })
-        renderApp(newState)
     }
 
     const slides = [...props.state.presentationInfo.slides]

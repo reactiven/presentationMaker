@@ -3,8 +3,13 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { initialState } from './viewModel/initialState';
 import { State } from './Entity/types';
+import { initialState } from './viewModel/initialState';
+import { dispatch } from './state/state-manager';
+
+// function renderUndo() {
+//   dispatch()
+// }
 
 function renderApp(state: State) {
   ReactDOM.render(

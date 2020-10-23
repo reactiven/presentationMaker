@@ -1,20 +1,23 @@
 import React from 'react';
-import { state } from '../Entity/State';
+import { redo, state, undo } from '../Entity/State';
 import { State } from '../Entity/types';
 import { Button } from './Button';
 import './TopPanel.css';
 import logo from '../images/logo_tcaer.png';
+import { dispatch } from '../state/state-manager';
 
 type PropsType = {
     state: State,
 }
 
 function printNewSquare(): void {
-    console.log('New square')
+    // console.log('New square')
+    dispatch(undo)
 }
 
 function printNewCircle(): void {
-    console.log('New circle')
+    // console.log('New circle')
+    dispatch(redo)
 }
 
 function printNewTriangle(): void {
