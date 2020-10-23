@@ -77,10 +77,12 @@ describe('TextBox test', () => {
 			}
 		}
 		expect(changeFont(initialState, {
-			bold: true,
-			italic: true,
-			fontSize: '2px',
-			fontStyle: 'Calibri',
+			newFont: {
+				bold: true,
+				italic: true,
+				fontSize: '2px',
+				fontStyle: 'Calibri',
+			}
 		})).toEqual(newState)
 	})
 	test('Set font for textbox', () => {
@@ -120,6 +122,8 @@ describe('TextBox test', () => {
 				]
 			}
 		}
-		expect(updateTextBox(initialState, 'text2')).toEqual(newState)
+		expect(updateTextBox(initialState, {
+			text: 'text2',
+		})).toEqual(newState)
 	})
 })

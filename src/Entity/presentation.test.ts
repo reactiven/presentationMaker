@@ -89,7 +89,9 @@ describe('move selected slides ', () => {
 			}
 		}
 
-		expect(moveSlides(initialState, 4)).toEqual(newState)
+		expect(moveSlides(initialState, {
+			newPosition: 4,
+		})).toEqual(newState)
 	})
 
 	test('move slide 1', () => {
@@ -178,7 +180,9 @@ describe('move selected slides ', () => {
 			}
 		}
 
-		expect(moveSlides(initialState, 5)).toEqual(newState)
+		expect(moveSlides(initialState, {
+			newPosition: 5,
+		})).toEqual(newState)
 	})
 
 	test('move slide 1', () => {
@@ -267,7 +271,9 @@ describe('move selected slides ', () => {
 			}
 		}
 
-		expect(moveSlides(initialState, 0)).toEqual(newState)
+		expect(moveSlides(initialState, {
+			newPosition: 0,
+		})).toEqual(newState)
 	})
 
 	test('move 2 and 4 slide to 1 position', () => {
@@ -356,7 +362,9 @@ describe('move selected slides ', () => {
 			}
 		}
 
-		expect(moveSlides(initialState, 1)).toEqual(newState)
+		expect(moveSlides(initialState, {
+			newPosition: 1,
+		})).toEqual(newState)
 	})
     
 	test('change presentation name', () => {
@@ -382,7 +390,9 @@ describe('move selected slides ', () => {
 				slides: [],
 			}
 		}
-		expect(changeName(initialState, 'new presentation name')).toEqual(newState)
+		expect(changeName(initialState, {
+			newName: 'new presentation name',
+		})).toEqual(newState)
 	})
     
 	test('delete slides', () => {
@@ -473,7 +483,7 @@ describe('move selected slides ', () => {
 			currentSlide: 2,
 			onPreview: false,
 			selectedSlideElements: [],
-			selectedSlides: [1, 2],
+			selectedSlides: [],
 			presentationInfo: {
 				name: 'presentation',
 				slidesOrder: [0, 1, 2],
@@ -499,7 +509,9 @@ describe('move selected slides ', () => {
 				],
 			}
 		}
-		expect(goToSlide(initialState, 2)).toEqual(newState)
+		expect(goToSlide(initialState, {
+			slideId: 2,
+		})).toEqual(newState)
 	})
     
 	test('get current slide info', () => {
@@ -653,7 +665,9 @@ describe('move selected slides ', () => {
 			}
 		}
         
-		expect(addSlideToSelected(initialState, 0)).toEqual(newState)
+		expect(addSlideToSelected(initialState, {
+			slideId: 0,
+		})).toEqual(newState)
 	})
 
 	test('select one slide', () => {
@@ -688,7 +702,7 @@ describe('move selected slides ', () => {
 			}
 		}
 		const newState: State = {
-			currentSlide: 1,
+			currentSlide: 0,
 			onPreview: false,
 			selectedSlideElements: [],
 			selectedSlides: [0],
@@ -717,6 +731,8 @@ describe('move selected slides ', () => {
 				],
 			}
 		}
-		expect(selectSlide(initialState, 0)).toEqual(newState)
+		expect(selectSlide(initialState, {
+			slideId: 0,
+		})).toEqual(newState)
 	})
 })

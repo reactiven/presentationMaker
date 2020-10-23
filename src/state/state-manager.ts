@@ -9,10 +9,12 @@ let state = initialState
 
 function dispatch(fn: fnType, payload?: any) {
     const newState = fn(state, payload) 
-    console.log(state)
-    saveStateForUndo(state)
-    state = newState !== undefined ? newState : state
-    renderApp(state)
+    if (JSON.stringify(state) !== JSON.stringify(newState)) {
+        console.log(state)
+        saveStateForUndo(state)
+        state = newState ? newState : state
+        renderApp(state)
+    }
 }
 
 export {

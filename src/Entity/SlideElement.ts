@@ -58,10 +58,21 @@ function addElementToSelected(state: State, payload: {elementId: number}): State
 }
 
 function selectElement(state: State, payload: {elementId: number}): State {
+	const slides = [...state.presentationInfo.slides]
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
+	const elementsOrder = [...slide.elementsOrder].filter((elementId) => elementId !== payload.elementId)
+	elementsOrder.push(payload.elementId)
 	const selectedSlideElements = [payload.elementId]
+
+	slide.elementsOrder = elementsOrder
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
 		selectedSlideElements,
+		presentationInfo: {
+			...state.presentationInfo,
+			slides,
+		}
 	}
 }
 

@@ -1,6 +1,8 @@
 import React from 'react';
 import { getCurrentSlideInfo } from '../Entity/Presentation';
+import { DeleteElements } from '../Entity/Slide';
 import { deleteElementSelection } from '../Entity/SlideElement';
+import { undo } from '../Entity/State';
 import { State } from '../Entity/types';
 import { dispatch } from '../state/state-manager';
 import { Slide } from './Slide';
@@ -19,6 +21,17 @@ function Workspace(props: PropsType) {
             dispatch(deleteElementSelection)
         }
     }
+
+    const keydownHandler = (e: KeyboardEvent): void => {
+        if (e.keyCode === 46) {
+            dispatch(DeleteElements)
+        }
+        if (e.keyCode == 90 && e.ctrlKey) {
+            dispatch(undo)
+        }
+    }
+
+    document.addEventListener('keydown', keydownHandler)
 
     return(
         <div className="workspace" onClick={onClick}>

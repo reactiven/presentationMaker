@@ -184,6 +184,8 @@ describe('slide tests', () => {
 				]
 			}
 		}
-		expect(SetBackgroud(initialState, '/src/image/1.png')).toEqual(newState)
+		expect(SetBackgroud(initialState, {
+			newBackground: '/src/image/1.png',
+		})).toEqual(newState)
 	})
 })

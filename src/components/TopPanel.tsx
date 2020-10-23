@@ -11,13 +11,11 @@ type PropsType = {
 }
 
 function printNewSquare(): void {
-    // console.log('New square')
-    dispatch(undo)
+    console.log('New square')
 }
 
 function printNewCircle(): void {
-    // console.log('New circle')
-    dispatch(redo)
+    console.log('New circle')
 }
 
 function printNewTriangle(): void {

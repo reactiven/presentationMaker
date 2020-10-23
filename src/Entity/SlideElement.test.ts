@@ -86,7 +86,11 @@ describe('SlideElements test', () => {
 				]
 			}
 		}
-		expect(moveElement(initialState, 1, 40, 70)).toEqual(newState)
+		expect(moveElement(initialState, {
+			elementId:1,
+			newX: 40,
+			newY: 70
+		})).toEqual(newState)
 	})
     
 	test('resize element', () => {
@@ -131,7 +135,10 @@ describe('SlideElements test', () => {
 				]
 			}
 		}
-		expect(resizeElement(initialState, 150, 300)).toEqual(newState)
+		expect(resizeElement(initialState, {
+			newWidth: 150,
+			newHeight: 300,
+		})).toEqual(newState)
 	})
 	test('add element to select', () => {
 		const newState: State = {
@@ -176,7 +183,9 @@ describe('SlideElements test', () => {
 			}
 		}
 
-		expect(addElementToSelected(initialState, 1)).toEqual(newState)
+		expect(addElementToSelected(initialState, {
+			elementId: 1,
+		})).toEqual(newState)
 	})
     
 
@@ -223,6 +232,8 @@ describe('SlideElements test', () => {
 			}
 		}
         
-		expect(selectElement(initialState, 1)).toEqual(newState)
+		expect(selectElement(initialState, {
+			elementId: 1,
+		})).toEqual(newState)
 	})
 })

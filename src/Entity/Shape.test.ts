@@ -68,8 +68,10 @@ describe('Shape test', () => {
 			}
 		}
 		expect(setColor(initialState, {
-			fillColor: '#123456',
-			strokeColor: '#654321',
+			newColor: {
+				fillColor: '#123456',
+				strokeColor: '#654321',
+			}
 		})).toEqual(newState)
 	})
 })
