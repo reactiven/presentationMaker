@@ -11,14 +11,14 @@ const slideElement = {
 	elementId: 1,
 }
 
-function moveElement(state: State, elementId: number, newX: number, newY: number): State {
+function moveElement(state: State, payload: {elementId: number, newX: number, newY: number}): State {
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
-	const element = {...elements[elements.findIndex(element => element.elementId === elementId)]}
-	element.xPos = newX
-	element.yPos = newY
-	elements[elements.findIndex(element => element.elementId === elementId)] = element
+	const element = {...elements[elements.findIndex(element => element.elementId === payload.elementId)]}
+	element.xPos = payload.newX
+	element.yPos = payload.newY
+	elements[elements.findIndex(element => element.elementId === payload.elementId)] = element
 	slide.elements = elements
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
@@ -29,13 +29,13 @@ function moveElement(state: State, elementId: number, newX: number, newY: number
 		}
 	}
 }
-function resizeElement(state: State, newWidth: number, newHeight: number): State {
+function resizeElement(state: State, payload:{newWidth: number, newHeight: number}): State {
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
-	element.width = newWidth
-	element.height = newHeight
+	element.width = payload.newWidth
+	element.height = payload.newHeight
 	elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])] = element
 	slide.elements = elements
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
@@ -48,17 +48,17 @@ function resizeElement(state: State, newWidth: number, newHeight: number): State
 	}
 }
 
-function addElementToSelected(state: State, elementId: number): State {
+function addElementToSelected(state: State, payload: {elementId: number}): State {
 	const selectedSlideElements = [...state.selectedSlideElements]
-	selectedSlideElements.push(elementId)
+	selectedSlideElements.push(payload.elementId)
 	return {
 		...state,
 		selectedSlideElements,
 	}
 }
 
-function selectElement(state: State, elementId: number): State {
-	const selectedSlideElements = [elementId]
+function selectElement(state: State, payload: {elementId: number}): State {
+	const selectedSlideElements = [payload.elementId]
 	return {
 		...state,
 		selectedSlideElements,

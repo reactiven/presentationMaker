@@ -6,15 +6,15 @@ const shape: ShapeType = {
 	strokeColor: '#4567',
 }
 
-function setColor(state: State, newColor: ShapeColorType): State {
+function setColor(state: State, payload: {newColor: ShapeColorType}): State {
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
 	const dataElement = {...element.dataElement}
 	if (isShape(dataElement)){
-		dataElement.fillColor = newColor.fillColor
-		dataElement.strokeColor = newColor.strokeColor
+		dataElement.fillColor = payload.newColor.fillColor
+		dataElement.strokeColor = payload.newColor.strokeColor
 	}
 	element.dataElement = dataElement
 	let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0]) 

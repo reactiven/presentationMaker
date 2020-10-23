@@ -9,52 +9,52 @@
 }
 
 .element_selected {
-    border: 2px solid blue;
+    border: 1px solid #2a9df4;
 }
 
 .resize-handle {
     position: absolute;
-    width: 10px;
-    height: 10px;
-    background-color: blue;
+    width: 8px;
+    height: 8px;
+    background-color: #2a9df4;
 }
 
 .resize-handle-tl {
-    top: -5px;
+    top: -4px;
     left: -5px;
 }
 
 .resize-handle-tr {
-    top: -5px;
-    right: -5px;
+    top: -4px;
+    right: -4px;
 }
 
 .resize-handle-bl {
-    bottom: -5px;
+    bottom: -4px;
     left: -5px;
 }
 .resize-handle-br {
-    bottom: -5px;
-    right: -5px;
+    bottom: -4px;
+    right: -4px;
 }
 
 .resize-handle-ts {
-    top: -5px;
-    left: calc(50% - 5px);
+    top: -4px;
+    left: calc(50% - 4px);
 }
 
 .resize-handle-rs {
-    right: -5px;
-    top: calc(50% - 5px);
+    right: -4px;
+    top: calc(50% - 4px);
 }
 
 .resize-handle-bs {
-    bottom: -5px;
-    left: calc(50% - 5px);
+    bottom: -4px;
+    left: calc(50% - 4px);
 }
 
 .resize-handle-ls {
-    top: calc(50% - 5px);
+    top: calc(50% - 4px);
     left: -5px;
 }
 
