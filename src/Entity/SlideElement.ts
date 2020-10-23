@@ -65,6 +65,13 @@ function selectElement(state: State, payload: {elementId: number}): State {
 	}
 }
 
+function deleteElementSelection(state: State): State {
+	return {
+		...state,
+		selectedSlideElements: [],
+	}
+}
+
 function generateElementId(): number {
 	return (Math.random() * 10)
 }
@@ -74,6 +81,7 @@ export {
 	selectElement,
 	addElementToSelected,
 	resizeElement,
+	deleteElementSelection,
 	moveElement,
 	generateElementId,
 }

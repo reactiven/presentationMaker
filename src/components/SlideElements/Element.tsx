@@ -7,6 +7,8 @@ import './Element.css';
 import { isImage } from '../../Entity/Image';
 import { isShape } from '../../Entity/Shape';
 import { isTextBox } from '../../Entity/TextBox';
+import { dispatch } from '../../state/state-manager';
+import { addElementToSelected, selectElement } from '../../Entity/SlideElement';
 
 type ElementPropsType = {
     element: SlideElementType,
@@ -23,8 +25,24 @@ function SlideElement(props: ElementPropsType) {
     }
     const className = `element ${props.isSelected ? 'element_selected' : ''}`
 
+    function onClick(event: any) {
+        event.preventDefault()
+        if (event.ctrlKey)
+        {
+            dispatch(addElementToSelected, {
+                elementId: element.elementId
+            })
+        }
+        else
+        {
+            dispatch(selectElement, {
+                elementId: element.elementId
+            })
+        }
+    }
+
     return(
-        <div style={style} className={className}>
+        <div style={style} className={className} onClick={onClick}>
             {props.isSelected && resizeHandlers()} 
             {renderElement(element, style)}
         </div>

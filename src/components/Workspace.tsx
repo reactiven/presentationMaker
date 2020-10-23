@@ -1,6 +1,8 @@
 import React from 'react';
 import { getCurrentSlideInfo } from '../Entity/Presentation';
+import { deleteElementSelection } from '../Entity/SlideElement';
 import { State } from '../Entity/types';
+import { dispatch } from '../state/state-manager';
 import { Slide } from './Slide';
 import './WorkSpace.css';
 
@@ -10,8 +12,16 @@ type PropsType = {
 
 function Workspace(props: PropsType) {
     const slideInfo = getCurrentSlideInfo(props.state)
+
+    function onClick(event: any) {
+        if (!event.defaultPrevented)
+        {
+            dispatch(deleteElementSelection)
+        }
+    }
+
     return(
-        <div className="workspace">
+        <div className="workspace" onClick={onClick}>
             {slideInfo && <Slide 
                 slideInfo={slideInfo}
                 selectedElements={props.state.selectedSlideElements}
