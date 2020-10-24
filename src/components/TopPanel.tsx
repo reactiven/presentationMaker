@@ -6,25 +6,33 @@ import './TopPanel.css';
 import logo from '../images/logo_tcaer.png';
 import { dispatch } from '../state/state-manager';
 import { changeName } from '../Entity/Presentation';
+import { AddShape, AddTextBox } from '../Entity/Slide';
+import { ToolPanel } from './ToolPanel';
 
 type PropsType = {
     state: State,
 }
 
 function printNewSquare(): void {
-    console.log('New square')
+    dispatch(AddShape, {
+        type: 'rect',
+    })
 }
 
 function printNewCircle(): void {
-    console.log('New circle')
+    dispatch(AddShape, {
+        type: 'circle',
+    })
 }
 
 function printNewTriangle(): void {
-    console.log('New triangle')
+    dispatch(AddShape, {
+        type: 'triangle',
+    })
 }
 
 function printNewTextBox(): void {
-    console.log('New textBox')
+    dispatch(AddTextBox)
 }
 
 
@@ -43,7 +51,7 @@ function TopPanel(props: PropsType) {
     return(
         <div className="top-panel">
             <div className='header-panel'>
-                <img src={logo} className='logo'/>
+                <img src={logo} className='logo' alt='logo'/>
                 <div className='tool-bar'>
                     <input type="text" defaultValue={state.presentationInfo.name} onBlur={onBlur} className='presentation-title'/>
                     <div className="second-row">
@@ -70,6 +78,7 @@ function TopPanel(props: PropsType) {
                     </div>
                 </div>
             </div>
+            <ToolPanel />
         </div>
     )
 }

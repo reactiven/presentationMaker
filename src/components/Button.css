@@ -1,8 +1,10 @@
 .standard-button {
-    width: 75px;
     height: 25px;
+    padding: 2px 8px;
     background: none;
     border-radius: 5px;
+    display: flex;
+    align-items: center;
     border: 1px solid #000;
     transition: all 0.2s ease;
 }
@@ -25,5 +27,11 @@
 .standard-button:focus {
     border-radius: 5px;
     outline: none;
-    border: 3px solid #87CEFA;
+    border: 1px solid transparent;
+    box-shadow: 0 0 0 2px #87CEFA;
+}
+
+.button-image {
+    height: 100%;
+    width: auto;
 }

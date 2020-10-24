@@ -74,11 +74,11 @@ function AddTextBox(state: State): State{
 	const elements = [...slide.elements]
 	const elementsOrder = [...slide.elementsOrder]
 	const defaultTextBox: SlideElementType = {
-		type: 'image',
+		type: 'textBox',
 		dataElement: {
 			font: {
 				fontStyle: 'Times New Roman',
-				fontSize: '2px',
+				fontSize: '20px',
 				bold: false,
 				italic: false,
 			},

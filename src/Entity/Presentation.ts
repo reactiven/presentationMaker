@@ -29,9 +29,10 @@ function addSlide(state: State): State{
 		background: '#fff',
 	}
 	const slides = [...state.presentationInfo.slides]
-	slides.push(defaultSlide)
+	slides.splice(state.currentSlide + 1, 0, defaultSlide)
 	const slidesOrder: Array<number> = [...state.presentationInfo.slidesOrder]
-	slidesOrder.push(defaultSlide.slideId)
+	const insertPosition = slidesOrder.findIndex(slideId => slideId === state.currentSlide)
+	slidesOrder.splice(insertPosition + 1, 0, defaultSlide.slideId)
 
 	return {
 		...state,
