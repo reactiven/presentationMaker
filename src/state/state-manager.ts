@@ -1,5 +1,5 @@
 import { renderApp } from "..";
-import { saveStateForUndo, stateList } from "../Entity/State";
+import { saveStateForUndo, stateList, undo } from "../Entity/State";
 import { State } from "../Entity/types";
 import { initialState } from "../viewModel/initialState";
 
@@ -9,12 +9,13 @@ let state = initialState
 
 function dispatch(fn: fnType, payload?: any) {
     const newState = fn(state, payload)
-    if (JSON.stringify(state) !== JSON.stringify(newState)) {
-        console.log(state)
-        saveStateForUndo(state)
-        state = newState ? newState : state
-        renderApp(state)
+	console.log(stateList)
+    if (fn !== undo) {
+        saveStateForUndo(state) 
     }
+    state = newState ? newState : state
+    console.log(state)
+    renderApp(state)
 }
 
 export {

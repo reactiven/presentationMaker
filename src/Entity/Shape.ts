@@ -1,11 +1,5 @@
 import { ShapeType, ShapeColorType, State } from './types'
 
-const shape: ShapeType = {
-	shapeType: 'circle',
-	fillColor: '#123',
-	strokeColor: '#4567',
-}
-
 function setColor(state: State, payload: {newColor: ShapeColorType}): State {
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
@@ -38,7 +32,6 @@ function isShape(dataElement: any): dataElement is ShapeType {
 }
 
 export {
-	shape,
 	setColor,
 	isShape,
 }

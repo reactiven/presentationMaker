@@ -1,13 +1,4 @@
-import { slide } from './Slide'
-import { SlideType, PresentationType, State } from './types'
-
-const presentation: PresentationType = {
-	name: 'Презентация 1',
-	slides: [
-		slide,
-	],
-	slidesOrder: [1],
-}
+import { SlideType, State } from './types'
 
 function changeName(state: State, payload: {
 	newName: string,
@@ -156,7 +147,6 @@ function generateSlideId(): number {
 }
 
 export {
-	presentation,
 	changeName,
 	addSlideToSelected,
 	selectSlide,

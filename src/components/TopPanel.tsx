@@ -1,5 +1,5 @@
 import React from 'react';
-import { redo, state, undo } from '../Entity/State';
+import { redo, undo } from '../Entity/State';
 import { State } from '../Entity/types';
 import { Button } from './Button';
 import './TopPanel.css';
@@ -53,7 +53,7 @@ function TopPanel(props: PropsType) {
             <div className='header-panel'>
                 <img src={logo} className='logo' alt='logo'/>
                 <div className='tool-bar'>
-                    <input type="text" defaultValue={state.presentationInfo.name} onBlur={onBlur} className='presentation-title'/>
+                    <input type="text" defaultValue={props.state.presentationInfo.name} onBlur={onBlur} className='presentation-title'/>
                     <div className="second-row">
                         <Button 
                             onClick={printNewImage}

@@ -1,43 +1,5 @@
-import { image } from './Image'
-import { shape } from './Shape'
 import { generateElementId } from './SlideElement'
-import { textBox } from './TextBox'
-import { BackgroundType, SlideType, State, SlideElementType, ShapeTypeType } from './types'
-
-const slide: SlideType = {
-	elements: [
-		{
-			type: 'image',
-			dataElement: image,
-			width: 1000,
-			height: 1000,
-			xPos: 200,
-			yPos: 300,
-			elementId: 0,
-		},
-		{
-			type: 'textBox',
-			dataElement: textBox,
-			width: 1000,
-			height: 1000,
-			xPos: 200,
-			yPos: 300,
-			elementId: 1,
-		},
-		{
-			type: 'shape',
-			dataElement: shape,
-			width: 1000,
-			height: 1000,
-			xPos: 200,
-			yPos: 300,
-			elementId: 2,
-		},
-	],
-	elementsOrder: [0, 1, 2],
-	slideId: 0,
-	background: '#123123',
-}
+import { BackgroundType, State, SlideElementType, ShapeTypeType } from './types'
 
 function AddImage(state: State, payload: {filepath: string}): State {
 	const slides = [...state.presentationInfo.slides]
@@ -179,7 +141,6 @@ function SetBackgroud(state: State, payload: {newBackground: BackgroundType}): S
 }
 
 export {
-	slide,
 	AddImage,
 	AddTextBox,
 	AddShape,

@@ -1,20 +1,10 @@
-import { presentation } from './Presentation'
+import { state } from '../state/state-manager'
 import { State, StateList } from './types'
 
 // Не уверен что так мы будем задавать массивы, тут вопросик
 const stateList: StateList = {
 	undoStateList: [],
 	redoStateList: [],
-}
-
-const state: State = {
-	selectedSlides: [
-		1,
-	],
-	selectedSlideElements: [1, 2],
-	currentSlide: 1,
-	presentationInfo: presentation,
-	onPreview: false,
 }
 
 // function exportPresentation(state: State): void {}
@@ -38,10 +28,11 @@ function undo(): State|undefined {
 	const newState = stateList.undoStateList.pop()
 	if (newState)
 	{
-		stateList.redoStateList.push(newState)
+		stateList.redoStateList.push(state)
 	}
 	return newState
 }
+
 function redo(): State|undefined {
 	const newState = stateList.redoStateList.pop()
 	return newState
@@ -53,5 +44,4 @@ export {
 	undo,
 	redo,
 	stateList,
-	state,
 }

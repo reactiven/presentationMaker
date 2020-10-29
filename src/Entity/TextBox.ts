@@ -1,15 +1,5 @@
 import { FontType, State, TextBoxType } from './types'
 
-const textBox: TextBoxType = {
-	font: {
-		fontStyle: 'Times New Roman',
-		fontSize: '2px',
-		bold: true,
-		italic: true,
-	},
-	text: 'text',
-}
-
 function changeFont(state: State, payload: {
 	newFont: FontType
 }): State {
@@ -61,7 +51,6 @@ function isTextBox(dataElement: any): dataElement is TextBoxType {
 }
 
 export {
-	textBox,
 	changeFont,
 	updateTextBox,
 	isTextBox,
