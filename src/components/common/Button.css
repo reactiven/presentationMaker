@@ -5,8 +5,15 @@
     border-radius: 5px;
     display: flex;
     align-items: center;
-    border: 1px solid #000;
     transition: all 0.2s ease;
+}
+
+.standard-button_normal {
+    border: 1px solid #000;
+}
+
+.standard-button_border-none {
+    border: 1px solid transparent;
 }
 
 .standard-button:disabled {
@@ -16,7 +23,7 @@
 
 .standard-button:hover:not(:disabled),
 .standard-button:hover:not(:focus) {
-    background: #dcdcdc;
+    background: #F2F2F2;
     cursor: pointer;
 }
 

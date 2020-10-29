@@ -1,7 +1,7 @@
 import React from 'react';
-import { SlideElementType, SlideType } from "../Entity/types";
+import { SlideElementType, SlideType } from "../../Entity/types";
 import './Slide.css';
-import { SlideElement } from './SlideElements/Element';
+import { SlideElement } from '../SlideElements/Element';
 
 type PropsType = {
     slideInfo: SlideType,

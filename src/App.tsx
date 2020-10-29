@@ -1,9 +1,10 @@
 import React from 'react';
 import './App.css';
-import { Workspace } from './components/Workspace';
-import { SideBar } from './components/Sidebar';
+import { SideBar } from './components/sidebar/Sidebar';
+import { TopPanel } from './components/topPanel/TopPanel';
+import { Workspace } from './components/workspace/Workspace';
 import { State } from './Entity/types';
-import { TopPanel } from './components/TopPanel';
+
 
 type PropsType = {
   state: State

@@ -1,13 +1,12 @@
 import React from 'react';
-import { redo, undo } from '../Entity/State';
-import { State } from '../Entity/types';
-import { Button } from './Button';
+import { Button } from '../common/Button';
 import './TopPanel.css';
-import logo from '../images/logo_tcaer.png';
-import { dispatch } from '../state/state-manager';
-import { changeName } from '../Entity/Presentation';
-import { AddShape, AddTextBox } from '../Entity/Slide';
+import logo from '../../images/logo_tcaer.png';
+import { dispatch } from '../../state/state-manager';
+import { changeName } from '../../Entity/Presentation';
+import { AddShape, AddTextBox } from '../../Entity/Slide';
 import { ToolPanel } from './ToolPanel';
+import { State } from '../../Entity/types';
 
 type PropsType = {
     state: State,
@@ -56,22 +55,27 @@ function TopPanel(props: PropsType) {
                     <input type="text" defaultValue={props.state.presentationInfo.name} onBlur={onBlur} className='presentation-title'/>
                     <div className="second-row">
                         <Button 
+                            type={'normal'}
                             onClick={printNewImage}
                             label={'Image'}
                         />
                         <Button 
+                            type={'normal'}
                             onClick={printNewTextBox}
                             label={'TextBox'}
                         />
                         <Button 
+                            type={'normal'}
                             onClick={printNewSquare}
                             label={'Square'}
                         />
                         <Button 
+                            type={'normal'}
                             onClick={printNewCircle}
                             label={'Circle'}
                         />
                         <Button 
+                            type={'normal'}
                             onClick={printNewTriangle}
                             label={'Triangle'}
                         />

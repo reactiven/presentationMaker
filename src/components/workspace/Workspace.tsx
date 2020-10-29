@@ -1,10 +1,10 @@
 import React, { useEffect } from 'react';
-import { getCurrentSlideInfo } from '../Entity/Presentation';
-import { DeleteElements } from '../Entity/Slide';
-import { deleteElementSelection } from '../Entity/SlideElement';
-import { redo, undo } from '../Entity/State';
-import { State } from '../Entity/types';
-import { dispatch } from '../state/state-manager';
+import { getCurrentSlideInfo } from '../../Entity/Presentation';
+import { DeleteElements } from '../../Entity/Slide';
+import { deleteElementSelection } from '../../Entity/SlideElement';
+import { redo, undo } from '../../Entity/State';
+import { State } from '../../Entity/types';
+import { dispatch } from '../../state/state-manager';
 import { Slide } from './Slide';
 import './WorkSpace.css';
 

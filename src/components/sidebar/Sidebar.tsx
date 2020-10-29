@@ -1,8 +1,7 @@
 import React from 'react'
-import { renderApp } from '..';
-import { goToSlide } from '../Entity/Presentation';
-import { SlideType, State } from '../Entity/types'
-import { dispatch } from '../state/state-manager';
+import { goToSlide } from '../../Entity/Presentation';
+import { SlideType, State } from '../../Entity/types'
+import { dispatch } from '../../state/state-manager';
 import './Sidebar.css';
 
 type PropsType = {
