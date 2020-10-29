@@ -1,7 +1,7 @@
 import React from 'react'
 import { goToSlide } from '../../Entity/Presentation';
 import { SlideType, State } from '../../Entity/types'
-import { dispatch } from '../../state/state-manager';
+import { dispatch, state } from '../../state/state-manager';
 import './Sidebar.css';
 
 type PropsType = {
@@ -26,6 +26,7 @@ function SideBar(props: PropsType): JSX.Element {
             return <SideBarItem 
                 key={slideId}
                 slide={slide}
+                isSelected={state.currentSlide == slideId}
                 index={index} 
                 changeSlide={changeSlide}
             />
@@ -43,12 +44,16 @@ type SidebarItemType = {
     slide: SlideType,
     index: number,
     changeSlide: (slideId: number) => void, 
+    isSelected: boolean,
 }
 
 function SideBarItem(props: SidebarItemType): JSX.Element {
+    const className = props.isSelected
+        ? 'sidebar-item sidebar-item_selected'
+        : 'sidebar-item'
     return (
         <div
-            className="sidebar-item"
+            className={className}
             onClick={() => {
                 props.changeSlide(props.slide.slideId)
             }}
