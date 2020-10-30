@@ -56,6 +56,7 @@ function TopPanel(props: PropsType) {
 
     let fileURL = download()
 
+
     return(
         <div className="top-panel">
             <div className='header-panel'>
@@ -88,7 +89,7 @@ function TopPanel(props: PropsType) {
                             onClick={printNewTriangle}
                             label={'Triangle'}
                         />
-                        <a href={fileURL} download>Download!</a>
+                        <a href={fileURL} download="presentationName.json">Download!</a>
                     </div>
                 </div>
             </div>
