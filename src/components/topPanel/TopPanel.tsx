@@ -2,11 +2,12 @@ import React from 'react';
 import { Button } from '../common/Button';
 import './TopPanel.css';
 import logo from '../../images/logo_tcaer.png';
-import { dispatch } from '../../state/state-manager';
+import { dispatch, state } from '../../state/state-manager';
 import { changeName } from '../../Entity/Presentation';
 import { AddShape, AddTextBox } from '../../Entity/Slide';
 import { ToolPanel } from './ToolPanel';
 import { State } from '../../Entity/types';
+import { savePresentation } from '../../Entity/State';
 
 type PropsType = {
     state: State,
@@ -39,13 +40,21 @@ function printNewImage(): void {
     console.log('New image')
 }
 
+
+
 function TopPanel(props: PropsType) {
+
+    function download(): string {
+        return savePresentation(state)
+    }
 
     function onBlur(event: any) {
         dispatch(changeName, {
             newName: event.currentTarget.value,
         })
     }
+
+    let fileURL = download()
 
     return(
         <div className="top-panel">
@@ -79,6 +88,7 @@ function TopPanel(props: PropsType) {
                             onClick={printNewTriangle}
                             label={'Triangle'}
                         />
+                        <a href={fileURL} download>Download!</a>
                     </div>
                 </div>
             </div>

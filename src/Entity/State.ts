@@ -8,7 +8,16 @@ const stateList: StateList = {
 }
 
 // function exportPresentation(state: State): void {}
-// function savePresentation(state: State): void {}
+function savePresentation(state: State): string {
+	const file = new Blob(
+		[JSON.stringify(state)],
+		{ type: 'application/json'}
+	)
+	
+	const fileURL = URL.createObjectURL(file)
+
+	return fileURL	
+}
 // function uploadPresentation(filepath: string): State{
 // 	return state
 // }
@@ -19,7 +28,6 @@ function goToPreview(state: State): State{
 	}
 }
 
-// Вызывать эту функцию в конце всех функций, которые изменяют состояние
 function saveStateForUndo(state: State): void {
 	stateList.undoStateList.push(state)
 }
@@ -39,6 +47,7 @@ function redo(): State|undefined {
 }
 
 export {
+	savePresentation,
 	goToPreview,
 	saveStateForUndo,
 	undo,
