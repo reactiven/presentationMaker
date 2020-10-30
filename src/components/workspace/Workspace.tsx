@@ -23,11 +23,11 @@ function Workspace(props: PropsType) {
     }
 
     useEffect(() => {
-    document.addEventListener("keydown", keydownHandler);
-    return () => {
-        document.removeEventListener("keydown", keydownHandler);
+        document.addEventListener("keydown", keydownHandler);
+        return () => {
+            document.removeEventListener("keydown", keydownHandler);
         }
-      })
+    })
     
     const keydownHandler = (e: KeyboardEvent): void => {
         if (e.keyCode === 46) {

@@ -29,8 +29,8 @@ type SlideElementType = {
   dataElement: (TextBoxType|ImageType|ShapeType),
   width: number,
   height: number,
-  xPos: number,
-  yPos: number,
+  xPos: number | null,
+  yPos: number | null,
   elementId: number,
 }
 

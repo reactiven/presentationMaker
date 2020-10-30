@@ -14,8 +14,8 @@ function AddImage(state: State, payload: {filepath: string}): State {
 		elementId: generateElementId(),
 		width: 200,
 		height: 200,
-		xPos: 400,
-		yPos: 400,
+		xPos: null,
+		yPos: null,
 	}
 	elements.push(defaultImage)
 	elementsOrder.push(defaultImage.elementId)
@@ -49,8 +49,8 @@ function AddTextBox(state: State): State{
 		elementId: generateElementId(),
 		width: 200,
 		height: 200,
-		xPos: 400,
-		yPos: 400,
+		xPos: null,
+		yPos: null,
 	}
 	elements.push(defaultTextBox)
 	elementsOrder.push(defaultTextBox.elementId)
@@ -80,8 +80,8 @@ function AddShape(state: State, payload: {type: ShapeTypeType}): State{
 		elementId: elements.length,
 		width: 200,
 		height: 200,
-		xPos: 400,
-		yPos: 400,
+		xPos: null,
+		yPos: null,
 	}
 	elements.push(defaultShape)
 	elementsOrder.push(defaultShape.elementId)

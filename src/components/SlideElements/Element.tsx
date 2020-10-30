@@ -18,8 +18,8 @@ type ElementPropsType = {
 function SlideElement(props: ElementPropsType) {
     const element = {...props.element}
     const style = {
-        top: element.yPos,
-        left: element.xPos,
+        top: element.yPos ? element.yPos : 215 - element.height / 2,
+        left: element.xPos ? element.xPos : 380 - element.width / 2,
         height: element.height,
         width: element.width,
     }

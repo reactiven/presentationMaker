@@ -36,7 +36,7 @@ function renderElements(elements: Array<SlideElementType>, elementsOrder: Array<
             />
         }
         return null
-    });
+    })
     return elementsList
 }
 
