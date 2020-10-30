@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { ChangeEvent } from 'react';
 import { Button } from '../common/Button';
 import './TopPanel.css';
 import logo from '../../images/logo_tcaer.png';
@@ -54,6 +54,11 @@ function TopPanel(props: PropsType) {
         })
     }
 
+    function onChangeHandler(e: any) {
+        console.log(e.target.files[0])
+
+    } 
+
     let fileURL = download()
     let fileName = `${props.state.presentationInfo.name}.json`
 
@@ -91,6 +96,7 @@ function TopPanel(props: PropsType) {
                             label={'Triangle'}
                         />
                         <a href={fileURL} download={fileName}>Download!</a>
+                        <input type='file' name='file' onChange={onChangeHandler}/>
                     </div>
                 </div>
             </div>

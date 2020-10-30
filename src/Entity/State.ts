@@ -1,5 +1,6 @@
 import { state } from '../state/state-manager'
 import { State, StateList } from './types'
+import html2canvas from 'html2canvas';
 
 // Не уверен что так мы будем задавать массивы, тут вопросик
 const stateList: StateList = {
@@ -7,7 +8,10 @@ const stateList: StateList = {
 	redoStateList: [],
 }
 
-// function exportPresentation(state: State): void {}
+function exportPresentation(state: State): void {
+	
+}
+
 function savePresentation(state: State): string {
 	const file = new Blob(
 		[JSON.stringify(state)],
