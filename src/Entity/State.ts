@@ -30,12 +30,12 @@ function goToPreview(state: State): State{
 
 function saveStateForUndo(state: State): void {
 	stateList.undoStateList.push(state)
+
 }
 
 function undo(): State|undefined {
 	const newState = stateList.undoStateList.pop()
-	if (newState)
-	{
+	if (newState) {
 		stateList.redoStateList.push(state)
 	}
 	return newState
@@ -43,6 +43,9 @@ function undo(): State|undefined {
 
 function redo(): State|undefined {
 	const newState = stateList.redoStateList.pop()
+	if (newState) {
+		saveStateForUndo(newState)
+	}
 	return newState
 }
 
