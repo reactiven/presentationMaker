@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './App.css';
 import { SideBar } from './components/sidebar/Sidebar';
 import { TopPanel } from './components/topPanel/TopPanel';
@@ -11,6 +11,11 @@ type PropsType = {
 }
 
 function App(props: PropsType): JSX.Element {
+
+  useEffect(() => {
+      document.title = props.state.presentationInfo.name
+  }, [props.state])
+
   return (
     <div className="app-layout">
       <TopPanel
