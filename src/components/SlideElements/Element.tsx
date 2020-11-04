@@ -7,9 +7,7 @@ import './Element.css';
 import { isImage } from '../../Entity/Image';
 import { isShape } from '../../Entity/Shape';
 import { isTextBox } from '../../Entity/TextBox';
-import { dispatch } from '../../state/state-manager';
-import {addElementToSelected, moveElement, selectElement} from '../../Entity/SlideElement';
-import {getParentRelativePointerСoordinates } from '../../viewModel/getRelativePointerCoordinates';
+import {useElementsDragNDrop} from "../../viewModel/useDragNDrop";
 
 type ElementPropsType = {
     element: SlideElementType,
@@ -19,69 +17,18 @@ type ElementPropsType = {
 
 function SlideElement(props: ElementPropsType) {
     const element = {...props.element}
-    const [left, setLeft] = useState(element.xPos)
-    const [top, setTop] = useState(element.yPos)
-    // const [topOffset, setTopOffset] = useState(0)
 
     const elementRef = useRef<HTMLDivElement>(null)
 
-    function mouseUp(event: MouseEvent) {
-        document.removeEventListener('mousemove', mouseMove);
-        document.removeEventListener('mouseup', mouseUp);
-        const slide = elementRef && elementRef.current && elementRef.current.parentElement
-        const [cursorX, cursorY] = getParentRelativePointerСoordinates(event, slide);
-        dispatch(moveElement, {
-            elementId: element.elementId,
-            newX: cursorX - element.width / 2,
-            newY: cursorY - element.height / 2,
-        })
-        setLeft(null)
-        setTop(null)
-    }
-
-    function mouseMove(event: MouseEvent) {
-        const slide = elementRef && elementRef.current && elementRef.current.parentElement
-        const [cursorX, cursorY] = getParentRelativePointerСoordinates(event, slide);
-        setLeft(cursorX - element.width / 2)
-        setTop(cursorY - element.height / 2)
-    }
-
-    function mouseDown(event: MouseEvent) {
-        event.preventDefault();
-        if (event.ctrlKey)
-        {
-            dispatch(addElementToSelected, {
-                elementId: element.elementId
-            })
-        }
-        else
-        {
-            dispatch(selectElement, {
-                elementId: element.elementId
-            })
-            debugger
-            const [cursorX, cursorY] = getParentRelativePointerСoordinates(event, elementRef.current);
-            document.addEventListener('mousemove', mouseMove);
-            document.addEventListener('mouseup', mouseUp);
-        }
-
-    }
-
-    useEffect(() => {
-        const element = elementRef.current
-        element && element.addEventListener('mousedown', mouseDown)
-        return () => {
-            element && element.removeEventListener('mousedown', mouseDown)
-        }
-    }, [elementRef])
+    const [left, top] = useElementsDragNDrop(element, elementRef)
 
     const style = {
-        top: top
+        top: top !== null
             ? top
             : element.yPos
                 ? element.yPos
                 : 0,
-        left: left
+        left: left !== null
             ? left
             : element.xPos
                 ? element.xPos
