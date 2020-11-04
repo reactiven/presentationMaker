@@ -25,14 +25,10 @@ function SlideElement(props: ElementPropsType) {
     const style = {
         top: top !== null
             ? top
-            : element.yPos
-                ? element.yPos
-                : 0,
+            : 215 - element.height / 2,
         left: left !== null
             ? left
-            : element.xPos
-                ? element.xPos
-                : 0,
+            : 380 - element.width / 2,
         height: element.height,
         width: element.width,
     }
