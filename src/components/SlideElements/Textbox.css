@@ -3,6 +3,8 @@
     height: 100%;
     box-sizing: border-box;
     padding: 5px;
+    resize: none;
+    border: none;
 }
 
 .textBox-block:focus {

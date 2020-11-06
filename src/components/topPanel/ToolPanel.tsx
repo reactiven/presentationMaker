@@ -6,13 +6,18 @@ import arrowLeft from '../../images/undo.png';
 import arrowRight from '../../images/redo.png';
 import fill from '../../images/fill.png';
 import stroke from '../../images/stroke.png';
+import word from '../../images/word.png';
+import bold from '../../images/bold.png';
+import italic from '../../images/italic.png';
+import underline from '../../images/underline.png';
 import { dispatch } from '../../state/state-manager';
 import { addSlide } from '../../Entity/Presentation';
 import { redo, undo } from '../../Entity/State';
 import { Button_WithColorPicker } from '../common/Button_WithColorPicker';
 import {State} from "../../Entity/types";
-import {isShape} from "../../Entity/Shape";
 import {setBackgroundColor, setStrokeColor} from "../../Entity/SlideElement";
+import {changeFont, isTextBox} from "../../Entity/TextBox";
+import { Button_TwoState } from '../common/Button_TwoState';
 
 type PropsType = {
     state: State,
@@ -36,6 +41,10 @@ function ToolPanel(props: PropsType) {
         ? String(selectedElement.borderColor)
         : ''
 
+    const fontColorPicker = selectedElement && isTextBox(selectedElement.dataElement)
+        ? String(selectedElement.dataElement.font.fontColor)
+        : ''
+
     function changeBgColor(value: string) {
         debugger
         dispatch(setBackgroundColor, {
@@ -47,6 +56,58 @@ function ToolPanel(props: PropsType) {
         dispatch(setStrokeColor, {
             newColor: value,
         })
+    }
+
+    function changeFontColor(value: string) {
+        if (selectedElement && isTextBox(selectedElement.dataElement))
+        {
+            debugger
+            dispatch(changeFont, {
+                newFont: {
+                    ...selectedElement.dataElement.font,
+                    fontColor: value,
+                }
+            })
+        }
+    }
+
+    function changeFontBold(value: boolean) {
+        if (selectedElement && isTextBox(selectedElement.dataElement))
+        {
+            debugger
+            dispatch(changeFont, {
+                newFont: {
+                    ...selectedElement.dataElement.font,
+                    bold: value,
+                }
+            })
+        }
+    }
+
+    function changeFontItalic(value: boolean) {
+        if (selectedElement && isTextBox(selectedElement.dataElement))
+        {
+            debugger
+            dispatch(changeFont, {
+                newFont: {
+                    ...selectedElement.dataElement.font,
+                    italic: value,
+                }
+            })
+        }
+    }
+
+    function changeFontUnderline(value: boolean) {
+        if (selectedElement && isTextBox(selectedElement.dataElement))
+        {
+            debugger
+            dispatch(changeFont, {
+                newFont: {
+                    ...selectedElement.dataElement.font,
+                    underline: value,
+                }
+            })
+        }
     }
 
     return(
@@ -76,6 +137,35 @@ function ToolPanel(props: PropsType) {
                 onChange={changeStrokeColor}
                 value={strokeColorPicker}
             />}
+            {selectedElement !== null && isTextBox(selectedElement.dataElement)
+                && <Button_WithColorPicker
+                    img={word}
+                    onChange={changeFontColor}
+                    value={fontColorPicker}
+                />
+            }
+            {selectedElement !== null && isTextBox(selectedElement.dataElement)
+                && <Button_TwoState
+                    img={bold}
+                    onClick={changeFontBold}
+                    checked={selectedElement.dataElement.font.bold}
+                />
+            }
+            {selectedElement !== null && isTextBox(selectedElement.dataElement)
+                && <Button_TwoState
+                    img={italic}
+                    onClick={changeFontItalic}
+                    checked={selectedElement.dataElement.font.italic}
+                />
+            }
+            {selectedElement !== null && isTextBox(selectedElement.dataElement)
+            && <Button_TwoState
+                img={underline}
+                onClick={changeFontUnderline}
+                checked={selectedElement.dataElement.font.underline}
+            />
+            }
+
         </div>
     )
 }

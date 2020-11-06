@@ -1,7 +1,6 @@
 
 .element {
     position: absolute;
-    border: 1px solid transparent;
 }
 
 .element:focus {
@@ -9,7 +8,7 @@
 }
 
 .element_selected {
-    border: 1px solid #2a9df4;
+    outline: 2px solid #2a9df4;
 }
 
 .resize-handle {
@@ -20,42 +19,42 @@
 }
 
 .resize-handle-tl {
-    top: -4px;
-    left: -5px;
+    top: -6px;
+    left: -6px;
 }
 
 .resize-handle-tr {
-    top: -4px;
-    right: -4px;
+    top: -6px;
+    right: -6px;
 }
 
 .resize-handle-bl {
-    bottom: -4px;
-    left: -5px;
+    bottom: -6px;
+    left: -6px;
 }
 .resize-handle-br {
-    bottom: -4px;
-    right: -4px;
+    bottom: -6px;
+    right: -6px;
 }
 
 .resize-handle-ts {
-    top: -4px;
-    left: calc(50% - 4px);
+    top: -6px;
+    left: calc(50% - 6px);
 }
 
 .resize-handle-rs {
-    right: -4px;
-    top: calc(50% - 4px);
+    right: -6px;
+    top: calc(50% - 6px);
 }
 
 .resize-handle-bs {
-    bottom: -4px;
-    left: calc(50% - 4px);
+    bottom: -6px;
+    left: calc(50% - 6px);
 }
 
 .resize-handle-ls {
-    top: calc(50% - 4px);
-    left: -5px;
+    top: calc(50% - 6px);
+    left: -6px;
 }
 
 .resize-handle-tl:hover,

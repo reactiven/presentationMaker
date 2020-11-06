@@ -8,6 +8,7 @@ input[type="color" i]::-webkit-color-swatch-wrapper {
     max-height: 40px;
     align-items: center;
     justify-content: center;
+    padding: 0 6px;
 }
 
 .color-picker-image {

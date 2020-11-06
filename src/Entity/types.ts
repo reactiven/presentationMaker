@@ -1,7 +1,7 @@
 type State = {
   selectedSlides: Array<number>,
   selectedSlideElements: Array<number>,
-  currentSlide: number,
+  currentSlide: number|null,
   presentationInfo: PresentationType,
   onPreview: boolean,
 }
@@ -63,8 +63,10 @@ type BackgroundType = (string)
 type FontType = {
   fontStyle: string,
   fontSize: string,
+  fontColor: string,
   bold: boolean,
   italic: boolean,
+  underline: boolean,
 }
 type ShapeColorType = {
   fillColor: string,

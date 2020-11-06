@@ -1,0 +1,18 @@
+.button {
+    height: 25px;
+    padding: 2px 8px;
+    background: none;
+    border: 1px transparent;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    transition: all 0.2s ease;
+}
+
+.button_checked {
+    background: rgb(253, 138, 92, 0.2);
+}
+
+.button:focus {
+    outline: none;
+}

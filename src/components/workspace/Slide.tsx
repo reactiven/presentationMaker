@@ -28,7 +28,6 @@ function renderElements(elements: Array<SlideElementType>, elementsOrder: Array<
         if (!!element)
         {
             const isSelected = selectedElements.findIndex(slideId => slideId === element.elementId) !== -1
-
             return <SlideElement
                 key={elementId}
                 element={element}

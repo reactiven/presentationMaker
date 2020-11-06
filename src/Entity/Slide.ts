@@ -45,8 +45,10 @@ function AddTextBox(state: State): State{
 			font: {
 				fontStyle: 'Times New Roman',
 				fontSize: '20px',
+				fontColor: '#000',
 				bold: false,
 				italic: false,
+				underline: false,
 			},
 			text: '',
 		},

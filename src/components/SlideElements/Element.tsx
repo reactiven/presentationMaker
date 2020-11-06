@@ -35,6 +35,7 @@ function SlideElement(props: ElementPropsType) {
     function getElementBorder() {
         let border
         if (isTextBox(element.dataElement) || isImage(element.dataElement)) {
+            debugger
             const borderWidth = element.borderWidth
             const borderColor = element.borderColor
             border = `${borderWidth} solid ${borderColor}`
@@ -69,21 +70,6 @@ function SlideElement(props: ElementPropsType) {
 }
 
 function ResizeHandlers(elementId: number) {
-    // const tsRef = useRef<HTMLDivElement>(null)
-    //
-    // function mouseUpTs(event: any) {
-    //
-    // }
-    //
-    //
-    // function mouseDownTs(event: any) {
-    //     const ts = tsRef.current
-    //     if (ts)
-    //     {
-    //         ts.addEventListener('mousedown', mouseDownTs)
-    //     }
-    // }
-
     return(
         <div>
             <div className='resize-handle resize-handle-tl'></div>
@@ -129,6 +115,7 @@ function renderElement(element: SlideElementType, style: ElementStyleType) {
             {
                 return <Textbox
                     data={element.dataElement}
+                    background={element.background}
                 />
             }
             return null

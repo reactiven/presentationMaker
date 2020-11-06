@@ -6,8 +6,8 @@ import {SlideElementType} from "../Entity/types";
 
 
 function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HTMLDivElement>) {
-    const [left, setLeft] = useState(element.xPos)
-    const [top, setTop] = useState(element.yPos)
+    const [left, setLeft] = useState<number | null>(null)
+    const [top, setTop] = useState<number | null>(null)
     const [offsetTop, setOffsetTop] = useState(0)
     const [offsetLeft, setOffsetLeft] = useState(0)
 
@@ -34,6 +34,7 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
     }
 
     function mouseDown(event: MouseEvent) {
+        // console.log(event.currentTarget)
         if (event.ctrlKey)
         {
             dispatch(addElementToSelected, {
@@ -78,7 +79,6 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
                 ? element.yPos
                 : null
     }
-
     return [calcLeft(), calcTop()]
 }
 

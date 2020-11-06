@@ -3,7 +3,7 @@ import { State } from "../Entity/types";
 
 const initialState: State = {
     onPreview: false,
-    currentSlide: 2,
+    currentSlide: 0,
     selectedSlideElements: [1],
     selectedSlides: [2],
     presentationInfo: {
@@ -57,8 +57,10 @@ const initialState: State = {
                             font: {
                                 bold: false,
                                 italic: true,
+                                fontColor: '#945',
                                 fontSize: '50px',
                                 fontStyle: 'Calibri',
+                                underline: true,
                             },
                             text: 'Слайд',
                         },
@@ -100,7 +102,9 @@ const initialState: State = {
                                 fontSize: '25px',
                                 bold: false,
                                 italic: true,
+                                fontColor: '#f21',
                                 fontStyle: 'Times New Roman',
+                                underline: false,
                             },
                         },
                         height: 50,
