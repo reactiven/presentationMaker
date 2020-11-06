@@ -1,7 +1,7 @@
 import React, {useEffect, useRef, useState} from 'react';
 import { ElementStyleType, SlideElementType } from '../../Entity/types';
 import { ImageBlock } from './Image';
-import { Shape } from './Shape';
+import {ColorStyleType, Shape} from './Shape';
 import { Textbox } from './Textbox';
 import './Element.css';
 import { isImage } from '../../Entity/Image';
@@ -22,6 +22,26 @@ function SlideElement(props: ElementPropsType) {
 
     const [left, top] = useElementsDragNDrop(element, elementRef)
 
+    function getElementBackground() {
+        let background = 'none'
+        if (isTextBox(element.dataElement)) {
+            background = element.background
+                ? element.background
+                : 'none'
+        }
+        return background
+    }
+
+    function getElementBorder() {
+        let border
+        if (isTextBox(element.dataElement) || isImage(element.dataElement)) {
+            const borderWidth = element.borderWidth
+            const borderColor = element.borderColor
+            border = `${borderWidth} solid ${borderColor}`
+        }
+        return border
+    }
+
     const style = {
         top: top !== null
             ? top
@@ -31,6 +51,8 @@ function SlideElement(props: ElementPropsType) {
             : 380 - element.width / 2,
         height: element.height,
         width: element.width,
+        background: getElementBackground(),
+        border: getElementBorder(),
     }
     const className = `element ${props.isSelected ? 'element_selected' : ''}`
 
@@ -77,12 +99,18 @@ function ResizeHandlers(elementId: number) {
 }
 
 function renderElement(element: SlideElementType, style: ElementStyleType) {
+    const colorStyle: ColorStyleType = {
+        fill: element.background,
+        strokeWidth: element.borderWidth,
+        strokeColor: element.borderColor,
+    }
     switch (element.type) {
         case 'shape':
             if (isShape(element.dataElement))
             {
                 return <Shape
-                    data={element.dataElement}
+                    type={element.dataElement.shapeType}
+                    colorStyle={colorStyle}
                     width={style.width}
                     height={style.height}    
                 />

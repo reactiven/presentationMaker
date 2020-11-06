@@ -1,4 +1,7 @@
-import { State } from './types'
+import {ShapeColorType, State} from './types'
+import {isShape} from "./Shape";
+import {isTextBox} from "./TextBox";
+import {isImage} from "./Image";
 
 function moveElement(state: State, payload: {elementId: number, newX: number, newY: number}): State {
 	const slides = [...state.presentationInfo.slides]
@@ -65,6 +68,56 @@ function selectElement(state: State, payload: {elementId: number}): State {
 	}
 }
 
+function setBackgroundColor(state: State, payload: {newColor: string}): State {
+	const slides = [...state.presentationInfo.slides]
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
+	const elements = [...slide.elements]
+	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
+
+	const dataElement = {...element.dataElement}
+	element.background = payload.newColor
+	element.dataElement = dataElement
+	let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
+	if (elementNumber < elements.length)
+	{
+		elements[elementNumber] = element
+	}
+	slide.elements = elements
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
+	return {
+		...state,
+		presentationInfo: {
+			...state.presentationInfo,
+			slides
+		}
+	}
+}
+
+function setStrokeColor(state: State, payload: {newColor: string}): State {
+	const slides = [...state.presentationInfo.slides]
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
+	const elements = [...slide.elements]
+	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
+
+	const dataElement = {...element.dataElement}
+	element.borderColor = payload.newColor
+	element.dataElement = dataElement
+	let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
+	if (elementNumber < elements.length)
+	{
+		elements[elementNumber] = element
+	}
+	slide.elements = elements
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
+	return {
+		...state,
+		presentationInfo: {
+			...state.presentationInfo,
+			slides
+		}
+	}
+}
+
 function deleteElementSelection(state: State): State {
 	return {
 		...state,
@@ -83,4 +136,6 @@ export {
 	deleteElementSelection,
 	moveElement,
 	generateElementId,
+	setBackgroundColor,
+	setStrokeColor,
 }

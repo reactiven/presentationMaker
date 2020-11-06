@@ -1,15 +1,16 @@
 import React from 'react';
 import { ShapeType } from '../../Entity/types';
 import './Element.css';
+import {ColorStyleType} from "./Shape";
 
 type PropsType = {
-    data: ShapeType,
+    style: ColorStyleType,
     width: number,
     height: number,
 }
 
 function Rect(props: PropsType) {
-    const data = {...props.data}
+    const style = {...props.style}
     const {
       width,
       height,
@@ -24,9 +25,9 @@ function Rect(props: PropsType) {
             y="0"
             width={width}
             height={height}
-            fill={data.fillColor}
-            stroke={data.strokeColor}
-            strokeWidth="5"
+            fill={String(style.fill)}
+            stroke={String(style.strokeColor)}
+            strokeWidth={String(style.strokeWidth)}
           />
         </svg>
       )

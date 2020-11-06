@@ -1,9 +1,10 @@
 import React from 'react';
 import { ShapeType } from '../../Entity/types';
 import './Element.css';
+import {ColorStyleType} from "./Shape";
 
 type PropsType = {
-    data: ShapeType,
+    style: ColorStyleType,
     width: number,
     height: number,
 }
@@ -13,7 +14,7 @@ function Triangle(props: PropsType) {
         width,
         height,
       } = props
-    const data = {...props.data}
+    const style = {...props.style}
     const viewBox = [0, 0, width, height]
     const points = `5,${height - 5} ${width/2},5 ${width-5},${height-5}`
     return(
@@ -22,9 +23,9 @@ function Triangle(props: PropsType) {
         >
             <polygon 
                 points={points}
-                fill={data.fillColor} 
-                stroke={data.strokeColor} 
-                strokeWidth="5"
+                fill={String(style.fill)}
+                stroke={String(style.strokeColor)}
+                strokeWidth={String(style.strokeWidth)}
             />
         </svg>
     )

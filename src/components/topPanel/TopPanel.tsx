@@ -100,7 +100,7 @@ function TopPanel(props: PropsType) {
                     </div>
                 </div>
             </div>
-            <ToolPanel />
+            <ToolPanel state={props.state}/>
         </div>
     )
 }

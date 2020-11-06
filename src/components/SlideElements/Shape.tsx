@@ -1,24 +1,31 @@
 import React from 'react';
-import { ShapeType } from '../../Entity/types';
+import {ShapeType, ShapeTypeType} from '../../Entity/types';
 import { Circle } from './Circle';
 import { Rect } from './Rect';
 import { Triangle } from './Triangle';
 
+type ColorStyleType = {
+    fill: string|null,
+    strokeColor: string|null,
+    strokeWidth: string|null,
+}
+
 type PropsType = {
-    data: ShapeType,
+    type: ShapeTypeType,
+    colorStyle: ColorStyleType,
     width: number,
     height: number,
 }
 
 function Shape(props: PropsType) {
 
-    switch (props.data.shapeType) {
+    switch (props.type) {
         case 'rect':
-            return <Rect data={props.data} width={props.width} height={props.height} />
+            return <Rect style={props.colorStyle} width={props.width} height={props.height} />
         case 'circle':
-            return <Circle data={props.data} width={props.width} height={props.height} />
+            return <Circle style={props.colorStyle} width={props.width} height={props.height} />
         case 'triangle':
-            return <Triangle data={props.data} width={props.width} height={props.height} />
+            return <Triangle style={props.colorStyle} width={props.width} height={props.height} />
         default:
             return null
     }
@@ -26,4 +33,8 @@ function Shape(props: PropsType) {
 
 export {
     Shape,
+}
+
+export type {
+    ColorStyleType,
 }

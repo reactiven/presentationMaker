@@ -16,6 +16,9 @@ function AddImage(state: State, payload: {filepath: string}): State {
 		height: 200,
 		xPos: null,
 		yPos: null,
+		background: null,
+		borderWidth: null,
+		borderColor: null,
 	}
 	elements.push(defaultImage)
 	elementsOrder.push(defaultImage.elementId)
@@ -30,6 +33,7 @@ function AddImage(state: State, payload: {filepath: string}): State {
 		}
 	}
 }
+
 function AddTextBox(state: State): State{
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
@@ -51,6 +55,9 @@ function AddTextBox(state: State): State{
 		height: 200,
 		xPos: null,
 		yPos: null,
+		background: null,
+		borderWidth: null,
+		borderColor: null,
 	}
 	elements.push(defaultTextBox)
 	elementsOrder.push(defaultTextBox.elementId)
@@ -74,14 +81,15 @@ function AddShape(state: State, payload: {type: ShapeTypeType}): State{
 		type: 'shape',
 		dataElement: {
 			shapeType: payload.type,
-			fillColor: '#000',
-			strokeColor: '#000',
 		},
 		elementId: elements.length,
 		width: 200,
 		height: 200,
 		xPos: null,
 		yPos: null,
+		background: null,
+		borderWidth: null,
+		borderColor: null,
 	}
 	elements.push(defaultShape)
 	elementsOrder.push(defaultShape.elementId)

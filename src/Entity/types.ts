@@ -31,6 +31,9 @@ type SlideElementType = {
   height: number,
   xPos: number | null,
   yPos: number | null,
+  borderWidth: string | null,
+  borderColor: string | null,
+  background: string | null,
   elementId: number,
 }
 
@@ -40,8 +43,6 @@ type ImageType = {
 
 type ShapeType = {
   shapeType: ShapeTypeType,
-  fillColor: string,
-  strokeColor: string,
 }
 
 type TextBoxType = {

@@ -9,12 +9,10 @@ let state = initialState
 
 function dispatch(fn: fnType, payload?: any) {
     const newState = fn(state, payload)
-	console.log(stateList)
     if (fn !== undo && fn !== redo) {
         saveStateForUndo(state) 
     }
     state = newState ? newState : state
-    console.log(state)
     renderApp(state)
 }
 
