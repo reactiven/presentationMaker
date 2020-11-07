@@ -28,6 +28,7 @@ function addSlide(state: State): State{
 	return {
 		...state,
 		currentSlide: defaultSlide.slideId,
+		selectedSlideElements: [],
 		presentationInfo: {
 			...state.presentationInfo,
 			slidesOrder,

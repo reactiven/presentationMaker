@@ -27,6 +27,7 @@ function AddImage(state: State, payload: {filepath: string}): State {
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
+		selectedSlideElements: [defaultImage.elementId],
 		presentationInfo: {
 			...state.presentationInfo,
 			slides,
@@ -68,6 +69,7 @@ function AddTextBox(state: State): State{
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
+		selectedSlideElements: [defaultTextBox.elementId],
 		presentationInfo: {
 			...state.presentationInfo,
 			slides
@@ -100,6 +102,7 @@ function AddShape(state: State, payload: {type: ShapeTypeType}): State{
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
 	return {
 		...state,
+		selectedSlideElements: [defaultShape.elementId],
 		presentationInfo: {
 			...state.presentationInfo,
 			slides
