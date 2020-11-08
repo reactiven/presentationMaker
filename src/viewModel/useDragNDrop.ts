@@ -46,11 +46,15 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
             dispatch(selectElement, {
                 elementId: element.elementId
             })
-            const [cursorX, cursorY] = getParentRelativeСoordinates(event.clientX, event.clientY, elementRef.current)
-            setOffsetLeft(cursorX)
-            setOffsetTop(cursorY)
-            document.addEventListener('mousemove', mouseMove);
-            document.addEventListener('mouseup', mouseUp);
+            if (!event.defaultPrevented) {
+                console.log('test2')
+                const [cursorX, cursorY] = getParentRelativeСoordinates(event.clientX, event.clientY, elementRef.current)
+                setOffsetLeft(cursorX)
+                setOffsetTop(cursorY)
+                document.addEventListener('mousemove', mouseMove);
+                document.addEventListener('mouseup', mouseUp);
+            }
+
         }
 
     }

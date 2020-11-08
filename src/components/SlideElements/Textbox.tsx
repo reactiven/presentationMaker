@@ -7,6 +7,8 @@ import {updateTextBox} from "../../Entity/TextBox";
 type PropsType = {
     data: TextBoxType,
     background: string|null,
+    borderWidth: string|null,
+    borderColor: string|null,
 }
 
 function Textbox(props: PropsType) {
@@ -21,6 +23,7 @@ function Textbox(props: PropsType) {
         fontFamily: data.font.fontStyle,
         color: data.font.fontColor,
         background: String(props.background),
+        border: `${props.borderWidth} solid ${props.borderColor}`,
         fontWeight,
         textDecoration: fontDecoration,
     }
