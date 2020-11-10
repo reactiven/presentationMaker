@@ -1,15 +1,13 @@
-import {ShapeColorType, State} from './types'
-import {isShape} from "./Shape";
-import {isTextBox} from "./TextBox";
-import {isImage} from "./Image";
+import {State} from './types'
+
 
 function moveElement(state: State, payload: {elementId: number, newX: number, newY: number}): State {
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
 	const element = {...elements[elements.findIndex(element => element.elementId === payload.elementId)]}
-	element.xPos = payload.newX
-	element.yPos = payload.newY
+	element.xPos = payload.newX - 1
+	element.yPos = payload.newY - 1
 	elements[elements.findIndex(element => element.elementId === payload.elementId)] = element
 	slide.elements = elements
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide

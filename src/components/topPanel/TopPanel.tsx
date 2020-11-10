@@ -4,7 +4,6 @@ import './TopPanel.css';
 import logo from '../../images/logo_tcaer.png';
 import { dispatch, state } from '../../state/state-manager';
 import { changeName } from '../../Entity/Presentation';
-import { AddShape, AddTextBox } from '../../Entity/Slide';
 import { ToolPanel } from './ToolPanel';
 import { State } from '../../Entity/types';
 import { savePresentation } from '../../Entity/State';
@@ -12,29 +11,6 @@ import { savePresentation } from '../../Entity/State';
 type PropsType = {
     state: State,
 }
-
-function printNewSquare(): void {
-    dispatch(AddShape, {
-        type: 'rect',
-    })
-}
-
-function printNewCircle(): void {
-    dispatch(AddShape, {
-        type: 'circle',
-    })
-}
-
-function printNewTriangle(): void {
-    dispatch(AddShape, {
-        type: 'triangle',
-    })
-}
-
-function printNewTextBox(): void {
-    dispatch(AddTextBox)
-}
-
 
 function printNewImage(): void {
     console.log('New image')
@@ -74,26 +50,6 @@ function TopPanel(props: PropsType) {
                             type={'normal'}
                             onClick={printNewImage}
                             label={'Image'}
-                        />
-                        <Button 
-                            type={'normal'}
-                            onClick={printNewTextBox}
-                            label={'TextBox'}
-                        />
-                        <Button 
-                            type={'normal'}
-                            onClick={printNewSquare}
-                            label={'Square'}
-                        />
-                        <Button 
-                            type={'normal'}
-                            onClick={printNewCircle}
-                            label={'Circle'}
-                        />
-                        <Button 
-                            type={'normal'}
-                            onClick={printNewTriangle}
-                            label={'Triangle'}
                         />
                         <a href={fileURL} download={fileName}>Download!</a>
                         <input type='file' name='file' onChange={onChangeHandler}/>
