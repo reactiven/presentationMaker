@@ -1,5 +1,4 @@
-import React, { ChangeEvent } from 'react';
-import { Button } from '../common/Button';
+import React  from 'react';
 import './TopPanel.css';
 import logo from '../../images/logo_tcaer.png';
 import { dispatch, state } from '../../state/state-manager';
@@ -11,12 +10,6 @@ import { savePresentation } from '../../Entity/State';
 type PropsType = {
     state: State,
 }
-
-function printNewImage(): void {
-    console.log('New image')
-}
-
-
 
 function TopPanel(props: PropsType) {
 
@@ -32,7 +25,6 @@ function TopPanel(props: PropsType) {
 
     function onChangeHandler(e: any) {
         console.log(e.target.files[0])
-
     } 
 
     let fileURL = download()
@@ -46,11 +38,6 @@ function TopPanel(props: PropsType) {
                 <div className='tool-bar'>
                     <input type="text" defaultValue={props.state.presentationInfo.name} onBlur={onBlur} className='presentation-title'/>
                     <div className="second-row">
-                        <Button 
-                            type={'normal'}
-                            onClick={printNewImage}
-                            label={'Image'}
-                        />
                         <a href={fileURL} download={fileName}>Download!</a>
                         <input type='file' name='file' onChange={onChangeHandler}/>
                     </div>

@@ -12,7 +12,7 @@ const initialState: State = {
         slides: [
             {
                 slideId: 0,
-                background: '#fed',
+                background: '#fedfed',
                 elementsOrder: [0, 1],
                 elements: [
                     {
@@ -25,9 +25,9 @@ const initialState: State = {
                         width: 200,
                         xPos: 50,
                         yPos: 50,
-                        borderColor: '#456',
+                        borderColor: '#456456',
                         borderWidth: '6',
-                        background: '#987',
+                        background: '#987987',
                     },
                     {
                         elementId: 1,
@@ -47,7 +47,7 @@ const initialState: State = {
             },
             {
                 slideId: 1,
-                background: '#439',
+                background: '#439439',
                 elementsOrder: [0],
                 elements: [
                     {
@@ -57,7 +57,7 @@ const initialState: State = {
                             font: {
                                 bold: false,
                                 italic: true,
-                                fontColor: '#945',
+                                fontColor: '#945945',
                                 fontSize: '50px',
                                 fontStyle: 'Calibri',
                                 underline: true,
@@ -76,7 +76,7 @@ const initialState: State = {
             },
             {
                 slideId: 2,
-                background: '#fff',
+                background: '#ffffff',
                 elementsOrder: [0, 1],
                 elements: [
                     {
@@ -89,9 +89,9 @@ const initialState: State = {
                         width: 200,
                         xPos: 400,
                         yPos: 100,
-                        borderColor: '#785',
+                        borderColor: '#785785',
                         borderWidth: '2',
-                        background: '#f22',
+                        background: '#f22f22',
                     },
                     {
                         elementId: 1,
@@ -102,7 +102,7 @@ const initialState: State = {
                                 fontSize: '25px',
                                 bold: false,
                                 italic: true,
-                                fontColor: '#f21',
+                                fontColor: '#f21f21',
                                 fontStyle: 'Times New Roman',
                                 underline: false,
                             },

@@ -3,7 +3,7 @@ import fill from "../../images/fill.png";
 import stroke from "../../images/stroke.png";
 import {changeFont, isTextBox} from "../../Entity/TextBox";
 import word from "../../images/word.png";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import {dispatch} from "../../state/state-manager";
 import {setBackgroundColor, setStrokeColor, setStrokeWidth} from "../../Entity/SlideElement";
 import {SlideElementType} from "../../Entity/types";
@@ -19,36 +19,35 @@ type PropsType = {
 }
 
 function ColorEditColor(props: PropsType) {
+    // console.log(props.element.background)
+    const [fillColorPicker, setFillColorPicker] = useState<string|null>(null)
+    const [strokeColorPicker, setStrokeColorPicker] = useState<string|null>(null)
+    const [fontColorPicker, setFontColorPicker] = useState<string|null>(null)
 
-    const fillColorPicker = props.element
-        ? String(props.element.background)
-        : ''
-
-    const strokeColorPicker = props.element
-        ? String(props.element.borderColor)
-        : ''
-
-    const fontColorPicker = props.element && isTextBox(props.element.dataElement)
-        ? String(props.element.dataElement.font.fontColor)
-        : ''
+    useEffect(() => {
+        console.log(props.element.background)
+        setFillColorPicker(props.element.background)
+        setStrokeColorPicker(props.element.borderColor)
+    }, [fillColorPicker, strokeColorPicker])
 
     function changeBgColor(value: string) {
-        debugger
+        setFillColorPicker(value)
         dispatch(setBackgroundColor, {
             newColor: value,
         })
     }
 
     function changeStrokeColor(value: string) {
+        setStrokeColorPicker(value)
         dispatch(setStrokeColor, {
             newColor: value,
         })
     }
 
     function changeFontColor(value: string) {
+        setFontColorPicker(value)
         if (isTextBox(props.element.dataElement))
         {
-            debugger
             dispatch(changeFont, {
                 newFont: {
                     ...props.element.dataElement.font,
@@ -69,17 +68,21 @@ function ColorEditColor(props: PropsType) {
             <Button_WithColorPicker
                 img={fill}
                 onChange={changeBgColor}
-                value={fillColorPicker}
+                value={fillColorPicker
+                    ? fillColorPicker
+                    : String(props.element.background)}
             />
             <Button_WithColorPicker
                 img={stroke}
                 onChange={changeStrokeColor}
-                value={strokeColorPicker}
+                value={strokeColorPicker
+                    ? strokeColorPicker
+                    : String(props.element.borderColor)}
             />
             {isTextBox(props.element.dataElement) && <Button_WithColorPicker
                 img={word}
                 onChange={changeFontColor}
-                value={fontColorPicker}
+                value={props.element.dataElement.font.fontColor}
             />}
             <Button_WithPopover
                 img={border}
