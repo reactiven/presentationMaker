@@ -13,6 +13,7 @@ function dispatch(fn: fnType, payload?: any) {
         saveStateForUndo(state) 
     }
     state = newState ? newState : state
+    console.log(state)
     renderApp(state)
 }
 

@@ -11,9 +11,8 @@ type PropsType = {
 function Slide(props: PropsType) {
     const slideInfo = {...props.slideInfo}
     const selectedElements = [...props.selectedElements]
-    const style = {
-        background: props.slideInfo.background,
-    }
+    const imageRegexp = /\.*http\.*/
+    const style = slideInfo.background.match(imageRegexp) ? {background: `url("${props.slideInfo.background}") no-repeat 100%`} : {background: props.slideInfo.background}
 
     return(
         <div className="slide" style={style}>

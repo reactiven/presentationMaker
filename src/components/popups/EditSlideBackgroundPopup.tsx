@@ -15,6 +15,14 @@ function Content(props: ContentProps) {
     const [color, setColor] = useState<string>(props.currentSlideInfo.background)
     const inputColorRef = useRef<HTMLInputElement|null>(null)
     const inputFileRef = useRef<HTMLInputElement|null>(null)
+    
+    function onImageChange(event: any) {
+        if (event.target.files && event.target.files[0]) {
+          let img = event.target.files[0];
+        //   console.log(URL.createObjectURL(img))
+          dispatch(setSlideBackground, {newBackground: URL.createObjectURL(img)})
+        }
+      };
 
     function onInputColor() {
         if (inputColorRef.current) {
@@ -64,8 +72,9 @@ function Content(props: ContentProps) {
                     />
                     <input
                         type='file'
+                        accept=".png, .jpg"
                         ref={inputFileRef}
-                        onInput={onInputFile}
+                        onInput={onImageChange}
                         className='slide-background-content-file-input'
                     />
                 </div>

@@ -39,7 +39,6 @@ function TopPanel(props: PropsType) {
                     <input type="text" defaultValue={props.state.presentationInfo.name} onBlur={onBlur} className='presentation-title'/>
                     <div className="second-row">
                         <a href={fileURL} download={fileName}>Download!</a>
-                        <input type='file' name='file' onChange={onChangeHandler}/>
                     </div>
                 </div>
             </div>
