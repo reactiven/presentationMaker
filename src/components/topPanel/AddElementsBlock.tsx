@@ -23,6 +23,7 @@ function AddElementsBlock() {
                 filepath: URL.createObjectURL(img),
             })
         }
+        event.currentTarget.value = ''
     }
 
     function getShapePopoverItems() {

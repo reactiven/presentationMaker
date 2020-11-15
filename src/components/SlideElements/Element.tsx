@@ -34,16 +34,6 @@ function SlideElement(props: ElementPropsType) {
         setTop(dndTop)
     }, [dndlLeft, dndTop])
 
-    function getElementBorder() {
-        let border
-        if (isImage(element.dataElement)) {
-            const borderWidth = element.borderWidth
-            const borderColor = element.borderColor
-            border = `${borderWidth} solid ${borderColor}`
-        }
-        return border
-    }
-
     const style = {
         top: top !== null
             ? top
@@ -57,7 +47,6 @@ function SlideElement(props: ElementPropsType) {
         width: width !== null
             ? width
             : element.width,
-        border: getElementBorder(),
     }
     const className = `element ${props.isSelected ? 'element_selected' : ''}`
 
@@ -313,6 +302,8 @@ function renderElement(element: SlideElementType, style: ElementStyleType) {
             {
                 return <ImageBlock
                     data={element.dataElement}
+                    borderWidth={element.borderWidth}
+                    borderColor={element.borderColor}
                 />
             }
             return null

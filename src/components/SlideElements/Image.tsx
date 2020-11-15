@@ -4,12 +4,15 @@ import './Image.css';
 
 type PropsType = {
     data: ImageType,
+    borderWidth: string|null,
+    borderColor: string|null,
 }
 
 function ImageBlock(props: PropsType) {
     const data = {...props.data}
     const style = {
-        background: `url('${data.src}') no-repeat center/100%`
+        background: `url('${data.src}') no-repeat center/100% 100%`,
+        border: `${props.borderWidth} solid ${props.borderColor}`,
     }
 
     return(
