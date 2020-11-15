@@ -1,5 +1,5 @@
 import React from 'react'
-import { goToSlide } from '../../Entity/Presentation';
+import {goToSlide, selectSlide} from '../../Entity/Presentation';
 import { SlideType, State } from '../../Entity/types'
 import { dispatch, state } from '../../state/state-manager';
 import './Sidebar.css';
@@ -12,6 +12,9 @@ function SideBar(props: PropsType): JSX.Element {
 
     function changeSlide(slideId: number) {
         dispatch(goToSlide, {
+            slideId,
+        })
+        dispatch(selectSlide, {
             slideId,
         })
     }
@@ -53,7 +56,10 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
     return (
         <div
             className={className}
-            onClick={() => {
+            onClick={(event) => {
+                if (!event.defaultPrevented) {
+                    event.preventDefault()
+                }
                 props.changeSlide(props.slide.slideId)
             }}
         >

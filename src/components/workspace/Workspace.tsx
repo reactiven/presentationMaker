@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
-import { getCurrentSlideInfo } from '../../Entity/Presentation';
-import { DeleteElements } from '../../Entity/Slide';
+import React  from 'react';
+import {deleteSlideSelection, getCurrentSlideInfo} from '../../Entity/Presentation';
 import { deleteElementSelection } from '../../Entity/SlideElement';
-import { redo, undo } from '../../Entity/State';
 import { State } from '../../Entity/types';
 import { dispatch } from '../../state/state-manager';
 import { Slide } from './Slide';
@@ -20,25 +18,7 @@ function Workspace(props: PropsType) {
         {
             dispatch(deleteElementSelection)
         }
-    }
-
-    useEffect(() => {
-        document.addEventListener("keydown", keydownHandler);
-        return () => {
-            document.removeEventListener("keydown", keydownHandler);
-        }
-    })
-    
-    const keydownHandler = (e: KeyboardEvent): void => {
-        if (e.keyCode === 46) {
-            dispatch(DeleteElements)
-        }
-        if (e.keyCode === 90 && e.ctrlKey) {
-            dispatch(undo)
-        }
-        if (e.keyCode === 89 && e.ctrlKey) {
-            dispatch(redo)
-        }
+        dispatch(deleteSlideSelection)
     }
 
     return(

@@ -36,33 +36,27 @@ function addSlide(state: State): State{
 		}
 	}
 }
-function deleteSlides(state: State): State{
+function deleteSlides(state: State): State {
+
 	let currentSlide = state.currentSlide
 	let slides = [...state.presentationInfo.slides]
 	let slidesOrder = [...state.presentationInfo.slidesOrder]
 	let selectedSlides = [...state.selectedSlides]
-	let firstSelected: number = -1
-	for (let i = 0; i < slidesOrder.length; i++) {
-		if (selectedSlides.indexOf(slidesOrder[i]) !== -1)
-		{
-			firstSelected = i
-			break
-		}
-	}
-	for (let i = firstSelected; i < slidesOrder.length; i++) {
-		if (selectedSlides.indexOf(slidesOrder[i]) === -1)
-		{
-			currentSlide = i
-			break
-		}
-	}
+
+	const currentSlideIndex = slidesOrder.findIndex(slideId => currentSlide === slideId)
+	const newCurrentSlideIndex = currentSlideIndex < slidesOrder.length - 1
+		? currentSlideIndex + 1
+		: currentSlideIndex - 1
+	const newCurrentSlideId = slidesOrder[newCurrentSlideIndex]
+
 	slides = slides.filter((slide) => (selectedSlides.indexOf(slide.slideId) === -1))
 	slidesOrder = slidesOrder.filter(slideId => (selectedSlides.indexOf(slideId) === -1))
 	selectedSlides = []
+	debugger
 	return {
 		...state,
 		selectedSlides,
-		currentSlide,
+		currentSlide: newCurrentSlideId,
 		presentationInfo: {
 			...state.presentationInfo,
 			slides,
@@ -144,6 +138,13 @@ function selectSlide(state: State, payload: {
 	}
 }
 
+function deleteSlideSelection(state: State): State {
+	return {
+		...state,
+		selectedSlides: [],
+	}
+}
+
 function setEditSlideBackgroundPopupOpened(state: State, payload: {opened: boolean}): State {
 	return {
 		...state,
@@ -165,5 +166,6 @@ export {
 	deleteSlides,
 	addSlide,
 	generateSlideId,
+	deleteSlideSelection,
 	setEditSlideBackgroundPopupOpened,
 }
