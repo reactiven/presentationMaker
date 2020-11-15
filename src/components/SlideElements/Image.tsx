@@ -1,6 +1,6 @@
 import React from 'react';
 import { ImageType } from '../../Entity/types';
-import './Element.css';
+import './Image.css';
 
 type PropsType = {
     data: ImageType,
@@ -8,11 +8,12 @@ type PropsType = {
 
 function ImageBlock(props: PropsType) {
     const data = {...props.data}
-    return (
-        <img 
-            src={data.src}
-            alt='element'
-        />
+    const style = {
+        background: `url('${data.src}') no-repeat center/100%`
+    }
+
+    return(
+        <div className={'slide-element-image'} style={style}></div>
     )
 }
 

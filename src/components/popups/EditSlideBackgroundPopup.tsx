@@ -1,11 +1,11 @@
 import React, {useRef, useState} from "react"
-import { Popup } from "../common/Popup"
+import {Popup} from "../common/Popup"
 import {Button} from "../common/Button";
 import {dispatch} from "../../state/state-manager";
 import {setEditSlideBackgroundPopupOpened} from "../../Entity/Presentation";
 import {SlideType} from "../../Entity/types";
 import './EditSlideBackgroundPopup.css';
-import {setSlideBackground} from "../../Entity/Slide";
+import {AddImage, setSlideBackground} from "../../Entity/Slide";
 
 type ContentProps = {
     currentSlideInfo: SlideType,
@@ -13,16 +13,15 @@ type ContentProps = {
 
 function Content(props: ContentProps) {
     const [color, setColor] = useState<string>(props.currentSlideInfo.background)
-    const inputColorRef = useRef<HTMLInputElement|null>(null)
-    const inputFileRef = useRef<HTMLInputElement|null>(null)
-    
+    const inputColorRef = useRef<HTMLInputElement | null>(null)
+    const inputFileRef = useRef<HTMLInputElement | null>(null)
+
     function onImageChange(event: any) {
         if (event.target.files && event.target.files[0]) {
-          let img = event.target.files[0];
-        //   console.log(URL.createObjectURL(img))
-          dispatch(setSlideBackground, {newBackground: URL.createObjectURL(img)})
+            let img = event.target.files[0]
+            dispatch(setSlideBackground, {newBackground: URL.createObjectURL(img)})
         }
-      };
+    }
 
     function onInputColor() {
         if (inputColorRef.current) {
@@ -33,14 +32,8 @@ function Content(props: ContentProps) {
         }
     }
 
-    function onInputFile() {
-        if (inputFileRef.current){
-
-        }
-    }
-
     function insertImageButton() {
-        if (inputFileRef.current){
+        if (inputFileRef.current) {
             inputFileRef.current.click()
         }
     }
@@ -49,7 +42,7 @@ function Content(props: ContentProps) {
         event.stopPropagation()
     }
 
-    return(
+    return (
         <div className='slide-background-content-container'>
             <div className='slide-background-content-row'>
                 <div className='slide-background-content-row-title'>Цвет</div>
@@ -100,7 +93,7 @@ function EditSlideBackgroundPopup(props: PropsType) {
         })
     }
 
-    return(
+    return (
         <Popup
             headerText={'Фон слайда'}
             content={<Content

@@ -3,8 +3,8 @@ import {Button} from "../common/Button";
 import textbox from  '../../images/textbox.png';
 import shape from '../../images/shape.png';
 import image from '../../images/image-logo.png'
-import React from "react";
-import {AddShape, AddTextBox} from "../../Entity/Slide";
+import React, { useRef } from "react";
+import {AddImage, AddShape, AddTextBox} from "../../Entity/Slide";
 import {Button_WithPopover} from "../common/Button_WithPopover";
 import {ActionList} from "../common/ActionList";
 import circle from '../../images/circle.png';
@@ -14,6 +14,16 @@ import './AddElementsBlock.css';
 
 
 function AddElementsBlock() {
+    const inputFileRef = useRef<HTMLInputElement|null>(null)
+
+    function onImageChange(event: any) {
+        if (event.target.files && event.target.files[0]) {
+            let img = event.target.files[0]
+            dispatch(AddImage, {
+                filepath: URL.createObjectURL(img),
+            })
+        }
+    }
 
     function getShapePopoverItems() {
         return [
@@ -55,7 +65,9 @@ function AddElementsBlock() {
     }
 
     function handleAddImage(id: string) {
-        console.log('add image')
+        if (id === 'file') {
+            inputFileRef.current && inputFileRef.current.click()
+        }
     }
 
     return(
@@ -72,13 +84,22 @@ function AddElementsBlock() {
                     onChange={handleAddShape}
                 />}
             />
-            <Button_WithPopover
-                img={image}
-                popover={<ActionList
-                    items={getImagePopoverItems()}
-                    onChange={handleAddImage}
-                />}
-            />
+            <div>
+                <Button_WithPopover
+                    img={image}
+                    popover={<ActionList
+                        items={getImagePopoverItems()}
+                        onChange={handleAddImage}
+                    />}
+                />
+                <input
+                    type='file'
+                    accept=".png, .jpg"
+                    ref={inputFileRef}
+                    onInput={onImageChange}
+                    className='slide-background-content-file-input'
+                />
+            </div>
         </div>
     )
 }
