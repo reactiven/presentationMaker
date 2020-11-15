@@ -16,7 +16,6 @@ function changeFont(state: State, payload: {
 	elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])] = element
 	slide.elements = elements
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
-	debugger
 	return {
 		...state,
 		presentationInfo: {

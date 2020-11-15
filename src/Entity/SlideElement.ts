@@ -132,7 +132,6 @@ function setStrokeWidth(state: State, payload: {newWidth: string}): State {
 	}
 	slide.elements = elements
 	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
-	debugger
 	return {
 		...state,
 		presentationInfo: {

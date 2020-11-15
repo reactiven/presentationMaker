@@ -52,7 +52,6 @@ function deleteSlides(state: State): State {
 	slides = slides.filter((slide) => (selectedSlides.indexOf(slide.slideId) === -1))
 	slidesOrder = slidesOrder.filter(slideId => (selectedSlides.indexOf(slideId) === -1))
 	selectedSlides = []
-	debugger
 	return {
 		...state,
 		selectedSlides,
