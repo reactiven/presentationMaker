@@ -144,6 +144,13 @@ function selectSlide(state: State, payload: {
 	}
 }
 
+function setEditSlideBackgroundPopupOpened(state: State, payload: {opened: boolean}): State {
+	return {
+		...state,
+		editSlideBackgroundPopupOpened: payload.opened,
+	}
+}
+
 function generateSlideId(): number {
 	return Math.random() * 10
 }
@@ -158,4 +165,5 @@ export {
 	deleteSlides,
 	addSlide,
 	generateSlideId,
+	setEditSlideBackgroundPopupOpened,
 }

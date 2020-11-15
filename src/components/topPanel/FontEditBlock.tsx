@@ -1,5 +1,5 @@
 import {SlideElementType, TextBoxType} from "../../Entity/types";
-import {changeFont, isTextBox} from "../../Entity/TextBox";
+import {changeFont} from "../../Entity/TextBox";
 import {Button_TwoState} from "../common/Button_TwoState";
 import bold from "../../images/bold.png";
 import italic from "../../images/italic.png";

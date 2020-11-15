@@ -1,5 +1,4 @@
 import React from 'react';
-import { ShapeType } from '../../Entity/types';
 import './Element.css';
 import {ColorStyleType} from "./Shape";
 

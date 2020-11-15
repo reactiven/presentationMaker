@@ -9,8 +9,9 @@ type PropsType = {
 
 function Button_TwoState(props: PropsType) {
 
-    function onClick() {
+    function onClick(event: any) {
         props.onClick(!props.checked)
+        event.preventDefault()
     }
 
     const className = `button ${props.checked ? 'button_checked': ''}`

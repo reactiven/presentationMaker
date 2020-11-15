@@ -1,6 +1,4 @@
-import React from "react";
-
-const getParentRelativeСoordinates = (screenLeft: number, screenTop: number, parent: HTMLElement|null): any => {
+const getParentRelativeCoordinates = (screenLeft: number, screenTop: number, parent: HTMLElement|null): any => {
     // const parent = element && element.parentElement
     if (parent)
     {
@@ -13,5 +11,5 @@ const getParentRelativeСoordinates = (screenLeft: number, screenTop: number, pa
 }
 
 export {
-    getParentRelativeСoordinates,
+    getParentRelativeCoordinates,
 }

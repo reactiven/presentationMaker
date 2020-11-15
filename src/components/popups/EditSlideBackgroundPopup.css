@@ -1,0 +1,18 @@
+.slide-background-content-container {
+    padding: 10px 12px;
+}
+
+.slide-background-content-row {
+    display: flex;
+    justify-content: space-between;
+    min-height: 50px;
+    align-items: center;
+}
+
+.slide-background-content-row:not(:last-child) {
+    margin-bottom: 10px;
+}
+
+.slide-background-content-file-input {
+    display: none;
+}

@@ -1,5 +1,5 @@
 import React from 'react';
-import {ShapeType, ShapeTypeType} from '../../Entity/types';
+import {ShapeTypeType} from '../../Entity/types';
 import { Circle } from './Circle';
 import { Rect } from './Rect';
 import { Triangle } from './Triangle';

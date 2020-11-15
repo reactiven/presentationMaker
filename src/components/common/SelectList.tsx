@@ -24,7 +24,7 @@ function SelectList(props: SelectListProps) {
             key={item.id}
             onClick={onChange}
             item={item}
-            isSelected={props.selected == item.id}
+            isSelected={props.selected === item.id}
         />
     );
 

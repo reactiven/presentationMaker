@@ -1,4 +1,4 @@
-import { ShapeType, ShapeColorType, State } from './types'
+import { ShapeType} from './types'
 
 
 function isShape(dataElement: any): dataElement is ShapeType {

@@ -1,4 +1,4 @@
-import React, {ChangeEvent, useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 
 import './Button_WithColorPicker.css';
 
@@ -27,6 +27,9 @@ function Button_WithColorPicker(props: ButtonWithColorPickerProps): JSX.Element 
         }
     }
 
+    useEffect(() => {
+        setValue(props.value)
+    }, [props.value])
 
     return(
         <div className='color-picker-container' onClick={onClick}>

@@ -139,7 +139,7 @@ function DeleteElements(state: State): State{
 		}
 	}
 }
-function SetBackgroud(state: State, payload: {newBackground: BackgroundType}): State{
+function setSlideBackground(state: State, payload: {newBackground: BackgroundType}): State{
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	slide.background = payload.newBackground
@@ -158,5 +158,5 @@ export {
 	AddTextBox,
 	AddShape,
 	DeleteElements,
-	SetBackgroud,
+	setSlideBackground,
 }

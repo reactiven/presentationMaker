@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useRef} from 'react';
 import { TextBoxType } from '../../Entity/types';
 import './Textbox.css';
 import {dispatch} from "../../state/state-manager";
@@ -12,7 +12,6 @@ type PropsType = {
 }
 
 function Textbox(props: PropsType) {
-    const [text, setText] = useState<string|null>(props.data.text)
     const inputRef = useRef<HTMLTextAreaElement>(null)
     const data = {...props.data}
     const fontWeight: 'bold'|'normal' = data.font.bold ? 'bold' : 'normal'
@@ -31,17 +30,10 @@ function Textbox(props: PropsType) {
     function onChange(event: any) {
         if(inputRef.current)
         {
-            setText(inputRef.current.value)
-        }
-    }
-
-    function onBlur(event: any) {
-        if (inputRef.current) {
             dispatch(updateTextBox, {
                 text: inputRef.current.value
             })
         }
-        setText(null)
     }
 
     return(
@@ -49,8 +41,7 @@ function Textbox(props: PropsType) {
                   className='textBox-block richtext'
                   style={inputStyle}
                   onChange={onChange}
-                  onBlur={onBlur}
-                  value={text || data.text}
+                  value={props.data.text || ''}
         >
         </textarea>
     )

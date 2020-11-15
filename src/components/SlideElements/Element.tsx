@@ -8,9 +8,9 @@ import { isImage } from '../../Entity/Image';
 import { isShape } from '../../Entity/Shape';
 import { isTextBox } from '../../Entity/TextBox';
 import {useElementsDragNDrop} from "../../viewModel/useDragNDrop";
-import {getParentRelativeСoordinates} from "../../viewModel/getRelativePointerCoordinates";
 import {dispatch} from "../../state/state-manager";
 import {moveElement, resizeElement} from "../../Entity/SlideElement";
+import { getParentRelativeCoordinates } from '../../viewModel/getParentRelativeCoordinates';
 
 type ElementPropsType = {
     element: SlideElementType,
@@ -114,7 +114,7 @@ function ResizeHandlers({
         document.removeEventListener('mouseup', tsMouseUp)
         const currElement = elementRef.current && elementRef.current.getBoundingClientRect()
         if (!!currElement) {
-            const [cursorX, cursorY] = getParentRelativeСoordinates(currElement.left, currElement.top, slide)
+            const [cursorX, cursorY] = getParentRelativeCoordinates(currElement.left, currElement.top, slide)
             dispatch(moveElement, {
                 elementId: element.elementId,
                 newX: cursorX,
@@ -165,7 +165,7 @@ function ResizeHandlers({
         document.removeEventListener('mouseup', lsMouseUp)
         const currElement = elementRef.current && elementRef.current.getBoundingClientRect()
         if (!!currElement) {
-            const [cursorX, cursorY] = getParentRelativeСoordinates(currElement.left, currElement.top, slide)
+            const [cursorX, cursorY] = getParentRelativeCoordinates(currElement.left, currElement.top, slide)
             dispatch(moveElement, {
                 elementId: element.elementId,
                 newX: cursorX,
@@ -183,32 +183,32 @@ function ResizeHandlers({
     }
 
     function tsMouseMove(event: any) {
-        const [cursorX, cursorY] = getParentRelativeСoordinates(event.clientX, event.clientY, slide)
+        const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slide)
         const elementBounds = elementRef.current && elementRef.current.getBoundingClientRect()
-        const [elementLeft, elementTop] = getParentRelativeСoordinates(elementBounds!.left, elementBounds!.top, slide)
+        const [elementLeft, elementTop] = getParentRelativeCoordinates(elementBounds!.left, elementBounds!.top, slide)
         const elementBottom = elementTop + elementBounds!.height
         setHeight(elementBottom - cursorY)
         setTop(cursorY - 1)
     }
 
     function bsMouseMove(event: any) {
-        const [cursorX, cursorY] = getParentRelativeСoordinates(event.clientX, event.clientY, slide)
+        const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slide)
         const elementBounds = elementRef.current && elementRef.current.getBoundingClientRect()
-        const [elementLeft, elementTop] = getParentRelativeСoordinates(elementBounds!.left, elementBounds!.top, slide)
+        const [elementLeft, elementTop] = getParentRelativeCoordinates(elementBounds!.left, elementBounds!.top, slide)
         setHeight(cursorY - elementTop)
     }
 
     function rsMouseMove(event: any) {
-        const [cursorX, cursorY] = getParentRelativeСoordinates(event.clientX, event.clientY, slide)
+        const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slide)
         const elementBounds = elementRef.current && elementRef.current.getBoundingClientRect()
-        const [elementLeft, elementTop] = getParentRelativeСoordinates(elementBounds!.left, elementBounds!.top, slide)
+        const [elementLeft, elementTop] = getParentRelativeCoordinates(elementBounds!.left, elementBounds!.top, slide)
         setWidth(cursorX - elementLeft)
     }
 
     function lsMouseMove(event: any) {
-        const [cursorX, cursorY] = getParentRelativeСoordinates(event.clientX, event.clientY, slide)
+        const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slide)
         const elementBounds = elementRef.current && elementRef.current.getBoundingClientRect()
-        const [elementRight, elementTop] = getParentRelativeСoordinates(elementBounds!.right, elementBounds!.top, slide)
+        const [elementRight, elementTop] = getParentRelativeCoordinates(elementBounds!.right, elementBounds!.top, slide)
         setWidth(elementRight - cursorX)
         setLeft(cursorX - 1)
     }

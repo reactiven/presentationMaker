@@ -3,21 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import { State } from './Entity/types';
-import { initialState } from './viewModel/initialState';
-import { dispatch } from './state/state-manager';
+import {State} from './Entity/types';
+import {initialState} from './viewModel/initialState';
+import {EditSlideBackgroundPopup} from './components/popups/EditSlideBackgroundPopup';
+import {getCurrentSlideInfo} from "./Entity/Presentation";
 
-// function renderUndo() {
-//   dispatch()
-// }
 
 function renderApp(state: State) {
-  ReactDOM.render(
-    <React.StrictMode>
-      <App state={state}/>
-    </React.StrictMode>,
-    document.getElementById('root')
-  );
+    const currentSlideInfo = getCurrentSlideInfo(state)
+    ReactDOM.render(
+        <React.StrictMode>
+            <App state={state}/>
+            {state.editSlideBackgroundPopupOpened && currentSlideInfo && <EditSlideBackgroundPopup currentSlideInfo={currentSlideInfo}/>}
+        </React.StrictMode>,
+        document.getElementById('root')
+    );
 }
 
 renderApp(initialState)
@@ -28,5 +28,5 @@ renderApp(initialState)
 serviceWorker.unregister();
 
 export {
-  renderApp,
+    renderApp,
 }

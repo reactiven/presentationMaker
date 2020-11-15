@@ -3,7 +3,7 @@ import fill from "../../images/fill.png";
 import stroke from "../../images/stroke.png";
 import {changeFont, isTextBox} from "../../Entity/TextBox";
 import word from "../../images/word.png";
-import React, {useEffect, useState} from "react";
+import React from "react";
 import {dispatch} from "../../state/state-manager";
 import {setBackgroundColor, setStrokeColor, setStrokeWidth} from "../../Entity/SlideElement";
 import {SlideElementType} from "../../Entity/types";
@@ -19,33 +19,20 @@ type PropsType = {
 }
 
 function ColorEditColor(props: PropsType) {
-    // console.log(props.element.background)
-    const [fillColorPicker, setFillColorPicker] = useState<string|null>(null)
-    const [strokeColorPicker, setStrokeColorPicker] = useState<string|null>(null)
-    const [fontColorPicker, setFontColorPicker] = useState<string|null>(null)
-
-    useEffect(() => {
-        console.log(props.element.background)
-        setFillColorPicker(props.element.background)
-        setStrokeColorPicker(props.element.borderColor)
-    }, [fillColorPicker, strokeColorPicker])
 
     function changeBgColor(value: string) {
-        setFillColorPicker(value)
         dispatch(setBackgroundColor, {
             newColor: value,
         })
     }
 
     function changeStrokeColor(value: string) {
-        setStrokeColorPicker(value)
         dispatch(setStrokeColor, {
             newColor: value,
         })
     }
 
     function changeFontColor(value: string) {
-        setFontColorPicker(value)
         if (isTextBox(props.element.dataElement))
         {
             dispatch(changeFont, {
@@ -68,16 +55,12 @@ function ColorEditColor(props: PropsType) {
             <Button_WithColorPicker
                 img={fill}
                 onChange={changeBgColor}
-                value={fillColorPicker
-                    ? fillColorPicker
-                    : String(props.element.background)}
+                value={String(props.element.background)}
             />
             <Button_WithColorPicker
                 img={stroke}
                 onChange={changeStrokeColor}
-                value={strokeColorPicker
-                    ? strokeColorPicker
-                    : String(props.element.borderColor)}
+                value={String(props.element.borderColor)}
             />
             {isTextBox(props.element.dataElement) && <Button_WithColorPicker
                 img={word}

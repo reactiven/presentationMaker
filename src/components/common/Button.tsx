@@ -11,8 +11,14 @@ type ButtonProps = {
 
 function Button(props: ButtonProps): JSX.Element {
     const className = `standard-button standard-button_${props.type}`
+
+    function onClick(event: any) {
+        props.onClick()
+        event.preventDefault()
+    }
+
     return (
-        <button className={className} onClick={props.onClick} disabled={!!props.disabled}>
+        <button className={className} onClick={onClick} disabled={!!props.disabled}>
             {props.label && props.label}
             {props.img && <img src={props.img} alt='button-logo'  className='button-image'/>}
         </button>

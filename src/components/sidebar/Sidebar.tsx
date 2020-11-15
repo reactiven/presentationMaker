@@ -11,7 +11,6 @@ type PropsType = {
 function SideBar(props: PropsType): JSX.Element {
 
     function changeSlide(slideId: number) {
-        console.log(slideId)
         dispatch(goToSlide, {
             slideId,
         })
@@ -26,7 +25,7 @@ function SideBar(props: PropsType): JSX.Element {
             return <SideBarItem 
                 key={slideId}
                 slide={slide}
-                isSelected={state.currentSlide == slideId}
+                isSelected={state.currentSlide === slideId}
                 index={index} 
                 changeSlide={changeSlide}
             />
