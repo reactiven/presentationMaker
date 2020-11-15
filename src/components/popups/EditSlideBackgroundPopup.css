@@ -16,3 +16,7 @@
 .slide-background-content-file-input {
     display: none;
 }
+
+.slide-background-content-url-input {
+    width: 125px;
+}

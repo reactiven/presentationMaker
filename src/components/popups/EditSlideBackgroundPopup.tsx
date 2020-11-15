@@ -15,6 +15,7 @@ function Content(props: ContentProps) {
     const [color, setColor] = useState<string>(props.currentSlideInfo.background)
     const inputColorRef = useRef<HTMLInputElement | null>(null)
     const inputFileRef = useRef<HTMLInputElement | null>(null)
+    const inputUrlRef = useRef<HTMLInputElement | null>(null)
 
     function onImageChange(event: any) {
         if (event.target.files && event.target.files[0]) {
@@ -42,6 +43,15 @@ function Content(props: ContentProps) {
         event.stopPropagation()
     }
 
+    function findImageUrl(event: any) {
+        if (inputUrlRef.current) {
+            setColor(inputUrlRef.current.value)
+            dispatch(setSlideBackground, {
+                newBackground: inputUrlRef.current.value,
+            })
+        }
+    }
+
     return (
         <div className='slide-background-content-container'>
             <div className='slide-background-content-row'>
@@ -56,7 +66,7 @@ function Content(props: ContentProps) {
                 </div>
             </div>
             <div className='slide-background-content-row'>
-                <div className='slide-background-content-row-title'>Изображение</div>
+                <div className='slide-background-content-row-title'>Изображение с компьютера</div>
                 <div onClick={onInputClick}>
                     <Button
                         type={'normal'}
@@ -69,6 +79,18 @@ function Content(props: ContentProps) {
                         ref={inputFileRef}
                         onInput={onImageChange}
                         className='slide-background-content-file-input'
+                    />
+                </div>
+            </div>
+            <div className='slide-background-content-row'>
+                <div className='slide-background-content-row-title'>Изображение из интернета</div>
+                <div onClick={onInputClick}>
+                    <input
+                        type='text'
+                        ref={inputUrlRef}
+                        onBlur={findImageUrl}
+                        className='slide-background-content-url-input'
+                        placeholder={'Введите ссылку на изображение'}
                     />
                 </div>
             </div>
