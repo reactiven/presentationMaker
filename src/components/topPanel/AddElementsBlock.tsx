@@ -11,6 +11,8 @@ import circle from '../../images/circle.png';
 import rect from '../../images/rect.png';
 import triangle from '../../images/triangle.png';
 import './AddElementsBlock.css';
+import {setAddImageLinkPopopOpened} from "../../Entity/Presentation";
+import {ToolSeparator} from "./ToolPanel";
 
 
 function AddElementsBlock() {
@@ -69,6 +71,11 @@ function AddElementsBlock() {
         if (id === 'file') {
             inputFileRef.current && inputFileRef.current.click()
         }
+        if (id == 'ref') {
+            dispatch(setAddImageLinkPopopOpened, {
+                opened: true,
+            })
+        }
     }
 
     return(
@@ -101,6 +108,7 @@ function AddElementsBlock() {
                     className='slide-background-content-file-input'
                 />
             </div>
+            <ToolSeparator/>
         </div>
     )
 }

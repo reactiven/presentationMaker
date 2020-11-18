@@ -7,6 +7,7 @@ import {State} from './Entity/types';
 import {initialState} from './viewModel/initialState';
 import {EditSlideBackgroundPopup} from './components/popups/EditSlideBackgroundPopup';
 import {getCurrentSlideInfo} from "./Entity/Presentation";
+import {AddImageLinkPopup} from "./components/popups/AddImageLinkPopup";
 
 
 function renderApp(state: State) {
@@ -15,6 +16,7 @@ function renderApp(state: State) {
         <React.StrictMode>
             <App state={state}/>
             {state.editSlideBackgroundPopupOpened && currentSlideInfo && <EditSlideBackgroundPopup currentSlideInfo={currentSlideInfo}/>}
+            {state.addImageLinkPopupOpened && <AddImageLinkPopup />}
         </React.StrictMode>,
         document.getElementById('root')
     );

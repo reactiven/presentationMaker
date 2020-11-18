@@ -32,20 +32,18 @@ function ToolPanel(props: PropsType) {
     return(
         <div className='toolpanel'>
             <CommonToolBlock/>
-            <ToolSeparator/>
-            <AddElementsBlock />
-            <ToolSeparator/>
+            {currentSlide && <AddElementsBlock />}
             {selectedElement && <ColorEditColor element={selectedElement}/>}
             {selectedElement && isTextBox(selectedElement.dataElement)
             && <FontEditBlock
                 dataElement={selectedElement.dataElement}
                 element={selectedElement}
             />}
-            <Button
+            {currentSlide && <Button
                 type={'border-none'}
                 onClick={openEditSlideBackgroundPopup}
                 label={'Фон'}
-            />
+            />}
             <ToolSeparator/>
         </div>
     )

@@ -7,6 +7,7 @@ const initialState: State = {
     selectedSlideElements: [1],
     selectedSlides: [2],
     editSlideBackgroundPopupOpened: false,
+    addImageLinkPopupOpened: false,
     presentationInfo: {
         name: 'new presentation',
         slidesOrder: [0, 2, 1],

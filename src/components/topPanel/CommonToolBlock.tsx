@@ -7,6 +7,7 @@ import {redo, undo} from "../../Entity/State";
 import arrowRight from "../../images/redo.png";
 import './CommonToolBlock.css';
 import React from "react";
+import {ToolSeparator} from "./ToolPanel";
 
 function CommonToolBlock() {
 
@@ -27,6 +28,7 @@ function CommonToolBlock() {
                 img={arrowRight}
                 onClick={() => dispatch(redo)}
             />
+            <ToolSeparator/>
         </div>
     )
 }

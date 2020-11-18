@@ -152,6 +152,13 @@ function setEditSlideBackgroundPopupOpened(state: State, payload: {opened: boole
 	}
 }
 
+function setAddImageLinkPopopOpened(state: State, payload: {opened: boolean}): State {
+	return {
+		...state,
+		addImageLinkPopupOpened: payload.opened,
+	}
+}
+
 function generateSlideId(): number {
 	return Math.random() * 10
 }
@@ -168,4 +175,5 @@ export {
 	generateSlideId,
 	deleteSlideSelection,
 	setEditSlideBackgroundPopupOpened,
+	setAddImageLinkPopopOpened,
 }

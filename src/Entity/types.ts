@@ -5,6 +5,7 @@ type State = {
     presentationInfo: PresentationType,
     onPreview: boolean,
     editSlideBackgroundPopupOpened: boolean,
+    addImageLinkPopupOpened: boolean,
 }
 
 type StateList = {

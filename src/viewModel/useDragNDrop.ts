@@ -36,7 +36,6 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
     }
 
     function mouseDown(event: MouseEvent) {
-        // console.log(event.currentTarget)
         if (event.ctrlKey)
         {
             dispatch(addElementToSelected, {
@@ -49,7 +48,6 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
                 elementId: element.elementId
             })
             if (!event.defaultPrevented) {
-                console.log('test2')
                 const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, elementRef.current)
                 setOffsetLeft(cursorX)
                 setOffsetTop(cursorY)
