@@ -12,6 +12,7 @@ import { ToolSeparator } from "./ToolPanel";
 import border from "../../images/border.png";
 import { Button_WithPopover } from "../common/Button_WithPopover";
 import { SelectList } from "../common/SelectList";
+import { isImage } from "../../Entity/Image";
 
 
 type PropsType = {
@@ -52,11 +53,11 @@ function ColorEditColor(props: PropsType) {
 
     return(
         <div className='color-edit-block'>
-            <Button_WithColorPicker
+            {!isImage(props.element.dataElement) && <Button_WithColorPicker
                 img={fill}
                 onChange={changeBgColor}
                 value={String(props.element.background)}
-            />
+            />}
             <Button_WithColorPicker
                 img={stroke}
                 onChange={changeStrokeColor}

@@ -18,11 +18,10 @@ function Workspace(props: PropsType) {
         {
             dispatch(deleteElementSelection)
         }
-        dispatch(deleteSlideSelection)
     }
 
     return(
-        <div className="workspace" onClick={onClick}>
+        <div className="workspace" onClick={onClick} onMouseDown={() => dispatch(deleteSlideSelection)}>
             {slideInfo && <Slide 
                 slideInfo={slideInfo}
                 selectedElements={props.state.selectedSlideElements}

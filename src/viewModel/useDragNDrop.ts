@@ -16,15 +16,17 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
     function mouseUp(event: MouseEvent) {
         document.removeEventListener('mousemove', mouseMove)
         document.removeEventListener('mouseup', mouseUp)
-        const elementBounds = elementRef.current!.getBoundingClientRect()
-        const [cursorX, cursorY] = getParentRelativeCoordinates(elementBounds.left, elementBounds.top, slide)
-        dispatch(moveElement, {
-            elementId: element.elementId,
-            newX: cursorX,
-            newY: cursorY,
-        })
-        setLeft(null)
-        setTop(null)
+        if (elementRef.current) {
+            const elementBounds = elementRef.current.getBoundingClientRect()
+            const [cursorX, cursorY] = getParentRelativeCoordinates(elementBounds.left, elementBounds.top, slide)
+            dispatch(moveElement, {
+                elementId: element.elementId,
+                newX: cursorX,
+                newY: cursorY,
+            })
+            setLeft(null)
+            setTop(null)
+        }
     }
 
     function mouseMove(event: MouseEvent) {

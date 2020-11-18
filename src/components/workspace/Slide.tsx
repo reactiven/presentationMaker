@@ -14,7 +14,7 @@ function Slide(props: PropsType) {
     const imageRegexp = /\.*http\.*/
     const style = {
         background: slideInfo.background.match(imageRegexp)
-            ? `url("${props.slideInfo.background}") no-repeat center/100%`
+            ? `url("${props.slideInfo.background}") no-repeat center/100% 100%`
             : props.slideInfo.background
     }
 
