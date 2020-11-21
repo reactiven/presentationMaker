@@ -2,6 +2,8 @@ import { renderApp } from "..";
 import { redo, saveStateForUndo, undo } from "../Entity/State";
 import { State } from "../Entity/types";
 import { initialState } from "../viewModel/initialState";
+import * as htmlToImage from "html-to-image";
+import {setPreviewImage} from "../Entity/Slide";
 
 type fnType = (state: State, payload: any) => State|undefined
 
@@ -13,6 +15,18 @@ function dispatch(fn: fnType, payload?: any) {
         saveStateForUndo(state) 
     }
     state = newState ? newState : state
+    // console.log('123')
+    // const slide = document.getElementById('slide')
+    // if (slide) {
+    //     htmlToImage.toJpeg(slide, {
+    //         quality: 0.5,
+    //     })
+    //         .then(function (dataUrl) {
+    //             dispatch(setPreviewImage, {
+    //                 image: dataUrl,
+    //             })
+    //         });
+    // }
     renderApp(state)
 }
 

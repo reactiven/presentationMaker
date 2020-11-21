@@ -22,10 +22,12 @@ function Workspace(props: PropsType) {
 
     return(
         <div className="workspace" onClick={onClick} onMouseDown={() => dispatch(deleteSlideSelection)}>
-            {slideInfo && <Slide 
-                slideInfo={slideInfo}
-                selectedElements={props.state.selectedSlideElements}
-            />}
+            <div className='slide-container'>
+                {slideInfo && <Slide
+                    slideInfo={slideInfo}
+                    selectedElements={props.state.selectedSlideElements}
+                />}
+            </div>
         </div>
     )
 }

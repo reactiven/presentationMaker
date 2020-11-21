@@ -124,15 +124,18 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
     const className = props.isSelected
         ? 'sidebar-item sidebar-item_selected'
         : 'sidebar-item'
+
+    const styleBackground = {
+        background: props.slide.previewImage
+            ? `url(${props.slide.previewImage}) no-repeat center/100% 100%`
+            : 'transparent',
+    }
     return (
         <div
             className={className}
             ref={slideRef}
-        >
-            <div>
-                Слайд {props.index}
-            </div>
-        </div>
+            style={styleBackground}
+        ></div>
     )
 }
 

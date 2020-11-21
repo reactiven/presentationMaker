@@ -24,6 +24,7 @@ type SlideType = {
     elementsOrder: Array<number>
     slideId: number,
     background: BackgroundType,
+    previewImage: any|null,
 }
 
 type SlideElementType = {

@@ -46,7 +46,7 @@ function AddTextBox(state: State): State{
 			font: {
 				fontStyle: 'Times New Roman',
 				fontSize: '20px',
-				fontColor: '#000',
+				fontColor: '#000000',
 				bold: false,
 				italic: false,
 				underline: false,
@@ -153,10 +153,25 @@ function setSlideBackground(state: State, payload: {newBackground: BackgroundTyp
 	}
 }
 
+function setPreviewImage(state: State, payload: {image: string}): State {
+	const slides = [...state.presentationInfo.slides]
+	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
+	slide.previewImage = payload.image
+	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
+	return {
+		...state,
+		presentationInfo: {
+			...state.presentationInfo,
+			slides
+		}
+	}
+}
+
 export {
 	AddImage,
 	AddTextBox,
 	AddShape,
 	DeleteElements,
 	setSlideBackground,
+	setPreviewImage,
 }

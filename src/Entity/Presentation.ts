@@ -17,7 +17,8 @@ function addSlide(state: State): State{
 		slideId: generateSlideId(),
 		elements: [],
 		elementsOrder: [],
-		background: '#fff',
+		background: '#ffffff',
+		previewImage: null,
 	}
 	const slides = [...state.presentationInfo.slides]
 	slides.splice(Number(state.currentSlide) + 1, 0, defaultSlide)

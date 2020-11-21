@@ -22,9 +22,15 @@ function Triangle(props: PropsType) {
         >
             <polygon 
                 points={points}
-                fill={String(style.fill)}
-                stroke={String(style.strokeColor)}
-                strokeWidth={String(style.strokeWidth)}
+                fill={style.fill
+                    ? style.fill
+                    : 'transparent'}
+                stroke={style.strokeColor
+                    ? style.strokeColor
+                    : '#000000'}
+                strokeWidth={style.strokeWidth
+                    ? style.strokeWidth
+                    : '1'}
             />
         </svg>
     )

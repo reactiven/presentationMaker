@@ -23,9 +23,15 @@ function Circle(props: PropsType) {
                 r={width/2 - 5} 
                 cx={width/2} 
                 cy={height/2}
-                fill={String(style.fill)}
-                stroke={String(style.strokeColor)}
-                strokeWidth={String(style.strokeWidth)}
+                fill={style.fill
+                    ? style.fill
+                    : 'transparent'}
+                stroke={style.strokeColor
+                    ? style.strokeColor
+                    : '#000000'}
+                strokeWidth={style.strokeWidth
+                    ? style.strokeWidth
+                    : '1'}
             />
         </svg>
     )

@@ -2,8 +2,10 @@ import React, {Ref, useEffect, useRef} from 'react';
 import { SlideElementType, SlideType } from "../../Entity/types";
 import './Slide.css';
 import { SlideElement } from '../SlideElements/Element';
-// import * as htmlToImage from 'html-to-image';
-// import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
+import * as htmlToImage from 'html-to-image';
+import { toPng, toJpeg, toBlob, toPixelData, toSvg } from 'html-to-image';
+import {dispatch} from "../../state/state-manager";
+import {setPreviewImage} from "../../Entity/Slide";
 
 type PropsType = {
     slideInfo: SlideType,
@@ -21,25 +23,22 @@ function Slide(props: PropsType) {
             : props.slideInfo.background
     }
 
-    // const screenStyle = {
-    //     background: '#123123'
-    // }
     // useEffect(() => {
     //     if (slideRef.current) {
     //         htmlToImage.toJpeg(slideRef.current, {
-    //             quality: 0.95,
+    //             quality: 0.5,
     //         })
     //             .then(function (dataUrl) {
-    //                 var link = document.createElement('a');
-    //                 link.download = 'my-image-name.jpeg';
-    //                 link.href = dataUrl;
-    //                 // link.click();
+    //                 dispatch(setPreviewImage, {
+    //                     slideId: slideInfo.slideId,
+    //                     image: dataUrl,
+    //                 })
     //             });
     //     }
     // }, [slideInfo, slideRef])
 
     return(
-        <div className="slide" style={style} ref={slideRef}>
+        <div className="slide" id='slide' style={style} ref={slideRef}>
             {renderElements(slideInfo.elements, slideInfo.elementsOrder, selectedElements)}
         </div>
     )

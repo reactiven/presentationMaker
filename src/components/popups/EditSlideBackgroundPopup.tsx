@@ -61,7 +61,7 @@ function Content(props: ContentProps) {
                         type='color'
                         ref={inputColorRef}
                         onInput={onInputColor}
-                        value={color}
+                        defaultValue={color}
                     />
                 </div>
             </div>

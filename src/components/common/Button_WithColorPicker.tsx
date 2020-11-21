@@ -34,7 +34,7 @@ function Button_WithColorPicker(props: ButtonWithColorPickerProps): JSX.Element 
     return(
         <div className='color-picker-container' onClick={onClick}>
             {<img src={props.img} alt='button-logo' className='color-picker-image'/>}
-            <input type='color' ref={inputRef} onInput={onInput} value={value} className='color-picker'/>
+            <input type='color' ref={inputRef} onInput={onInput} defaultValue={value} className='color-picker'/>
         </div>
     )
 }

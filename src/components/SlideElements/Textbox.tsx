@@ -21,7 +21,9 @@ function Textbox(props: PropsType) {
         fontStyle: data.font.italic ? 'italic' : 'normal',
         fontFamily: data.font.fontStyle,
         color: data.font.fontColor,
-        background: String(props.background),
+        background: props.background
+            ? props.background
+            : 'transparent',
         border: `${props.borderWidth} solid ${props.borderColor}`,
         fontWeight,
         textDecoration: fontDecoration,
@@ -40,8 +42,8 @@ function Textbox(props: PropsType) {
         <textarea ref={inputRef}
                   className='textBox-block richtext'
                   style={inputStyle}
-                  onChange={onChange}
-                  value={props.data.text || ''}
+                  onBlur={onChange}
+                  defaultValue={props.data.text || ''}
         >
         </textarea>
     )

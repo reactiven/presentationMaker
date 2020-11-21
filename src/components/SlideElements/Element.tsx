@@ -177,7 +177,7 @@ function ResizeHandlers({
         const [elementLeft, elementTop] = getParentRelativeCoordinates(elementBounds!.left, elementBounds!.top, slide)
         const elementBottom = elementTop + elementBounds!.height
         setHeight(elementBottom - cursorY)
-        setTop(cursorY - 1)
+        setTop(cursorY)
     }
 
     function bsMouseMove(event: any) {
@@ -199,7 +199,7 @@ function ResizeHandlers({
         const elementBounds = elementRef.current && elementRef.current.getBoundingClientRect()
         const [elementRight, elementTop] = getParentRelativeCoordinates(elementBounds!.right, elementBounds!.top, slide)
         setWidth(elementRight - cursorX)
-        setLeft(cursorX - 1)
+        setLeft(cursorX)
     }
 
     function tsMouseDown(event: any) {
