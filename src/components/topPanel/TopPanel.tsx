@@ -23,10 +23,6 @@ function TopPanel(props: PropsType) {
         })
     }
 
-    function onChangeHandler(e: any) {
-        console.log(e.target.files[0])
-    } 
-
     let fileURL = download()
     let fileName = `${props.state.presentationInfo.name}.json`
 

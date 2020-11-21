@@ -43,13 +43,13 @@ function Button_WithPopover(props: Button_WithPopover) {
     })
 
     return(
-        <>
+        <div>
             <button className='button-with-popover' ref={buttonRef} onClick={onClick}>
                 {props.img && <img src={props.img} alt='button-logo' className='button-image'/>}
                 {props.text}
             </button>
             {open && positionPopover()}
-        </>
+        </div>
     )
 }
 

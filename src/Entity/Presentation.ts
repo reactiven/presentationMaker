@@ -52,7 +52,6 @@ function deleteSlides(state: State): State {
 	slides = slides.filter((slide) => (selectedSlides.indexOf(slide.slideId) === -1))
 	slidesOrder = slidesOrder.filter(slideId => (selectedSlides.indexOf(slideId) === -1))
 	selectedSlides = []
-	debugger
 	return {
 		...state,
 		selectedSlides,
@@ -82,36 +81,33 @@ function getCurrentSlideInfo(state: State): SlideType|undefined {
 function moveSlides(state: State, payload: {
 	newPosition: number
 }): State{
-	const selectedSlides = [...state.selectedSlides]
-	const slides = [...state.presentationInfo.slides]
+
+	const selectedSlideId = [...state.selectedSlides][0]
 	const slidesOrder = [...state.presentationInfo.slidesOrder]
-	const insertSlide = slides[payload.newPosition]
-	const movedSlidesOrder = slidesOrder.filter((slideId) => (selectedSlides.indexOf(slideId) !== -1))
-	const staticSlidesOrder = slidesOrder.filter((slideId) => (selectedSlides.indexOf(slideId) === -1))
-	let insertPosition: number = -1
-	if (insertSlide === undefined)
-	{
-		insertPosition = staticSlidesOrder.length
+	const selectedSlideIndex = slidesOrder.findIndex(id => selectedSlideId === id)
+	let finalArray
+	if (payload.newPosition == 0) {
+		let newSlidesOrder = slidesOrder.filter(slideId => slideId !== selectedSlideId)
+		finalArray = [selectedSlideId].concat(newSlidesOrder)
 	}
-	else
-	{
-		staticSlidesOrder.forEach((slideId, index) => {
-			if (slideId === insertSlide.slideId)
-			{
-				insertPosition = index
-			}
-		})
+	else if (payload.newPosition == slidesOrder.length) {
+		let newSlidesOrder = slidesOrder.filter(slideId => slideId !== selectedSlideId)
+		finalArray = newSlidesOrder.concat([selectedSlideId])
 	}
-	
-	const firtsPart = staticSlidesOrder.slice(0, insertPosition)
-	const secondPart = staticSlidesOrder.slice(insertPosition)
-	const concatArray = firtsPart.concat(movedSlidesOrder).concat(secondPart)
+	else {
+		let nextSlideId = slidesOrder[payload.newPosition]
+		slidesOrder.splice(selectedSlideIndex, 1)
+		const insertPosition = slidesOrder.findIndex(id => nextSlideId === id)
+		const firstPart = slidesOrder.slice(0, insertPosition)
+		const secondPart = slidesOrder.slice(insertPosition)
+		finalArray = firstPart.concat([selectedSlideId]).concat(secondPart)
+	}
 
 	return {
 		...state,
 		presentationInfo: {
 			...state.presentationInfo,
-			slidesOrder: concatArray,
+			slidesOrder: finalArray,
 		}
 	}
 }

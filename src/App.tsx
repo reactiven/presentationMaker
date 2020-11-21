@@ -29,7 +29,7 @@ function App(props: PropsType): JSX.Element {
 
     const keydownHandler = (e: KeyboardEvent): void => {
         if (e.keyCode === 46) {
-            debugger
+
             if (!!props.state.selectedSlides.length) {
                 dispatch(deleteSlides)
             }

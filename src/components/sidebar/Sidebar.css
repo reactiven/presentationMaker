@@ -8,6 +8,7 @@
     display: flex;
     flex-direction: column;
     padding: 0 15px;
+    position: relative;
 }
 
 .sidebar-item:hover {
@@ -34,4 +35,12 @@
 .sidebar-item_selected:hover {
     box-shadow: 0 0 0 2px #FA8258;
     border: 1px solid transparent;
+}
+
+.sidebar-separator {
+    position: absolute;
+    width: 200px;
+    height: 2px;
+    background: red;
+    left: -10px;
 }
