@@ -6,6 +6,10 @@
     position: relative;
 }
 
+.workspace_insertion:hover {
+    cursor: crosshair;
+}
+
 .slide-container {
     position: absolute;
     left: 50%;

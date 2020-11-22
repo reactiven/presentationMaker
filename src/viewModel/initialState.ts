@@ -12,7 +12,11 @@ const initialState: State = {
         name: 'new presentation',
         slidesOrder: [],
         slides: [],
-    }
+    },
+    insertionMode: {
+        on: false,
+        elementType: null,
+    },
 }
 
 export {

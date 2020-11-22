@@ -1,4 +1,4 @@
-import { SlideType, State } from './types'
+import {ElementType, ShapeTypeType, SlideElementType, SlideType, State} from './types'
 
 function changeName(state: State, payload: {
 	newName: string,
@@ -156,6 +156,23 @@ function setAddImageLinkPopopOpened(state: State, payload: {opened: boolean}): S
 	}
 }
 
+function setInsertionMode(state: State, payload: {
+	on: boolean,
+	elementType: ElementType | null,
+	shapeType: ShapeTypeType | undefined,
+	filepath: string | undefined,
+}): State {
+	return {
+		...state,
+		insertionMode: {
+			on: payload.on,
+			elementType: payload.elementType,
+			shapeType: payload.shapeType,
+			filepath: payload.filepath,
+		}
+	}
+}
+
 function generateSlideId(): number {
 	return Math.random() * 10
 }
@@ -173,4 +190,5 @@ export {
 	deleteSlideSelection,
 	setEditSlideBackgroundPopupOpened,
 	setAddImageLinkPopopOpened,
+	setInsertionMode,
 }

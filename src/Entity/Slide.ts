@@ -1,7 +1,8 @@
 import { generateElementId } from './SlideElement'
 import { BackgroundType, State, SlideElementType, ShapeTypeType } from './types'
 
-function AddImage(state: State, payload: {filepath: string}): State {
+function AddImage(state: State, payload: {filepath: string, position: ElementPosition}): State {
+	debugger
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
@@ -14,8 +15,8 @@ function AddImage(state: State, payload: {filepath: string}): State {
 		elementId: generateElementId(),
 		width: 200,
 		height: 200,
-		xPos: 280,
-		yPos: 115,
+		xPos: payload.position.x,
+		yPos: payload.position.y,
 		background: null,
 		borderWidth: null,
 		borderColor: null,
@@ -35,7 +36,7 @@ function AddImage(state: State, payload: {filepath: string}): State {
 	}
 }
 
-function AddTextBox(state: State): State{
+function AddTextBox(state: State, payload: {position: ElementPosition}): State{
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
@@ -56,8 +57,8 @@ function AddTextBox(state: State): State{
 		elementId: generateElementId(),
 		width: 200,
 		height: 200,
-		xPos: 280,
-		yPos: 115,
+		xPos: payload.position.x,
+		yPos: payload.position.y,
 		background: null,
 		borderWidth: null,
 		borderColor: null,
@@ -76,7 +77,13 @@ function AddTextBox(state: State): State{
 		}
 	}
 }
-function AddShape(state: State, payload: {type: ShapeTypeType}): State{
+
+type ElementPosition = {
+	x: number,
+	y: number
+}
+
+function AddShape(state: State, payload: {type: ShapeTypeType, position: ElementPosition}): State{
 	const slides = [...state.presentationInfo.slides]
 	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
 	const elements = [...slide.elements]
@@ -89,8 +96,8 @@ function AddShape(state: State, payload: {type: ShapeTypeType}): State{
 		elementId: elements.length,
 		width: 200,
 		height: 200,
-		xPos: 280,
-		yPos: 115,
+		xPos: payload.position.x,
+		yPos: payload.position.y,
 		background: null,
 		borderWidth: null,
 		borderColor: null,

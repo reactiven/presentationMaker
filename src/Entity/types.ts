@@ -6,6 +6,14 @@ type State = {
     onPreview: boolean,
     editSlideBackgroundPopupOpened: boolean,
     addImageLinkPopupOpened: boolean,
+    insertionMode: InsertionModeType,
+}
+
+type InsertionModeType = {
+    on: boolean,
+    elementType: ElementType | null,
+    shapeType?: ShapeTypeType,
+    filepath?: string,
 }
 
 type StateList = {
@@ -24,7 +32,7 @@ type SlideType = {
     elementsOrder: Array<number>
     slideId: number,
     background: BackgroundType,
-    previewImage: any|null,
+    previewImage: any | null,
 }
 
 type SlideElementType = {

@@ -5,7 +5,7 @@ import React, {Ref, useRef, useState} from "react";
 import {SlideType} from "../../Entity/types";
 import {dispatch} from "../../state/state-manager";
 import {AddImage, setSlideBackground} from "../../Entity/Slide";
-import {setAddImageLinkPopopOpened} from "../../Entity/Presentation";
+import {setAddImageLinkPopopOpened, setInsertionMode} from "../../Entity/Presentation";
 
 type ContentProps = {
     inputInfo: any,
@@ -37,13 +37,14 @@ function Content(props: ContentProps) {
 
 
 function AddImageLinkPopup() {
-
     const inputInfo = useRef<any>({
         value: ''
     })
 
     function acceptChange() {
-        dispatch(AddImage, {
+        dispatch(setInsertionMode, {
+            on: true,
+            elementType: 'image',
             filepath: inputInfo.current.value
         })
         dispatch(setAddImageLinkPopopOpened, {

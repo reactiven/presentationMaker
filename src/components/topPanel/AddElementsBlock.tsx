@@ -11,7 +11,7 @@ import circle from '../../images/circle.png';
 import rect from '../../images/rect.png';
 import triangle from '../../images/triangle.png';
 import './AddElementsBlock.css';
-import {setAddImageLinkPopopOpened} from "../../Entity/Presentation";
+import {setAddImageLinkPopopOpened, setInsertionMode} from "../../Entity/Presentation";
 import {ToolSeparator} from "./ToolPanel";
 
 
@@ -21,7 +21,9 @@ function AddElementsBlock() {
     function onImageChange(event: any) {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0]
-            dispatch(AddImage, {
+            dispatch(setInsertionMode, {
+                on: true,
+                elementType: 'image',
                 filepath: URL.createObjectURL(img),
             })
         }
@@ -62,8 +64,10 @@ function AddElementsBlock() {
     }
 
     function handleAddShape(id: string) {
-        dispatch(AddShape, {
-            type: id,
+        dispatch(setInsertionMode, {
+            on: true,
+            elementType: 'shape',
+            shapeType: id,
         })
     }
 
@@ -83,7 +87,10 @@ function AddElementsBlock() {
             <Button
                 type={'border-none'}
                 img={textbox}
-                onClick={() => dispatch(AddTextBox)}
+                onClick={() => dispatch(setInsertionMode, {
+                    on: true,
+                    elementType: 'textBox',
+                })}
             />
             <Button_WithPopover
                 img={shape}
