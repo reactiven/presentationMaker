@@ -1,3 +1,4 @@
+import jsPDF from 'jspdf'
 import { state } from '../state/state-manager'
 import { State, StateList } from './types'
 
@@ -7,9 +8,17 @@ const stateList: StateList = {
 	redoStateList: [],
 }
 
-// function exportPresentation(state: State): void {
-//
-// }
+function exportPresentation(state: State): void {
+	const slides = [...state.presentationInfo.slides]
+	const doc = new jsPDF()
+	slides.forEach((slide, index) => {
+		doc.addImage(slide.previewImage,'JPEG', 7, 40, 200, 115)
+		if (index < slides.length - 1) {
+			doc.addPage()
+		}
+	})
+	doc.save(`${state.presentationInfo.name}.pdf`)
+}
 
 function savePresentation(state: State): string {
 	const file = new Blob(
@@ -33,7 +42,6 @@ function goToPreview(state: State): State{
 
 function saveStateForUndo(state: State): void {
 	stateList.undoStateList.push(state)
-
 }
 
 function undo(): State|undefined {
@@ -53,6 +61,7 @@ function redo(): State|undefined {
 }
 
 export {
+	exportPresentation,
 	savePresentation,
 	goToPreview,
 	saveStateForUndo,

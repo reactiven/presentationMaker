@@ -15,18 +15,18 @@ function dispatch(fn: fnType, payload?: any) {
         saveStateForUndo(state) 
     }
     state = newState ? newState : state
-    // console.log('123')
-    // const slide = document.getElementById('slide')
-    // if (slide) {
-    //     htmlToImage.toJpeg(slide, {
-    //         quality: 0.5,
-    //     })
-    //         .then(function (dataUrl) {
-    //             dispatch(setPreviewImage, {
-    //                 image: dataUrl,
-    //             })
-    //         });
-    // }
+    const slide = document.getElementById('slide')
+    if (slide) {
+        htmlToImage.toJpeg(slide, {
+            quality: 0.5,
+        })
+            .then(function (dataUrl) {
+                state = setPreviewImage(state,{
+                    image: dataUrl,
+                })
+                renderApp(state)
+            });
+    }
     renderApp(state)
 }
 
