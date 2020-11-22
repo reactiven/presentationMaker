@@ -2,7 +2,6 @@ import jsPDF from 'jspdf'
 import { state } from '../state/state-manager'
 import { State, StateList } from './types'
 
-// Не уверен что так мы будем задавать массивы, тут вопросик
 const stateList: StateList = {
 	undoStateList: [],
 	redoStateList: [],
@@ -21,6 +20,7 @@ function exportPresentation(state: State): void {
 }
 
 function savePresentation(state: State): string {
+	console.log(state)
 	const file = new Blob(
 		[JSON.stringify(state)],
 		{ type: 'application/json'}
@@ -30,9 +30,11 @@ function savePresentation(state: State): string {
 
 	return fileURL	
 }
-// function uploadPresentation(filepath: string): State{
-// 	return state
-// }
+
+function uploadPresentation(state: State, payload: {newState: State}): State{
+	return payload.newState
+}
+
 function goToPreview(state: State): State{
 	return {
 		...state,
@@ -68,4 +70,5 @@ export {
 	undo,
 	redo,
 	stateList,
+	uploadPresentation,
 }
