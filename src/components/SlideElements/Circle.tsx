@@ -19,9 +19,10 @@ function Circle(props: PropsType) {
         <svg 
             viewBox={String(viewBox)}
         >
-            <circle 
-                r={width/2 - 5} 
-                cx={width/2} 
+            <ellipse
+                rx={width / 2 - 5}
+                ry={height /2 - 5}
+                cx={width/2}
                 cy={height/2}
                 fill={style.fill
                     ? style.fill

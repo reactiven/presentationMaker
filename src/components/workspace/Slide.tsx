@@ -12,9 +12,10 @@ function Slide(props: PropsType) {
     const slideInfo = {...props.slideInfo}
     const selectedElements = [...props.selectedElements]
     const imageRegexp = /\.*http\.*/
+    const dataRegexp = /\.*data:\.*/
     const slideRef = useRef<HTMLDivElement|null>(null)
     const style = {
-        background: slideInfo.background.match(imageRegexp)
+        background: slideInfo.background.match(imageRegexp) || slideInfo.background.match(dataRegexp)
             ? `url("${props.slideInfo.background}") no-repeat center/100% 100%`
             : props.slideInfo.background
     }

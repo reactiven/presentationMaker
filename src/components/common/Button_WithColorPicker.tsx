@@ -29,6 +29,10 @@ function Button_WithColorPicker(props: ButtonWithColorPickerProps): JSX.Element 
 
     useEffect(() => {
         setValue(props.value)
+        if (inputRef.current) {
+            inputRef.current.value = props.value
+        }
+
     }, [props.value])
 
     return(

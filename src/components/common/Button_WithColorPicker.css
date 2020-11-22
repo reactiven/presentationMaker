@@ -11,6 +11,10 @@ input[type="color" i]::-webkit-color-swatch-wrapper {
     padding: 0 6px;
 }
 
+.color-picker-container:hover {
+    cursor: pointer;
+}
+
 .color-picker-image {
     width: 25px;
 }
