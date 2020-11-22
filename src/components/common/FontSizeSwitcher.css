@@ -2,14 +2,14 @@
 .switcher-container {
     display: flex;
     align-items: center;
-    height: 35px;
+    height: 26px;
     border: 1px solid #000;
     border-radius: 5px;
 }
 
 .input-size {
     width: 35px;
-    height: 35px;
+    height: 100%;
     box-sizing: border-box;
     border: 1px solid #000;
     border-top: none;
@@ -17,8 +17,8 @@
 }
 
 .switch-button {
-    width: 45px;
-    height: 35px;
+    width: 35px;
+    height: 100%;
     background: none;
     border: none;
     border-radius: 5px;

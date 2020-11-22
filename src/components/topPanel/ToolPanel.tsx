@@ -37,14 +37,13 @@ function ToolPanel(props: PropsType) {
             {selectedElement && isTextBox(selectedElement.dataElement)
             && <FontEditBlock
                 dataElement={selectedElement.dataElement}
-                element={selectedElement}
             />}
             {currentSlide && <Button
                 type={'border-none'}
                 onClick={openEditSlideBackgroundPopup}
                 label={'Фон'}
             />}
-            <ToolSeparator/>
+            {currentSlide && <ToolSeparator/>}
         </div>
     )
 }

@@ -13,7 +13,6 @@ import { SelectList } from "../common/SelectList";
 import { Button_WithPopover } from "../common/Button_WithPopover";
 
 type PropsType = {
-    element: SlideElementType,
     dataElement: TextBoxType,
 }
 
@@ -82,7 +81,7 @@ function FontEditBlock(props: PropsType) {
                 />}
             />
             <FontSizeSwitcher
-                textBox={props.element}
+                textBox={props.dataElement}
             />
             <ToolSeparator />
         </div>

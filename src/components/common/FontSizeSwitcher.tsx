@@ -4,65 +4,55 @@ import plus from '../../images/add_new.png';
 import './FontSizeSwitcher.css'
 import {dispatch} from "../../state/state-manager";
 import {changeFont, isTextBox} from "../../Entity/TextBox";
-import {SlideElementType} from "../../Entity/types";
+import {SlideElementType, TextBoxType} from "../../Entity/types";
 
 type SizeSwitcherProps = {
-    textBox: SlideElementType | null,
+    textBox: TextBoxType,
 }
 
 function FontSizeSwitcher(props: SizeSwitcherProps) {
     const inputRef = useRef<HTMLInputElement>(null)
-    const [size, setSize] = useState<number|null>(null)
 
     function sizeInc() {
-        if (props.textBox && isTextBox(props.textBox.dataElement))
+        if (props.textBox)
         {
-            const size = parseInt(props.textBox.dataElement.font.fontSize.replace(/[^\d]/g, ''))
             dispatch(changeFont, {
                 newFont: {
-                    ...props.textBox.dataElement.font,
-                    fontSize: `${size + 1}px`,
+                    ...props.textBox.font,
+                    fontSize: Number(props.textBox.font.fontSize) + 1,
                 }
             })
-            setSize(size)
         }
     }
 
     function sizeDec() {
-        if (props.textBox && isTextBox(props.textBox.dataElement))
+        if (props.textBox)
         {
-            const size = parseInt(props.textBox.dataElement.font.fontSize.replace(/[^\d]/g, ''))
             dispatch(changeFont, {
                 newFont: {
-                    ...props.textBox.dataElement.font,
-                    fontSize: `${size - 1}px`,
-                }
-            })
-            setSize(size)
-        }
-    }
-
-    function onChange() {
-        if (inputRef.current && props.textBox && isTextBox(props.textBox.dataElement)) {
-            dispatch(changeFont, {
-                newFont: {
-                    ...props.textBox.dataElement.font,
-                    fontSize: `${inputRef.current.value}px`,
+                    ...props.textBox.font,
+                    fontSize: props.textBox.font.fontSize - 1,
                 }
             })
         }
     }
 
-    // setSize(props.textBox && isTextBox(props.textBox.dataElement)
-    //     ? parseInt(props.textBox.dataElement.font.fontSize.replace(/[^\d]/g, ''))
-    //     : null)
+    function onInput() {
+        if (inputRef.current && props.textBox) {
+            dispatch(changeFont, {
+                newFont: {
+                    ...props.textBox.font,
+                    fontSize: inputRef.current.value,
+                }
+            })
+        }
+    }
 
     useEffect(() => {
-        if (props.textBox && isTextBox(props.textBox.dataElement)) {
-            const size = parseInt(props.textBox.dataElement.font.fontSize.replace(/[^\d]/g, ''))
-            setSize(size)
+        if (props.textBox && inputRef.current) {
+            inputRef.current.value = String(props.textBox.font.fontSize)
         }
-    }, [inputRef, props.textBox, setSize])
+    }, [inputRef, props.textBox])
 
     return(
         <div className='switcher-container'>
@@ -70,10 +60,10 @@ function FontSizeSwitcher(props: SizeSwitcherProps) {
                 <img src={minus} alt='logo' className='switch-image-button'/>
             </button>
             <input
-                defaultValue={size || ''}
+                defaultValue={String(props.textBox.font.fontSize)}
                 className='input-size'
                 ref={inputRef}
-                onInput={onChange}
+                onInput={onInput}
             />
             <button className='switch-button' onClick={sizeInc}>
                 <img src={plus} alt='logo' className='switch-image-button'/>

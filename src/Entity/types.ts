@@ -65,7 +65,7 @@ type ShapeTypeType = ('circle' | 'rect' | 'triangle')
 type BackgroundType = (string)
 type FontType = {
     fontStyle: string,
-    fontSize: string,
+    fontSize: number,
     fontColor: string,
     bold: boolean,
     italic: boolean,

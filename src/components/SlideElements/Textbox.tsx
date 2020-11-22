@@ -17,7 +17,7 @@ function Textbox(props: PropsType) {
     const fontWeight: 'bold'|'normal' = data.font.bold ? 'bold' : 'normal'
     const fontDecoration: 'underline'|'none' = data.font.underline ? 'underline' : 'none'
     const inputStyle = {
-        fontSize: data.font.fontSize,
+        fontSize: `${data.font.fontSize}px`,
         fontStyle: data.font.italic ? 'italic' : 'normal',
         fontFamily: data.font.fontStyle,
         color: data.font.fontColor,

@@ -45,7 +45,7 @@ function AddTextBox(state: State): State{
 		dataElement: {
 			font: {
 				fontStyle: 'Times New Roman',
-				fontSize: '20px',
+				fontSize: 20,
 				fontColor: '#000000',
 				bold: false,
 				italic: false,
