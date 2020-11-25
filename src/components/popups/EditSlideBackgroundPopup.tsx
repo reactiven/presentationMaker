@@ -6,6 +6,7 @@ import {setEditSlideBackgroundPopupOpened} from "../../Entity/Presentation";
 import {SlideType} from "../../Entity/types";
 import './EditSlideBackgroundPopup.css';
 import {AddImage, setSlideBackground} from "../../Entity/Slide";
+import { toDataURL } from "../../viewModel/toDataURL";
 
 type ContentProps = {
     currentSlideInfo: SlideType,
@@ -20,7 +21,10 @@ function Content(props: ContentProps) {
     function onImageChange(event: any) {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0]
-            dispatch(setSlideBackground, {newBackground: URL.createObjectURL(img)})
+            toDataURL(URL.createObjectURL(img), function(dataUrl: any) {
+                dispatch(setSlideBackground, {newBackground: dataUrl})
+            })
+
         }
     }
 

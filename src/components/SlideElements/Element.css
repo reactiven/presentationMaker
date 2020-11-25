@@ -3,6 +3,10 @@
     position: absolute;
 }
 
+.element:hover {
+    cursor: crosshair;
+}
+
 .element:focus {
     outline: none;
 }

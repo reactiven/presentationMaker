@@ -13,6 +13,7 @@ import triangle from '../../images/triangle.png';
 import './AddElementsBlock.css';
 import {setAddImageLinkPopopOpened, setInsertionMode} from "../../Entity/Presentation";
 import {ToolSeparator} from "./ToolPanel";
+import {toDataURL} from "../../viewModel/toDataURL";
 
 
 function AddElementsBlock() {
@@ -21,11 +22,14 @@ function AddElementsBlock() {
     function onImageChange(event: any) {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0]
-            dispatch(setInsertionMode, {
-                on: true,
-                elementType: 'image',
-                filepath: URL.createObjectURL(img),
+            toDataURL(URL.createObjectURL(img), function(dataUrl: any) {
+                dispatch(setInsertionMode, {
+                    on: true,
+                    elementType: 'image',
+                    filepath: dataUrl,
+                })
             })
+
         }
         event.currentTarget.value = ''
     }

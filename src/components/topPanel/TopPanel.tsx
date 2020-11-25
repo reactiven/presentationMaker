@@ -35,9 +35,7 @@ function TopPanel(props: PropsType) {
                 dispatch(uploadPresentation, {
                     newState: intern
                 })
-                console.log(intern)
             }
-            debugger
             fileread.readAsText(file)
         }
         event.currentTarget.value = ''

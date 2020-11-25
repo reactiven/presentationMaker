@@ -9,9 +9,11 @@ const stateList: StateList = {
 
 function exportPresentation(state: State): void {
 	const slides = [...state.presentationInfo.slides]
+	const slidesOrder = [...state.presentationInfo.slidesOrder]
 	const doc = new jsPDF()
-	slides.forEach((slide, index) => {
-		doc.addImage(slide.previewImage,'JPEG', 7, 40, 200, 115)
+	slidesOrder.forEach((slideId, index) => {
+		const slide = {...slides[slides.findIndex(slide => slide.slideId === slideId)]}
+		doc.addImage(slide.previewImage,'JPEG', 5, 40, 200, 115)
 		if (index < slides.length - 1) {
 			doc.addPage()
 		}
@@ -20,7 +22,6 @@ function exportPresentation(state: State): void {
 }
 
 function savePresentation(state: State): string {
-	console.log(state)
 	const file = new Blob(
 		[JSON.stringify(state)],
 		{ type: 'application/json'}
