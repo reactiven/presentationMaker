@@ -1,5 +1,5 @@
 import { renderApp } from "..";
-import { redo, saveStateForUndo, undo } from "../Entity/State";
+import {goToPreview, redo, saveStateForUndo, undo} from "../Entity/State";
 import { State } from "../Entity/types";
 import { initialState } from "../viewModel/initialState";
 import * as htmlToImage from "html-to-image";
@@ -16,7 +16,7 @@ function dispatch(fn: fnType, payload?: any) {
     }
     state = newState ? newState : state
     const slide = document.getElementById('slide')
-    if (slide) {
+    if (slide && fn !== goToPreview) {
         htmlToImage.toJpeg(slide, {
             quality: 0.5,
         })
@@ -24,7 +24,7 @@ function dispatch(fn: fnType, payload?: any) {
                 state = setPreviewImage(state,{
                     image: dataUrl,
                 })
-                renderApp(state)
+                // renderApp(state)
             });
     }
     renderApp(state)

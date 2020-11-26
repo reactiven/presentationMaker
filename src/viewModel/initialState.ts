@@ -2,7 +2,6 @@ import { State } from "../Entity/types";
 
 
 const initialState: State = {
-    onPreview: false,
     currentSlide: null,
     selectedSlideElements: [],
     selectedSlides: [],
@@ -17,6 +16,10 @@ const initialState: State = {
         on: false,
         elementType: null,
     },
+    previewInfo: {
+        currentSlide: 0,
+        onPreview: false,
+    }
 }
 
 export {

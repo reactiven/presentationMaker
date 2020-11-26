@@ -8,13 +8,19 @@ import {initialState} from './viewModel/initialState';
 import {EditSlideBackgroundPopup} from './components/popups/EditSlideBackgroundPopup';
 import {getCurrentSlideInfo} from "./Entity/Presentation";
 import {AddImageLinkPopup} from "./components/popups/AddImageLinkPopup";
+import { PreviewMode } from './components/preview/PreviewMode';
 
 
 function renderApp(state: State) {
     const currentSlideInfo = getCurrentSlideInfo(state)
     ReactDOM.render(
         <React.StrictMode>
-            <App state={state}/>
+            {!state.previewInfo.onPreview && <App state={state}/>}
+            {state.previewInfo.onPreview && <PreviewMode
+                slides={[...state.presentationInfo.slides]}
+                slidesOrder={[...state.presentationInfo.slidesOrder]}
+                currentSlide={state.previewInfo.currentSlide}
+            />}
             {state.editSlideBackgroundPopupOpened && currentSlideInfo && <EditSlideBackgroundPopup currentSlideInfo={currentSlideInfo}/>}
             {state.addImageLinkPopupOpened && <AddImageLinkPopup />}
         </React.StrictMode>,

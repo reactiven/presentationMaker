@@ -5,9 +5,10 @@ import { dispatch, state } from '../../state/state-manager';
 import {changeName, setInsertionMode} from '../../Entity/Presentation';
 import { ToolPanel } from './ToolPanel';
 import { State } from '../../Entity/types';
-import {exportPresentation, savePresentation, uploadPresentation} from '../../Entity/State';
+import {exportPresentation, goToPreview, savePresentation, uploadPresentation} from '../../Entity/State';
 import {Button_WithPopover} from "../common/Button_WithPopover";
 import {ActionList} from "../common/ActionList";
+import {Button} from "../common/Button";
 
 type PropsType = {
     state: State,
@@ -112,6 +113,11 @@ function TopPanel(props: PropsType) {
                         />
                     </div>
                 </div>
+                <Button
+                    label={'Preview'}
+                    type={'normal'}
+                    onClick={() => dispatch(goToPreview)}
+                />
             </div>
             <ToolPanel state={props.state}/>
         </div>

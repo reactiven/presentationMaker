@@ -33,8 +33,8 @@ function ToolPanel(props: PropsType) {
         <div className='toolpanel'>
             <CommonToolBlock/>
             {currentSlide && <AddElementsBlock />}
-            {selectedElement && <ColorEditColor element={selectedElement}/>}
-            {selectedElement && isTextBox(selectedElement.dataElement)
+            {selectedElement && selectedElements.length == 1 && <ColorEditColor element={selectedElement}/>}
+            {selectedElement && selectedElements.length == 1 &&  isTextBox(selectedElement.dataElement)
             && <FontEditBlock
                 dataElement={selectedElement.dataElement}
             />}

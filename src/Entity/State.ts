@@ -39,7 +39,45 @@ function uploadPresentation(state: State, payload: {newState: State}): State{
 function goToPreview(state: State): State{
 	return {
 		...state,
-		onPreview: true
+		previewInfo: {
+			currentSlide: 0,
+			onPreview: true
+		}
+	}
+}
+
+function closePreview(state: State): State{
+	return {
+		...state,
+		previewInfo: {
+			currentSlide: 0,
+			onPreview: false
+		}
+	}
+}
+
+function nextSlide(state: State): State {
+	const slideCount = state.presentationInfo.slides.length
+	return {
+		...state,
+		previewInfo: {
+			...state.previewInfo,
+			currentSlide: state.previewInfo.currentSlide < slideCount - 1
+				? state.previewInfo.currentSlide + 1
+				: state.previewInfo.currentSlide,
+		}
+	}
+}
+
+function prevSlide(state: State): State {
+	return {
+		...state,
+		previewInfo: {
+			...state.previewInfo,
+			currentSlide: state.previewInfo.currentSlide > 0
+				? state.previewInfo.currentSlide - 1
+				: state.previewInfo.currentSlide,
+		}
 	}
 }
 
@@ -70,6 +108,9 @@ export {
 	saveStateForUndo,
 	undo,
 	redo,
+	nextSlide,
+	prevSlide,
 	stateList,
 	uploadPresentation,
+	closePreview,
 }

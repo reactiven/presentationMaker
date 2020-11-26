@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {goToSlide, moveSlides, selectSlide} from '../../Entity/Presentation';
+import {addSlideToSelected, goToSlide, moveSlides, selectSlide} from '../../Entity/Presentation';
 import { SlideType, State } from '../../Entity/types'
 import { dispatch } from '../../state/state-manager';
 import './Sidebar.css';
@@ -20,15 +20,17 @@ function SideBar(props: PropsType): JSX.Element {
     }
 
     const slides = [...props.state.presentationInfo.slides]
+    const selectedSlides = [...props.state.selectedSlides]
     const slidesOrder = [...props.state.presentationInfo.slidesOrder]
     const listItems = slidesOrder.map((slideId, index) => {
         const slide = slides.find(slide => slide.slideId === slideId)
+        debugger
         if (!!slide)
         {
             return <SideBarItem 
                 key={slideId}
                 slide={slide}
-                isSelected={props.state.currentSlide === slideId}
+                isSelected={!!selectedSlides.find(slide => slide === slideId)}
                 index={index}
                 slidesCount={slidesOrder.length}
                 setSeparatorTop={setSeparatorTop}
@@ -91,12 +93,18 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
 
     function mouseDown(event: MouseEvent) {
         if (slideRef.current) {
-            dispatch(goToSlide, {
-                slideId: props.slide.slideId,
-            })
-            dispatch(selectSlide, {
-                slideId: props.slide.slideId,
-            })
+
+            if (event.ctrlKey) {
+                dispatch(addSlideToSelected, {
+                    slideId: props.slide.slideId,
+                })
+            }
+            else {
+                dispatch(selectSlide, {
+                    slideId: props.slide.slideId,
+                })
+            }
+
             if (!event.defaultPrevented) {
                 document.addEventListener('mousemove', mouseMove);
                 document.addEventListener('mouseup', mouseUp);

@@ -3,10 +3,14 @@ type State = {
     selectedSlideElements: Array<number>,
     currentSlide: number | null,
     presentationInfo: PresentationType,
-    onPreview: boolean,
+    previewInfo: PreviewInfoType,
     editSlideBackgroundPopupOpened: boolean,
     addImageLinkPopupOpened: boolean,
     insertionMode: InsertionModeType,
+}
+type PreviewInfoType = {
+    onPreview: boolean,
+    currentSlide: number,
 }
 
 type InsertionModeType = {

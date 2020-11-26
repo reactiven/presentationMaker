@@ -117,10 +117,20 @@ function addSlideToSelected(state: State, payload: {
 	slideId: number
 }): State {
 	const selectedSlides = [...state.selectedSlides]
-	selectedSlides.push(payload.slideId)
+	let newSelectedSlides = [...selectedSlides]
+	let newCurrentSlide = state.currentSlide
+	if (!!selectedSlides.find(slide => slide === payload.slideId)) {
+		newSelectedSlides = selectedSlides.filter(slide => slide !== payload.slideId)
+		newCurrentSlide = newSelectedSlides[newSelectedSlides.length - 1]
+	}
+	else {
+		newSelectedSlides.push(payload.slideId)
+		newCurrentSlide = payload.slideId
+	}
 	return {
 		...state,
-		selectedSlides
+		currentSlide: newCurrentSlide,
+		selectedSlides: newSelectedSlides,
 	}
 }
 
