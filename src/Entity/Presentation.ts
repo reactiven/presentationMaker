@@ -1,4 +1,4 @@
-import {ElementType, ShapeTypeType, SlideElementType, SlideType, State} from './types'
+import {ElementType, ShapeTypeType, SlidesMapType, SlideType, State} from './types'
 
 function changeName(state: State, payload: {
 	newName: string,
@@ -20,8 +20,8 @@ function addSlide(state: State): State{
 		background: '#ffffff',
 		previewImage: null,
 	}
-	const slides = [...state.presentationInfo.slides]
-	slides.splice(Number(state.currentSlide) + 1, 0, defaultSlide)
+	const slides = {...state.presentationInfo.slides}
+	slides[defaultSlide.slideId] = defaultSlide
 	const slidesOrder: Array<number> = [...state.presentationInfo.slidesOrder]
 	const insertPosition = slidesOrder.findIndex(slideId => slideId === state.currentSlide)
 	slidesOrder.splice(insertPosition + 1, 0, defaultSlide.slideId)
@@ -40,7 +40,7 @@ function addSlide(state: State): State{
 function deleteSlides(state: State): State {
 
 	let currentSlide = state.currentSlide
-	let slides = [...state.presentationInfo.slides]
+	let slides = {...state.presentationInfo.slides}
 	let slidesOrder = [...state.presentationInfo.slidesOrder]
 	let selectedSlides = [...state.selectedSlides]
 
@@ -50,7 +50,9 @@ function deleteSlides(state: State): State {
 		: currentSlideIndex - 1
 	const newCurrentSlideId = slidesOrder[newCurrentSlideIndex]
 
-	slides = slides.filter((slide) => (selectedSlides.indexOf(slide.slideId) === -1))
+	selectedSlides.forEach((slideId => {
+		delete slides[slideId]
+	}))
 	slidesOrder = slidesOrder.filter(slideId => (selectedSlides.indexOf(slideId) === -1))
 	selectedSlides = []
 	return {
@@ -75,8 +77,8 @@ function goToSlide(state: State, payload: {
 	}
 }
 function getCurrentSlideInfo(state: State): SlideType|undefined {
-	const slides: Array<SlideType> = [...state.presentationInfo.slides]
-	const slide = slides.find(slide => slide.slideId === state.currentSlide)
+	const slides: SlidesMapType = {...state.presentationInfo.slides}
+	const slide = slides[Number(state.currentSlide)]
 	return slide
 }
 function moveSlides(state: State, payload: {

@@ -1,5 +1,5 @@
 import React, {useEffect, useRef, useState} from 'react'
-import {addSlideToSelected, goToSlide, moveSlides, selectSlide} from '../../Entity/Presentation';
+import {addSlideToSelected, moveSlides, selectSlide} from '../../Entity/Presentation';
 import { SlideType, State } from '../../Entity/types'
 import { dispatch } from '../../state/state-manager';
 import './Sidebar.css';
@@ -19,12 +19,11 @@ function SideBar(props: PropsType): JSX.Element {
         top: separatorTop,
     }
 
-    const slides = [...props.state.presentationInfo.slides]
+    const slides = {...props.state.presentationInfo.slides}
     const selectedSlides = [...props.state.selectedSlides]
     const slidesOrder = [...props.state.presentationInfo.slidesOrder]
     const listItems = slidesOrder.map((slideId, index) => {
-        const slide = slides.find(slide => slide.slideId === slideId)
-        debugger
+        const slide = slides[slideId]
         if (!!slide)
         {
             return <SideBarItem 
@@ -62,7 +61,6 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
     const slideRef = useRef<HTMLDivElement|null>(null)
 
     let sidebar: HTMLElement | null
-    let slidesCount: number
     let moveMode = false
 
     function mouseUp(event: MouseEvent) {
@@ -93,9 +91,6 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
 
     function mouseDown(event: MouseEvent) {
         if (slideRef.current) {
-            // dispatch(goToSlide, {
-            //     slideId: props.slide.slideId
-            // })
             if (event.ctrlKey) {
                 dispatch(addSlideToSelected, {
                     slideId: props.slide.slideId,
@@ -116,8 +111,6 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
 
     useEffect(() => {
         const element = slideRef.current
-        slidesCount = props.slidesCount
-        sidebar = slideRef && slideRef.current && slideRef.current.parentElement
         element && element.addEventListener('mousedown', mouseDown)
         return () => {
             element && element.removeEventListener('mousedown', mouseDown)

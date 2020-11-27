@@ -1,4 +1,4 @@
-import {SlideElementType, TextBoxType} from "../../Entity/types";
+import {TextBoxType} from "../../Entity/types";
 import {changeFont} from "../../Entity/TextBox";
 import {Button_TwoState} from "../common/Button_TwoState";
 import bold from "../../images/bold.png";
@@ -18,14 +18,12 @@ type PropsType = {
 
 function FontEditBlock(props: PropsType) {
     function changeFontBold(value: boolean) {
-        {
-            dispatch(changeFont, {
-                newFont: {
-                    ...props.dataElement.font,
-                    bold: value,
-                }
-            })
-        }
+        dispatch(changeFont, {
+            newFont: {
+                ...props.dataElement.font,
+                bold: value,
+            }
+        })
     }
 
     function changeFontItalic(value: boolean) {

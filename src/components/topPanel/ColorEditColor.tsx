@@ -3,7 +3,7 @@ import fill from "../../images/fill.png";
 import stroke from "../../images/stroke.png";
 import {changeFont, isTextBox} from "../../Entity/TextBox";
 import word from "../../images/word.png";
-import React, {useEffect} from "react";
+import React from "react";
 import {dispatch} from "../../state/state-manager";
 import {setBackgroundColor, setStrokeColor, setStrokeWidth} from "../../Entity/SlideElement";
 import {SlideElementType} from "../../Entity/types";
@@ -13,7 +13,6 @@ import border from "../../images/border.png";
 import { Button_WithPopover } from "../common/Button_WithPopover";
 import { SelectList } from "../common/SelectList";
 import { isImage } from "../../Entity/Image";
-import {isShape} from "../../Entity/Shape";
 
 
 type PropsType = {

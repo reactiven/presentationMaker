@@ -25,14 +25,22 @@ type StateList = {
     redoStateList: Array<State>,
 }
 
+type SlidesMapType = {
+    [item: number]: SlideType,
+}
+
 type PresentationType = {
     name: string,
     slidesOrder: Array<number>,
-    slides: Array<SlideType>,
+    slides: SlidesMapType,
+}
+
+type ElementsMapType = {
+    [item: number]: SlideElementType,
 }
 
 type SlideType = {
-    elements: Array<SlideElementType>
+    elements: ElementsMapType
     elementsOrder: Array<number>
     slideId: number,
     background: BackgroundType,
@@ -103,4 +111,6 @@ export type {
     ElementStyleType,
     ShapeColorType,
     StateList,
+    SlidesMapType,
+    ElementsMapType,
 }

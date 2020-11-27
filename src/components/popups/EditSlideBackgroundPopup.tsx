@@ -5,7 +5,7 @@ import {dispatch} from "../../state/state-manager";
 import {setEditSlideBackgroundPopupOpened} from "../../Entity/Presentation";
 import {SlideType} from "../../Entity/types";
 import './EditSlideBackgroundPopup.css';
-import {AddImage, setSlideBackground} from "../../Entity/Slide";
+import {setSlideBackground} from "../../Entity/Slide";
 import { toDataURL } from "../../common/toDataURL";
 
 type ContentProps = {

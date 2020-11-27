@@ -1,5 +1,5 @@
-import React, {Ref, useEffect, useRef} from 'react';
-import { SlideElementType, SlideType } from "../../Entity/types";
+import React, {useRef} from 'react';
+import {ElementsMapType, SlideType} from "../../Entity/types";
 import './Slide.css';
 import { SlideElement } from '../SlideElements/Element';
 
@@ -27,9 +27,9 @@ function Slide(props: PropsType) {
     )
 }
 
-function renderElements(elements: Array<SlideElementType>, elementsOrder: Array<number>, selectedElements: Array<number>) {
+function renderElements(elements: ElementsMapType, elementsOrder: Array<number>, selectedElements: Array<number>) {
     const elementsList = elementsOrder.map((elementId, index) => {
-        const element = elements.find(element => element.elementId === elementId)
+        const element = elements[elementId]
         if (!!element)
         {
             const isSelected = selectedElements.findIndex(slideId => slideId === element.elementId) !== -1

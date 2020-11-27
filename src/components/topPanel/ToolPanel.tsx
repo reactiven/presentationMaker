@@ -17,10 +17,10 @@ type PropsType = {
 function ToolPanel(props: PropsType) {
     const selectedElements = props.state.selectedSlideElements
     const slides = props.state.presentationInfo.slides
-    const currentSlide = slides[slides.findIndex(slide => slide.slideId === props.state.currentSlide)]
+    const currentSlide = slides[Number(props.state.currentSlide)]
 
     const selectedElement = selectedElements.length > 0
-        ? currentSlide.elements[currentSlide.elements.findIndex(element => element.elementId === selectedElements[0])]
+        ? currentSlide.elements[selectedElements[0]]
         : null
 
     function openEditSlideBackgroundPopup() {
@@ -33,8 +33,8 @@ function ToolPanel(props: PropsType) {
         <div className='toolpanel'>
             <CommonToolBlock/>
             {currentSlide && <AddElementsBlock />}
-            {selectedElement && selectedElements.length == 1 && <ColorEditColor element={selectedElement}/>}
-            {selectedElement && selectedElements.length == 1 &&  isTextBox(selectedElement.dataElement)
+            {selectedElement && selectedElements.length === 1 && <ColorEditColor element={selectedElement}/>}
+            {selectedElement && selectedElements.length === 1 &&  isTextBox(selectedElement.dataElement)
             && <FontEditBlock
                 dataElement={selectedElement.dataElement}
             />}

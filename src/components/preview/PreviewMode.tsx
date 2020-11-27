@@ -1,14 +1,12 @@
-import {SlideType} from "../../Entity/types";
+import {SlidesMapType} from "../../Entity/types";
 import './PreviewMode.css';
-import {useEffect, useState} from "react";
+import {useEffect} from "react";
 import React from "react";
 import {dispatch} from "../../state/state-manager";
 import {closePreview, nextSlide, prevSlide} from "../../Entity/State";
-import {deleteSlides} from "../../Entity/Presentation";
-import {DeleteElements} from "../../Entity/Slide";
 
 type PropsType = {
-    slides: Array<SlideType>,
+    slides: SlidesMapType,
     slidesOrder: Array<number>,
     currentSlide: number,
 }
@@ -16,7 +14,7 @@ type PropsType = {
 function PreviewMode(props: PropsType) {
     debugger
     const currentSlideId = props.slidesOrder[props.currentSlide]
-    const currentSlideInfo = props.slides[props.slides.findIndex(slide => slide.slideId === currentSlideId)]
+    const currentSlideInfo = props.slides[currentSlideId]
 
     const slideBack = {
         background: `url("${currentSlideInfo.previewImage}") no-repeat center/100% 100%`

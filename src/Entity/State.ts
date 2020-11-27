@@ -8,13 +8,13 @@ const stateList: StateList = {
 }
 
 function exportPresentation(state: State): void {
-	const slides = [...state.presentationInfo.slides]
+	const slides = {...state.presentationInfo.slides}
 	const slidesOrder = [...state.presentationInfo.slidesOrder]
 	const doc = new jsPDF()
 	slidesOrder.forEach((slideId, index) => {
-		const slide = {...slides[slides.findIndex(slide => slide.slideId === slideId)]}
+		const slide = {...slides[slideId]}
 		doc.addImage(slide.previewImage,'JPEG', 5, 40, 200, 115)
-		if (index < slides.length - 1) {
+		if (index < Object.keys(slides).length - 1) {
 			doc.addPage()
 		}
 	})
@@ -57,7 +57,7 @@ function closePreview(state: State): State{
 }
 
 function nextSlide(state: State): State {
-	const slideCount = state.presentationInfo.slides.length
+	const slideCount = Object.keys(state.presentationInfo.slides).length
 	return {
 		...state,
 		previewInfo: {

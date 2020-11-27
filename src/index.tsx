@@ -17,7 +17,7 @@ function renderApp(state: State) {
         <React.StrictMode>
             {!state.previewInfo.onPreview && <App state={state}/>}
             {state.previewInfo.onPreview && <PreviewMode
-                slides={[...state.presentationInfo.slides]}
+                slides={{...state.presentationInfo.slides}}
                 slidesOrder={[...state.presentationInfo.slidesOrder]}
                 currentSlide={state.previewInfo.currentSlide}
             />}

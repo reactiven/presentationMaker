@@ -4,7 +4,6 @@ import textbox from  '../../images/textbox.png';
 import shape from '../../images/shape.png';
 import image from '../../images/image-logo.png'
 import React, { useRef } from "react";
-import {AddImage, AddShape, AddTextBox} from "../../Entity/Slide";
 import {Button_WithPopover} from "../common/Button_WithPopover";
 import {ActionList} from "../common/ActionList";
 import circle from '../../images/circle.png';
@@ -79,7 +78,7 @@ function AddElementsBlock() {
         if (id === 'file') {
             inputFileRef.current && inputFileRef.current.click()
         }
-        if (id == 'ref') {
+        if (id === 'ref') {
             dispatch(setAddImageLinkPopopOpened, {
                 opened: true,
             })

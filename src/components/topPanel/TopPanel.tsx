@@ -1,8 +1,8 @@
 import React, {useEffect, useRef} from 'react';
 import './TopPanel.css';
 import logo from '../../images/logo_tcaer.png';
-import { dispatch, state } from '../../state/state-manager';
-import {changeName, setInsertionMode} from '../../Entity/Presentation';
+import { dispatch } from '../../state/state-manager';
+import {changeName} from '../../Entity/Presentation';
 import { ToolPanel } from './ToolPanel';
 import { State } from '../../Entity/types';
 import {exportPresentation, goToPreview, savePresentation, uploadPresentation} from '../../Entity/State';
@@ -61,13 +61,13 @@ function TopPanel(props: PropsType) {
     }
 
     function handleClickAction(id: string) {
-        if (id == 'save' && saveRef.current) {
+        if (id === 'save' && saveRef.current) {
             saveRef.current.click()
         }
-        if (id == 'export') {
+        if (id === 'export') {
             exportPresentation(props.state)
         }
-        if (id == 'upload' && inputFileRef.current) {
+        if (id === 'upload' && inputFileRef.current) {
             inputFileRef.current.click()
         }
     }

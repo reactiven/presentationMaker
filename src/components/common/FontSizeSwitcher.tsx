@@ -1,10 +1,10 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useRef} from "react";
 import minus from '../../images/minus.png';
 import plus from '../../images/add_new.png';
 import './FontSizeSwitcher.css'
 import {dispatch} from "../../state/state-manager";
-import {changeFont, isTextBox} from "../../Entity/TextBox";
-import {SlideElementType, TextBoxType} from "../../Entity/types";
+import {changeFont} from "../../Entity/TextBox";
+import {TextBoxType} from "../../Entity/types";
 
 type SizeSwitcherProps = {
     textBox: TextBoxType,

@@ -10,7 +10,7 @@ const initialState: State = {
     presentationInfo: {
         name: 'new presentation',
         slidesOrder: [],
-        slides: [],
+        slides: {},
     },
     insertionMode: {
         on: false,

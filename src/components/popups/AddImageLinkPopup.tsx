@@ -1,10 +1,8 @@
 import './AddImageLinkPopup.css';
 import {Popup} from "../common/Popup";
 import {Button} from "../common/Button";
-import React, {Ref, useRef, useState} from "react";
-import {SlideType} from "../../Entity/types";
+import React, {useRef} from "react";
 import {dispatch} from "../../state/state-manager";
-import {AddImage, setSlideBackground} from "../../Entity/Slide";
 import {setAddImageLinkPopopOpened, setInsertionMode} from "../../Entity/Presentation";
 
 type ContentProps = {

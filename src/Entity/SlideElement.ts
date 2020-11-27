@@ -2,15 +2,15 @@ import {State} from './types'
 
 
 function moveElement(state: State, payload: {elementId: number, newX: number, newY: number}): State {
-	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
-	const elements = [...slide.elements]
-	const element = {...elements[elements.findIndex(element => element.elementId === payload.elementId)]}
+	const slides = {...state.presentationInfo.slides}
+	const slide = {...slides[Number(state.currentSlide)]}
+	const elements = {...slide.elements}
+	const element = {...elements[state.selectedSlideElements[0]]}
 	element.xPos = payload.newX
 	element.yPos = payload.newY
-	elements[elements.findIndex(element => element.elementId === payload.elementId)] = element
+	elements[payload.elementId] = element
 	slide.elements = elements
-	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
+	slides[Number(state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {
@@ -20,15 +20,15 @@ function moveElement(state: State, payload: {elementId: number, newX: number, ne
 	}
 }
 function resizeElement(state: State, payload:{newWidth: number, newHeight: number}): State {
-	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
-	const elements = [...slide.elements]
-	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
+	const slides = {...state.presentationInfo.slides}
+	const slide = {...slides[Number(state.currentSlide)]}
+	const elements = {...slide.elements}
+	const element = {...elements[Number(state.selectedSlideElements[0])]}
 	element.width = payload.newWidth
 	element.height = payload.newHeight
-	elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])] = element
+	elements[Number(state.selectedSlideElements[0])] = element
 	slide.elements = elements
-	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
+	slides[Number(state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {
@@ -48,14 +48,14 @@ function addElementToSelected(state: State, payload: {elementId: number}): State
 }
 
 function selectElement(state: State, payload: {elementId: number}): State {
-	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
+	const slides = {...state.presentationInfo.slides}
+	const slide = {...slides[Number(state.currentSlide)]}
 	const elementsOrder = [...slide.elementsOrder].filter((elementId) => elementId !== payload.elementId)
 	elementsOrder.push(payload.elementId)
 	const selectedSlideElements = [payload.elementId]
 
 	slide.elementsOrder = elementsOrder
-	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
+	slides[Number(state.currentSlide)] = slide
 	return {
 		...state,
 		selectedSlideElements,
@@ -67,21 +67,22 @@ function selectElement(state: State, payload: {elementId: number}): State {
 }
 
 function setBackgroundColor(state: State, payload: {newColor: string}): State {
-	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
-	const elements = [...slide.elements]
-	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
+	const slides = {...state.presentationInfo.slides}
+	const slide = {...slides[Number(state.currentSlide)]}
+	const elements = {...slide.elements}
+	const element = {...elements[state.selectedSlideElements[0]]}
 
 	const dataElement = {...element.dataElement}
 	element.background = payload.newColor
 	element.dataElement = dataElement
-	let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
-	if (elementNumber < elements.length)
-	{
-		elements[elementNumber] = element
-	}
+	// let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
+	// if (elementNumber < elements.length)
+	// {
+	// 	elements[elementNumber] = element
+	// }
+	elements[state.selectedSlideElements[0]] = element
 	slide.elements = elements
-	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
+	slides[Number(state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {
@@ -92,21 +93,22 @@ function setBackgroundColor(state: State, payload: {newColor: string}): State {
 }
 
 function setStrokeColor(state: State, payload: {newColor: string}): State {
-	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
-	const elements = [...slide.elements]
-	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
+	const slides = {...state.presentationInfo.slides}
+	const slide = {...slides[Number(state.currentSlide)]}
+	const elements = {...slide.elements}
+	const element = {...elements[state.selectedSlideElements[0]]}
 
 	const dataElement = {...element.dataElement}
 	element.borderColor = payload.newColor
 	element.dataElement = dataElement
-	let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
-	if (elementNumber < elements.length)
-	{
-		elements[elementNumber] = element
-	}
+	// let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
+	// if (elementNumber < elements.length)
+	// {
+	// 	elements[elementNumber] = element
+	// }
+	elements[state.selectedSlideElements[0]] = element
 	slide.elements = elements
-	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
+	slides[Number(state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {
@@ -117,22 +119,22 @@ function setStrokeColor(state: State, payload: {newColor: string}): State {
 }
 
 function setStrokeWidth(state: State, payload: {newWidth: string}): State {
-	const slides = [...state.presentationInfo.slides]
-	const slide = {...slides[slides.findIndex(slide => slide.slideId === state.currentSlide)]}
-	const elements = [...slide.elements]
-	const element = {...elements[elements.findIndex(element => element.elementId === state.selectedSlideElements[0])]}
+	const slides = {...state.presentationInfo.slides}
+	const slide = {...slides[Number(state.currentSlide)]}
+	const elements = {...slide.elements}
+	const element = {...elements[state.selectedSlideElements[0]]}
 
 	const dataElement = {...element.dataElement}
 	element.borderWidth = payload.newWidth
 	element.dataElement = dataElement
-	let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
-	if (elementNumber < elements.length)
-	{
-		elements[elementNumber] = element
-	}
+	// let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
+	// if (elementNumber < elements.length)
+	// {
+	// 	elements[elementNumber] = element
+	// }
+	elements[state.selectedSlideElements[0]] = element
 	slide.elements = elements
-	slides[slides.findIndex(slide => slide.slideId === state.currentSlide)] = slide
-
+	slides[Number(state.currentSlide)] = slide
 	return {
 		...state,
 		presentationInfo: {
