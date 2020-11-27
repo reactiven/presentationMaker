@@ -13,7 +13,7 @@ import triangle from '../../images/triangle.png';
 import './AddElementsBlock.css';
 import {setAddImageLinkPopopOpened, setInsertionMode} from "../../Entity/Presentation";
 import {ToolSeparator} from "./ToolPanel";
-import {toDataURL} from "../../viewModel/toDataURL";
+import {toDataURL} from "../../common/toDataURL";
 
 
 function AddElementsBlock() {

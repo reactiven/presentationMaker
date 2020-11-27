@@ -1,4 +1,4 @@
-import React, {RefObject, useEffect, useRef, useState} from 'react';
+import React, {RefObject, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import { ElementStyleType, SlideElementType } from '../../Entity/types';
 import { ImageBlock } from './Image';
 import {ColorStyleType, Shape} from './Shape';
@@ -7,10 +7,10 @@ import './Element.css';
 import { isImage } from '../../Entity/Image';
 import { isShape } from '../../Entity/Shape';
 import { isTextBox } from '../../Entity/TextBox';
-import {useElementsDragNDrop} from "../../viewModel/useDragNDrop";
+import {useElementsDragNDrop} from "../../common/useDragNDrop";
 import {dispatch} from "../../state/state-manager";
 import {moveElement, resizeElement} from "../../Entity/SlideElement";
-import { getParentRelativeCoordinates } from '../../viewModel/getParentRelativeCoordinates';
+import { getParentRelativeCoordinates } from '../../common/getParentRelativeCoordinates';
 
 type ElementPropsType = {
     element: SlideElementType,
@@ -33,6 +33,11 @@ function SlideElement(props: ElementPropsType) {
         setLeft(dndlLeft)
         setTop(dndTop)
     }, [dndlLeft, dndTop])
+
+    useLayoutEffect(() => {
+        setLeft(props.element.xPos)
+        setTop(props.element.yPos)
+    }, [props.element])
 
     const style = {
         top: top !== null

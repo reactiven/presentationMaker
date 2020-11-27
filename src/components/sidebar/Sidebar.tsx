@@ -3,7 +3,7 @@ import {addSlideToSelected, goToSlide, moveSlides, selectSlide} from '../../Enti
 import { SlideType, State } from '../../Entity/types'
 import { dispatch } from '../../state/state-manager';
 import './Sidebar.css';
-import {getParentRelativeCoordinates} from "../../viewModel/getParentRelativeCoordinates";
+import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordinates";
 
 type PropsType = {
     state: State
@@ -30,7 +30,7 @@ function SideBar(props: PropsType): JSX.Element {
             return <SideBarItem 
                 key={slideId}
                 slide={slide}
-                isSelected={!!selectedSlides.find(slide => slide === slideId)}
+                isSelected={props.state.currentSlide === slideId || !!selectedSlides.find(slide => slide === slideId)}
                 index={index}
                 slidesCount={slidesOrder.length}
                 setSeparatorTop={setSeparatorTop}
@@ -93,7 +93,9 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
 
     function mouseDown(event: MouseEvent) {
         if (slideRef.current) {
-
+            // dispatch(goToSlide, {
+            //     slideId: props.slide.slideId
+            // })
             if (event.ctrlKey) {
                 dispatch(addSlideToSelected, {
                     slideId: props.slide.slideId,

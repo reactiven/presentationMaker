@@ -6,7 +6,7 @@ import { dispatch } from '../../state/state-manager';
 import { Slide } from './Slide';
 import './WorkSpace.css';
 import {AddImage, AddShape, AddTextBox} from "../../Entity/Slide";
-import {getParentRelativeCoordinates} from "../../viewModel/getParentRelativeCoordinates";
+import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordinates";
 
 type PropsType = {
     state: State,

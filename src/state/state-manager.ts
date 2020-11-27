@@ -24,7 +24,7 @@ function dispatch(fn: fnType, payload?: any) {
                 state = setPreviewImage(state,{
                     image: dataUrl,
                 })
-                // renderApp(state)
+                renderApp(state)
             });
     }
     renderApp(state)

@@ -6,7 +6,7 @@ import {setEditSlideBackgroundPopupOpened} from "../../Entity/Presentation";
 import {SlideType} from "../../Entity/types";
 import './EditSlideBackgroundPopup.css';
 import {AddImage, setSlideBackground} from "../../Entity/Slide";
-import { toDataURL } from "../../viewModel/toDataURL";
+import { toDataURL } from "../../common/toDataURL";
 
 type ContentProps = {
     currentSlideInfo: SlideType,
