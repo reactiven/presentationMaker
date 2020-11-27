@@ -13,11 +13,12 @@ type PropsType = {
 }
 
 function Workspace(props: PropsType) {
-    const slideInfo = getCurrentSlideInfo(props.state)
+    const slideInfo = props.state.currentSlide !== null
+        ? getCurrentSlideInfo(props.state)
+        : null
     const slideRef = useRef<HTMLDivElement|null>(null)
 
     function onClick(event: any) {
-        debugger
         if (props.state.insertionMode.on && slideRef.current) {
             const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slideRef.current)
             switch (props.state.insertionMode.elementType) {
@@ -58,7 +59,6 @@ function Workspace(props: PropsType) {
             dispatch(deleteElementSelection)
         }
     }
-
     return(
         <div
             className={`workspace ${props.state.insertionMode.on && 'workspace_insertion'}`}
@@ -66,7 +66,7 @@ function Workspace(props: PropsType) {
             onMouseDown={() => dispatch(deleteSlideSelection)}
         >
             <div className='slide-container' ref={slideRef}>
-                {slideInfo && <Slide
+                {props.state.currentSlide && !!slideInfo && <Slide
                     slideInfo={slideInfo}
                     selectedElements={props.state.selectedSlideElements}
                 />}

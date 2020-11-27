@@ -16,7 +16,7 @@ function dispatch(fn: fnType, payload?: any) {
     }
     state = newState ? newState : state
     const slide = document.getElementById('slide')
-    if (slide && fn !== goToPreview) {
+    if (slide && state.currentSlide && fn !== goToPreview) {
         htmlToImage.toJpeg(slide, {
             quality: 0.5,
         })

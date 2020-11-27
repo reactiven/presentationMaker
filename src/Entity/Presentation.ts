@@ -30,6 +30,7 @@ function addSlide(state: State): State{
 		...state,
 		currentSlide: defaultSlide.slideId,
 		selectedSlideElements: [],
+		selectedSlides: [defaultSlide.slideId],
 		presentationInfo: {
 			...state.presentationInfo,
 			slidesOrder,
@@ -58,7 +59,9 @@ function deleteSlides(state: State): State {
 	return {
 		...state,
 		selectedSlides,
-		currentSlide: newCurrentSlideId,
+		currentSlide: !!Object.keys(slides).length
+			? newCurrentSlideId
+			: null,
 		presentationInfo: {
 			...state.presentationInfo,
 			slides,
