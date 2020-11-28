@@ -1,8 +1,7 @@
 import { generateElementId } from './SlideElement'
 import { BackgroundType, State, SlideElementType, ShapeTypeType } from './types'
 
-function AddImage(state: State, payload: {filepath: string, position: ElementPosition}): State {
-	debugger
+function AddImage(state: State, payload: {filepath: string, position: ElementPosition, size: ElementSize|undefined}): State {
 	const slides = {...state.presentationInfo.slides}
 	const slide = {...slides[Number(state.currentSlide)]}
 	const elements = {...slide.elements}
@@ -13,8 +12,8 @@ function AddImage(state: State, payload: {filepath: string, position: ElementPos
 			src: payload.filepath,
 		},
 		elementId: generateElementId(),
-		width: 200,
-		height: 200,
+		width: (payload.size && payload.size.w) ||  200,
+		height: (payload.size && payload.size.h) ||  200,
 		xPos: payload.position.x,
 		yPos: payload.position.y,
 		background: null,
@@ -36,7 +35,7 @@ function AddImage(state: State, payload: {filepath: string, position: ElementPos
 	}
 }
 
-function AddTextBox(state: State, payload: {position: ElementPosition}): State{
+function AddTextBox(state: State, payload: {position: ElementPosition, size: ElementSize|undefined}): State{
 	const slides = {...state.presentationInfo.slides}
 	const slide = {...slides[Number(state.currentSlide)]}
 	const elements = {...slide.elements}
@@ -55,8 +54,8 @@ function AddTextBox(state: State, payload: {position: ElementPosition}): State{
 			text: '',
 		},
 		elementId: generateElementId(),
-		width: 200,
-		height: 200,
+		width: (payload.size && payload.size.w) ||  200,
+		height: (payload.size && payload.size.h) ||  200,
 		xPos: payload.position.x,
 		yPos: payload.position.y,
 		background: null,
@@ -83,7 +82,12 @@ type ElementPosition = {
 	y: number
 }
 
-function AddShape(state: State, payload: {type: ShapeTypeType, position: ElementPosition}): State{
+type ElementSize = {
+	w: number,
+	h: number
+}
+
+function AddShape(state: State, payload: {type: ShapeTypeType, position: ElementPosition, size: ElementSize|undefined}): State{
 	const slides = {...state.presentationInfo.slides}
 	const slide = {...slides[Number(state.currentSlide)]}
 	const elements = {...slide.elements}
@@ -94,8 +98,8 @@ function AddShape(state: State, payload: {type: ShapeTypeType, position: Element
 			shapeType: payload.type,
 		},
 		elementId: generateElementId(),
-		width: 200,
-		height: 200,
+		width: (payload.size && payload.size.w) ||  200,
+		height: (payload.size && payload.size.h) ||  200,
 		xPos: payload.position.x,
 		yPos: payload.position.y,
 		background: null,

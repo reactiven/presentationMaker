@@ -107,6 +107,7 @@ export type {
     ElementType,
     ShapeTypeType,
     BackgroundType,
+    InsertionModeType,
     FontType,
     ElementStyleType,
     ShapeColorType,

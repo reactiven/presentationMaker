@@ -61,6 +61,7 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
     const slideRef = useRef<HTMLDivElement|null>(null)
 
     let sidebar: HTMLElement | null
+    let slidesCount
     let moveMode = false
 
     function mouseUp(event: MouseEvent) {
@@ -111,6 +112,8 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
 
     useEffect(() => {
         const element = slideRef.current
+        slidesCount = props.slidesCount
+        sidebar = slideRef && slideRef.current && slideRef.current.parentElement
         element && element.addEventListener('mousedown', mouseDown)
         return () => {
             element && element.removeEventListener('mousedown', mouseDown)

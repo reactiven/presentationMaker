@@ -5,7 +5,7 @@ function moveElement(state: State, payload: {elementId: number, newX: number, ne
 	const slides = {...state.presentationInfo.slides}
 	const slide = {...slides[Number(state.currentSlide)]}
 	const elements = {...slide.elements}
-	const element = {...elements[state.selectedSlideElements[0]]}
+	const element = {...elements[payload.elementId]}
 	element.xPos = payload.newX
 	element.yPos = payload.newY
 	elements[payload.elementId] = element
@@ -75,11 +75,6 @@ function setBackgroundColor(state: State, payload: {newColor: string}): State {
 	const dataElement = {...element.dataElement}
 	element.background = payload.newColor
 	element.dataElement = dataElement
-	// let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
-	// if (elementNumber < elements.length)
-	// {
-	// 	elements[elementNumber] = element
-	// }
 	elements[state.selectedSlideElements[0]] = element
 	slide.elements = elements
 	slides[Number(state.currentSlide)] = slide
@@ -101,11 +96,6 @@ function setStrokeColor(state: State, payload: {newColor: string}): State {
 	const dataElement = {...element.dataElement}
 	element.borderColor = payload.newColor
 	element.dataElement = dataElement
-	// let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
-	// if (elementNumber < elements.length)
-	// {
-	// 	elements[elementNumber] = element
-	// }
 	elements[state.selectedSlideElements[0]] = element
 	slide.elements = elements
 	slides[Number(state.currentSlide)] = slide
@@ -127,11 +117,6 @@ function setStrokeWidth(state: State, payload: {newWidth: string}): State {
 	const dataElement = {...element.dataElement}
 	element.borderWidth = payload.newWidth
 	element.dataElement = dataElement
-	// let elementNumber: number = elements.findIndex(element => element.elementId === state.selectedSlideElements[0])
-	// if (elementNumber < elements.length)
-	// {
-	// 	elements[elementNumber] = element
-	// }
 	elements[state.selectedSlideElements[0]] = element
 	slide.elements = elements
 	slides[Number(state.currentSlide)] = slide
