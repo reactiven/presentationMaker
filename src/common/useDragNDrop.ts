@@ -14,7 +14,6 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
     let slide: HTMLElement|null
 
     function mouseUp(event: MouseEvent) {
-        debugger
         document.removeEventListener('mousemove', mouseMove)
         document.removeEventListener('mouseup', mouseUp)
         if (elementRef.current) {
@@ -31,6 +30,7 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
     }
 
     function mouseMove(event: MouseEvent) {
+        event.preventDefault()
         const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slide)
         setLeft(cursorX)
         setTop(cursorY)
