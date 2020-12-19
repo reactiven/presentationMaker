@@ -190,7 +190,7 @@ function setInsertionMode(state: State, payload: {
 }
 
 function generateSlideId(): number {
-	return Math.random() * 10
+	return Date.now()
 }
 
 export {
