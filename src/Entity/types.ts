@@ -114,4 +114,5 @@ export type {
     StateList,
     SlidesMapType,
     ElementsMapType,
+    PreviewInfoType,
 }
