@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useContext, useRef, useState} from 'react';
 import {deleteSlideSelection, getCurrentSlideInfo, setInsertionMode} from '../../Entity/Presentation';
 import { deleteElementSelection } from '../../Entity/SlideElement';
 import { State } from '../../Entity/types';
@@ -7,14 +7,22 @@ import { Slide } from './Slide';
 import './WorkSpace.css';
 import {AddImage, AddShape, AddTextBox} from "../../Entity/Slide";
 import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordinates";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {insertionReducerActions} from "../../state/insertionModeReducer";
+import {selectionReducerActions} from "../../state/selectionReducer";
 
-type PropsType = {
-    state: State,
-}
+function Workspace() {
+    const store: Readonly<StoreType> = useContext(StoreContext);
+    const {
+        presentationInfo,
+        selection,
+        insertionMode,
+    } = store.getState()
 
-function Workspace(props: PropsType) {
-    const slideInfo = props.state.currentSlide !== null
-        ? getCurrentSlideInfo(props.state)
+    const slideInfo = selection.currentSlide !== null
+        ? presentationInfo.slides[selection.currentSlide]
         : null
     const workspaceRef = useRef<HTMLDivElement|null>(null)
     const slideRef = useRef<HTMLDivElement|null>(null)
@@ -27,58 +35,68 @@ function Workspace(props: PropsType) {
     let insY: number
 
     function mouseUp(event: any) {
-        if (props.state.insertionMode.on && slideRef.current) {
+        if (insertionMode.on && slideRef.current && slideInfo) {
             document.removeEventListener('mousedown', mouseMove)
             document.removeEventListener('mouseup', mouseUp)
             const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slideRef.current)
-            switch (props.state.insertionMode.elementType) {
+            switch (insertionMode.elementType) {
                 case 'shape':
-                    dispatch(AddShape, {
-                        type: props.state.insertionMode.shapeType,
-                        position: {
-                            x: Number(insX > cursorX ? cursorX : insX),
-                            y: Number(insY > cursorY ? cursorY : insY),
-                        },
-                        size: {
-                            w: Math.abs(cursorX - insX),
-                            h: Math.abs(cursorY - insY),
-                        }
-                    })
+                    if (insertionMode.shapeType)
+                    {
+                        store.dispatch(presentationInfoActions.addShape(
+                            slideInfo.slideId,
+                            insertionMode.shapeType,
+                            {
+                                x: Number(insX > cursorX ? cursorX : insX),
+                                y: Number(insY > cursorY ? cursorY : insY),
+                            },
+                            {
+                                w: Math.abs(cursorX - insX),
+                                h: Math.abs(cursorY - insY),
+                            }
+                        ))
+                        store.dispatch(selectionReducerActions.selectElement((presentationInfo.slidesOrder[presentationInfo.slidesOrder.length-1])))
+                    }
                     break
                 case "image":
-                    dispatch(AddImage, {
-                        filepath: props.state.insertionMode.filepath,
-                        position: {
-                            x: Number(insX > cursorX ? cursorX : insX),
-                            y: Number(insY > cursorY ? cursorY : insY),
-                        },
-                        size: {
-                            w: Math.abs(cursorX - insX),
-                            h: Math.abs(cursorY - insY),
-                        }
-                    })
+                    if (insertionMode.filepath)
+                    {
+                        store.dispatch(presentationInfoActions.addImage(
+                            slideInfo.slideId,
+                            insertionMode.filepath,
+                            {
+                                x: Number(insX > cursorX ? cursorX : insX),
+                                y: Number(insY > cursorY ? cursorY : insY),
+                            },
+                            {
+                                w: Math.abs(cursorX - insX),
+                                h: Math.abs(cursorY - insY),
+                            }
+                        ))
+                    }
                     break
                 case "textBox":
-                    dispatch(AddTextBox, {
-                        position: {
+                    store.dispatch(presentationInfoActions.addTextBox(
+                        slideInfo.slideId,
+                        {
                             x: Number(insX > cursorX ? cursorX : insX),
                             y: Number(insY > cursorY ? cursorY : insY),
                         },
-                        size: {
+                        {
                             w: Math.abs(cursorX - insX),
                             h: Math.abs(cursorY - insY),
                         }
-                    })
+                    ))
                     break
             }
             setInsertionAreaY(null)
             setInsertionAreaX(null)
             setInsertionAreaW(null)
             setInsertionAreaH(null)
-            dispatch(setInsertionMode, {
+            store.dispatch(insertionReducerActions.setInsertionMode({
                 on: false,
                 elementType: null,
-            })
+            }))
         }
     }
 
@@ -89,8 +107,11 @@ function Workspace(props: PropsType) {
     }
 
     function mouseDown(event: any) {
-        dispatch(deleteSlideSelection)
-        if (props.state.insertionMode.on && slideRef.current) {
+        if (selection.selectedSlides.length)
+        {
+            store.dispatch(selectionReducerActions.deleteSlideSelection())
+        }
+        if (insertionMode.on && slideRef.current) {
             const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slideRef.current)
             setInsertionAreaX(cursorX)
             setInsertionAreaY(cursorY)
@@ -104,9 +125,9 @@ function Workspace(props: PropsType) {
     }
 
     function onClick(event: any) {
-        if (!event.defaultPrevented)
+        if (!event.defaultPrevented && selection.selectedSlideElements.length)
         {
-            dispatch(deleteElementSelection)
+            store.dispatch(selectionReducerActions.deleteElementSelection())
         }
     }
 
@@ -126,19 +147,16 @@ function Workspace(props: PropsType) {
             ref={workspaceRef}
             onMouseDown={mouseDown}
             onClick={onClick}
-            className={`workspace ${props.state.insertionMode.on && 'workspace_insertion'}`}
+            className={`workspace ${insertionMode.on && 'workspace_insertion'}`}
         >
             <div className='slide-container' ref={slideRef}>
-                {props.state.insertionMode.on
+                {insertionMode.on
                 && insertionAreaX
                 && insertionAreaH
                 && insertionAreaY
                 && insertionAreaW
                 && <div className={'insertion-area'} style={insertionStyle}></div>}
-                {props.state.currentSlide && !!slideInfo && <Slide
-                    slideInfo={slideInfo}
-                    selectedElements={props.state.selectedSlideElements}
-                />}
+                {!!slideInfo && <Slide />}
             </div>
         </div>
     )

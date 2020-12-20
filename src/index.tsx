@@ -6,35 +6,43 @@ import * as serviceWorker from './serviceWorker';
 import {State} from './Entity/types';
 import {initialState} from './viewModel/initialState';
 import {EditSlideBackgroundPopup} from './components/popups/EditSlideBackgroundPopup';
-import {getCurrentSlideInfo} from "./Entity/Presentation";
 import {AddImageLinkPopup} from "./components/popups/AddImageLinkPopup";
+import { store } from './state/store';
+import { StoreContext } from './state/storeContext';
 import { PreviewMode } from './components/preview/PreviewMode';
 
 
-function renderApp(state: State) {
-    const currentSlideInfo = getCurrentSlideInfo(state)
+function rerenderEntireTree() {
+    const {
+        selection,
+        preview,
+        popupsOpened,
+        presentationInfo,
+    } = store.getState()
+
+    const currentSlideInfo = selection.currentSlide
+        ? presentationInfo.slides[selection.currentSlide]
+        : null
+
     ReactDOM.render(
-        <React.StrictMode>
-            {!state.previewInfo.onPreview && <App state={state}/>}
-            {state.previewInfo.onPreview && <PreviewMode
-                slides={{...state.presentationInfo.slides}}
-                slidesOrder={[...state.presentationInfo.slidesOrder]}
-                currentSlide={state.previewInfo.currentSlide}
-            />}
-            {state.editSlideBackgroundPopupOpened && currentSlideInfo && <EditSlideBackgroundPopup currentSlideInfo={currentSlideInfo}/>}
-            {state.addImageLinkPopupOpened && <AddImageLinkPopup />}
-        </React.StrictMode>,
-        document.getElementById('root')
-    );
+        <StoreContext.Provider value={store}>
+            {!preview.onPreview && <App/>}
+            {preview.onPreview && <PreviewMode/>}
+            {popupsOpened.editSlideBackgroundPopupOpened && currentSlideInfo && <EditSlideBackgroundPopup currentSlideInfo={currentSlideInfo}/>}
+            {popupsOpened.addImageLinkPopupOpened && <AddImageLinkPopup />}
+        </StoreContext.Provider>, document.getElementById("root")
+    )
 }
 
-renderApp(initialState)
+rerenderEntireTree();
+
+store.subscribe(() => {
+    console.log('123')
+    rerenderEntireTree();
+});
+
 
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
-
-export {
-    renderApp,
-}

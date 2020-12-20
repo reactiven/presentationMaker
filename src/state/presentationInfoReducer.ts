@@ -1,6 +1,7 @@
-import {BackgroundType, FontType, PresentationType, ShapeTypeType, SlideType} from "../Entity/types";
+import {BackgroundType, FontType, PresentationType, ShapeTypeType} from "../Entity/types";
 import {generateSlideId} from "../Entity/Presentation";
 import {generateElementId} from "../Entity/SlideElement";
+import {isTextBox} from "../Entity/TextBox";
 
 
 let initialState = {
@@ -19,7 +20,7 @@ type ElementSize = {
 }
 
 const presentationInfoReducer = (state: PresentationType = initialState, action: ActionTypes): PresentationType => {
-    let newState = { ...state }
+    let newState: PresentationType = JSON.parse(JSON.stringify(state))
     switch (action.type) {
         case "CHANGE_NAME":
             newState.name = action.data.newName
@@ -33,7 +34,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             newState.slidesOrder.splice(insertPosition + 1, 0, slideId)
             newState.slides[slideId] = {
                 slideId,
-                elements: [],
+                elements: {},
                 elementsOrder: [],
                 background: '#ffffff',
                 previewImage: null,
@@ -74,7 +75,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
                 dataElement: {
                     src: action.data.filepath,
                 },
-                elementId: generateElementId(),
+                elementId: imageId,
                 width: (action.data.size && action.data.size.w) ||  200,
                 height: (action.data.size && action.data.size.h) ||  200,
                 xPos: action.data.position.x,
@@ -88,11 +89,11 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
         case "ADD_SHAPE":
             const shapeId = generateElementId()
             newState.slides[action.data.slideId].elements[shapeId] = {
-                type: 'image',
+                type: 'shape',
                 dataElement: {
                     shapeType: action.data.type,
                 },
-                elementId: generateElementId(),
+                elementId: shapeId,
                 width: (action.data.size && action.data.size.w) ||  200,
                 height: (action.data.size && action.data.size.h) ||  200,
                 xPos: action.data.position.x,
@@ -104,9 +105,9 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             newState.slides[action.data.slideId].elementsOrder.push(shapeId)
             break
         case "ADD_TEXT_BOX":
-            const textBox = generateElementId()
-            newState.slides[action.data.slideId].elements[textBox] = {
-                type: 'image',
+            const textBoxId = generateElementId()
+            newState.slides[action.data.slideId].elements[textBoxId] = {
+                type: 'textBox',
                 dataElement: {
                     font: {
                         fontStyle: 'Times New Roman',
@@ -118,7 +119,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
                     },
                     text: '',
                 },
-                elementId: generateElementId(),
+                elementId: textBoxId,
                 width: (action.data.size && action.data.size.w) ||  200,
                 height: (action.data.size && action.data.size.h) ||  200,
                 xPos: action.data.position.x,
@@ -127,7 +128,54 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
                 borderWidth: null,
                 borderColor: null,
             }
-            newState.slides[action.data.slideId].elementsOrder.push(textBox)
+            newState.slides[action.data.slideId].elementsOrder.push(textBoxId)
+            break
+        case "DELETE_ELEMENTS":
+            action.data.selectedElements.forEach(elementId => {
+                delete newState.slides[action.data.slideId].elements[elementId]
+            })
+            newState.slides[action.data.slideId].elementsOrder = newState.slides[action.data.slideId].elementsOrder.filter(elementId => {
+                const isSelected = action.data.selectedElements.indexOf(elementId) !== -1
+                return !isSelected
+            })
+            break
+        case "MOVE_ELEMENT":
+            newState.slides[action.data.slideId].elements[action.data.elementId].yPos = action.data.newY
+            newState.slides[action.data.slideId].elements[action.data.elementId].xPos = action.data.newX
+            break
+        case "RESIZE_ELEMENT":
+            newState.slides[action.data.slideId].elements[action.data.elementId].width = action.data.newWidth
+            newState.slides[action.data.slideId].elements[action.data.elementId].height = action.data.newHeight
+            break
+        case "SET_BACKGROUND_COLOR":
+            newState.slides[action.data.slideId].elements[action.data.elementId].background = action.data.newColor
+            break
+        case "CHANGE_FONT":
+            let changeFontDataElement = newState.slides[action.data.slideId].elements[action.data.elementId].dataElement
+            if (isTextBox(changeFontDataElement)) {
+                changeFontDataElement.font = {...action.data.newFont}
+                newState.slides[action.data.slideId].elements[action.data.elementId].dataElement = changeFontDataElement
+            }
+            break
+        case "SET_STROKE_WIDTH":
+            newState.slides[action.data.slideId].elements[action.data.elementId].borderWidth = action.data.newWidth
+            break
+        case "SET_STROKE_COLOR":
+            newState.slides[action.data.slideId].elements[action.data.elementId].borderColor = action.data.newColor
+            break
+        case "UPDATE_TEXT_BOX":
+            let updateCheckboxDataElement = newState.slides[action.data.slideId].elements[action.data.elementId].dataElement
+            if (isTextBox(updateCheckboxDataElement)) {
+                updateCheckboxDataElement.text = action.data.text
+                newState.slides[action.data.slideId].elements[action.data.elementId].dataElement = updateCheckboxDataElement
+            }
+            break
+        case "SET_PREVIEW_IMAGE":
+            newState.slides[action.data.slideId].previewImage = action.data.image
+            break
+        case "REPLACE_ELEMENT_TO_FRONT":
+            newState.slides[action.data.slideId].elementsOrder = newState.slides[action.data.slideId].elementsOrder.filter((elementId) => elementId !== action.data.elementId)
+            newState.slides[action.data.slideId].elementsOrder.push(action.data.elementId)
             break
         default:
             break
@@ -205,11 +253,12 @@ const presentationInfoActions = {
             }
         } as const
     },
-    deleteElements: (selectedElements: Array<number>) => {
+    deleteElements: (slideId: number, selectedElements: Array<number>) => {
         return {
             type: 'DELETE_ELEMENTS',
             data: {
                 selectedElements,
+                slideId,
             }
         } as const
     },
@@ -222,77 +271,92 @@ const presentationInfoActions = {
             }
         } as const
     },
-    setPreviewImage: (image: string) => {
+    setPreviewImage: (slideId: number, image: string) => {
         return {
             type: 'SET_PREVIEW_IMAGE',
             data: {
                 image,
+                slideId,
             }
         } as const
     },
-    moveElement: (elementId: number, newX: number, newY: number) => {
+    moveElement: (slideId: number, elementId: number, newX: number, newY: number) => {
         return {
             type: 'MOVE_ELEMENT',
             data: {
+                slideId,
                 elementId,
                 newX,
                 newY,
             }
         } as const
     },
-    resizeElement: (newWidth: number, newHeight: number) => {
+    resizeElement: (slideId: number, elementId: number, newWidth: number, newHeight: number) => {
         return {
             type: 'RESIZE_ELEMENT',
             data: {
+                slideId,
+                elementId,
                 newWidth,
                 newHeight,
             }
         } as const
     },
-    setBackgroundColor: (newColor: string) => {
+    setBackgroundColor: (slideId: number, elementId: number, newColor: string) => {
         return {
             type: 'SET_BACKGROUND_COLOR',
             data: {
+                slideId,
+                elementId,
                 newColor,
             }
         } as const
     },
-    setStrokeColor: (newColor: string) => {
+    setStrokeColor: (slideId: number, elementId: number, newColor: string) => {
         return {
             type: 'SET_STROKE_COLOR',
             data: {
+                slideId,
+                elementId,
                 newColor,
             }
         } as const
     },
-    setStrokeWidth: (newWidth: string) => {
+    setStrokeWidth: (slideId: number, elementId: number, newWidth: string) => {
         return {
             type: 'SET_STROKE_WIDTH',
             data: {
+                slideId,
+                elementId,
                 newWidth,
             }
         } as const
     },
-    changeFont: (newFont: FontType) => {
+    changeFont: (slideId: number, elementId: number, newFont: FontType) => {
         return {
             type: 'CHANGE_FONT',
             data: {
+                slideId,
+                elementId,
                 newFont,
             }
         } as const
     },
-    updateTextBox: (text: string) => {
+    updateTextBox: (slideId: number, elementId: number, text: string) => {
         return {
             type: 'UPDATE_TEXT_BOX',
             data: {
+                slideId,
+                elementId,
                 text,
             }
         } as const
     },
-    replaceElementToFront: (elementId: number) => {
+    replaceElementToFront: (slideId: number, elementId: number) => {
         return {
             type: 'REPLACE_ELEMENT_TO_FRONT',
             data: {
+                slideId,
                 elementId,
             }
         } as const

@@ -6,30 +6,19 @@ let initialState = {
     selectedSlides: [] as Array<number>,
 }
 
-const selectionReducer = (state = initialState, action: ActionTypes): SelectionStateType => {
-    let newState = { ...state }
+const selectionReducer = (state: SelectionStateType = initialState, action: ActionTypes): SelectionStateType => {
+    let newState: SelectionStateType = JSON.parse(JSON.stringify(state))
     switch (action.type) {
         case "SELECT_SLIDE":
-            newState = {
-                ...newState,
-                currentSlide: action.data.slideId,
-                selectedSlideElements: [],
-                selectedSlides: [action.data.slideId]
-            }
+            newState.currentSlide = action.data.slideId
+            newState.selectedSlideElements = []
+            newState.selectedSlides = [action.data.slideId]
             break
         case "ADD_ELEMENT_TO_SELECTED":
-            const selectedSlideElements = [...state.selectedSlideElements]
-            selectedSlideElements.push(action.data.elementId)
-            newState = {
-                ...newState,
-                selectedSlideElements,
-            }
+            newState.selectedSlideElements.push(action.data.elementId)
             break
         case "SELECT_ELEMENT":
-            newState = {
-                ...newState,
-                selectedSlideElements: [action.data.elementId],
-            }
+            newState.selectedSlideElements = [action.data.elementId]
             break
         case "ADD_SLIDE_TO_SELECTED":
             const selectedSlides = [...state.selectedSlides]
@@ -43,31 +32,19 @@ const selectionReducer = (state = initialState, action: ActionTypes): SelectionS
                 newSelectedSlides.push(action.data.slideId)
                 newCurrentSlide = action.data.slideId
             }
-            newState =  {
-                ...newState,
-                currentSlide: newCurrentSlide,
-                selectedSlides: newSelectedSlides,
-            }
+            newState.currentSlide = newCurrentSlide
+            newState.selectedSlides = newSelectedSlides
             break
         case "GO_TO_SLIDE":
-            newState = {
-                ...state,
-                currentSlide: action.data.slideId,
-                selectedSlides: [],
-                selectedSlideElements: [],
-            }
+            newState.currentSlide = action.data.slideId
+            newState.selectedSlides = []
+            newState.selectedSlideElements = []
             break
         case "DELETE_ELEMENT_SELECTION":
-            newState = {
-                ...state,
-                selectedSlideElements: [],
-            }
+            newState.selectedSlideElements = []
             break
         case "DELETE_SLIDE_SELECTION":
-            newState = {
-                ...state,
-                selectedSlides: [],
-            }
+            newState.selectedSlides = []
             break
         default:
             break

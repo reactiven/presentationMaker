@@ -1,4 +1,4 @@
-import React, {useRef, useState} from "react"
+import React, {useContext, useRef, useState} from "react"
 import {Popup} from "../common/Popup"
 import {Button} from "../common/Button";
 import {dispatch} from "../../state/state-manager";
@@ -7,12 +7,21 @@ import {SlideType} from "../../Entity/types";
 import './EditSlideBackgroundPopup.css';
 import {setSlideBackground} from "../../Entity/Slide";
 import { toDataURL } from "../../common/toDataURL";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
 
 type ContentProps = {
     currentSlideInfo: SlideType,
 }
 
 function Content(props: ContentProps) {
+    const store: Readonly<StoreType> = useContext(StoreContext);
+    const {
+        presentationInfo,
+        selection,
+    } = store.getState()
     const [color, setColor] = useState<string>(props.currentSlideInfo.background)
     const inputColorRef = useRef<HTMLInputElement | null>(null)
     const inputFileRef = useRef<HTMLInputElement | null>(null)
@@ -22,18 +31,15 @@ function Content(props: ContentProps) {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0]
             toDataURL(URL.createObjectURL(img), function(dataUrl: any) {
-                dispatch(setSlideBackground, {newBackground: dataUrl})
+                selection.currentSlide && store.dispatch(presentationInfoActions.setSlideBackground(selection.currentSlide, dataUrl))
             })
-
         }
     }
 
     function onInputColor() {
         if (inputColorRef.current) {
             setColor(inputColorRef.current.value)
-            dispatch(setSlideBackground, {
-                newBackground: inputColorRef.current.value,
-            })
+            selection.currentSlide && store.dispatch(presentationInfoActions.setSlideBackground(selection.currentSlide, inputColorRef.current.value))
         }
     }
 
@@ -50,9 +56,7 @@ function Content(props: ContentProps) {
     function findImageUrl(event: any) {
         if (inputUrlRef.current) {
             setColor(inputUrlRef.current.value)
-            dispatch(setSlideBackground, {
-                newBackground: inputUrlRef.current.value,
-            })
+            selection.currentSlide && store.dispatch(presentationInfoActions.setSlideBackground(selection.currentSlide, inputUrlRef.current.value))
         }
     }
 
@@ -107,16 +111,13 @@ type PropsType = {
 }
 
 function EditSlideBackgroundPopup(props: PropsType) {
+    const store: Readonly<StoreType> = useContext(StoreContext);
     function closePopup() {
-        dispatch(setEditSlideBackgroundPopupOpened, {
-            opened: false,
-        })
+        store.dispatch(popupOpenedReducerActions.setEditSlideBackgroundPopupOpened(false))
     }
 
     function acceptChange() {
-        dispatch(setEditSlideBackgroundPopupOpened, {
-            opened: false,
-        })
+        store.dispatch(popupOpenedReducerActions.setEditSlideBackgroundPopupOpened(false))
     }
 
     return (

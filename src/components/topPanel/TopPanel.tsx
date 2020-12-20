@@ -1,28 +1,34 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import './TopPanel.css';
 import logo from '../../images/logo_tcaer.png';
 import { dispatch } from '../../state/state-manager';
 import {changeName} from '../../Entity/Presentation';
 import { ToolPanel } from './ToolPanel';
-import { State } from '../../Entity/types';
 import {exportPresentation, goToPreview, savePresentation, uploadPresentation} from '../../Entity/State';
 import {Button_WithPopover} from "../common/Button_WithPopover";
 import {ActionList} from "../common/ActionList";
 import {Button} from "../common/Button";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {previewReducerActions} from "../../state/previewReducer";
 
-type PropsType = {
-    state: State,
-}
 
-function TopPanel(props: PropsType) {
+function TopPanel() {
+    const store: Readonly<StoreType> = useContext(StoreContext);
+    const {
+        presentationInfo,
+    } = store.getState()
+
     const saveRef = useRef<any|null>(null)
     const nameRef = useRef<HTMLInputElement|null>(null)
     const inputFileRef = useRef<HTMLInputElement|null>(null)
 
     function onBlur(event: any) {
-        dispatch(changeName, {
-            newName: event.currentTarget.value,
-        })
+        store.dispatch(presentationInfoActions.changeName(event.currentTarget.value))
+        // dispatch(changeName, {
+        //     newName: event.currentTarget.value,
+        // })
     }
 
     function onFileChange(event: any) {
@@ -30,7 +36,6 @@ function TopPanel(props: PropsType) {
             const file = event.target.files[0]
             const fileread = new FileReader()
             fileread.onload = function(e: any) {
-                debugger
                 const content = e.target.result
                 const intern = JSON.parse(content)
                 dispatch(uploadPresentation, {
@@ -65,7 +70,7 @@ function TopPanel(props: PropsType) {
             saveRef.current.click()
         }
         if (id === 'export') {
-            exportPresentation(props.state)
+            // exportPresentation(props.state)
         }
         if (id === 'upload' && inputFileRef.current) {
             inputFileRef.current.click()
@@ -74,9 +79,9 @@ function TopPanel(props: PropsType) {
 
     useEffect(() => {
         if (nameRef.current) {
-            nameRef.current.value = props.state.presentationInfo.name
+            nameRef.current.value = presentationInfo.name
         }
-    }, [props.state.presentationInfo])
+    }, [presentationInfo])
     return(
         <div className="top-panel">
             <div className='header-panel'>
@@ -85,16 +90,16 @@ function TopPanel(props: PropsType) {
                     <input
                         type="text"
                         ref={nameRef}
-                        defaultValue={props.state.presentationInfo.name}
+                        defaultValue={presentationInfo.name}
                         onBlur={onBlur}
                         className='presentation-title'/>
                     <div className="second-row">
-                        <a
-                            href={savePresentation(props.state)}
-                            download={`${props.state.presentationInfo.name}.json`}
-                            className={'ref'}
-                            ref={saveRef}
-                        ></a>
+                        {/*<a*/}
+                        {/*    href={savePresentation(store.getState())}*/}
+                        {/*    download={`${props.state.presentationInfo.name}.json`}*/}
+                        {/*    className={'ref'}*/}
+                        {/*    ref={saveRef}*/}
+                        {/*></a>*/}
                         <Button_WithPopover
                             text={'Файл'}
                             popover={
@@ -116,10 +121,10 @@ function TopPanel(props: PropsType) {
                 <Button
                     label={'Preview'}
                     type={'normal'}
-                    onClick={() => dispatch(goToPreview)}
+                    onClick={() => store.dispatch(previewReducerActions.setPreviewOpened(true))}
                 />
             </div>
-            <ToolPanel state={props.state}/>
+            <ToolPanel/>
         </div>
     )
 }

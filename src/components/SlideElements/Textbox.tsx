@@ -1,8 +1,11 @@
-import React, {useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 import { TextBoxType } from '../../Entity/types';
 import './Textbox.css';
 import {dispatch} from "../../state/state-manager";
 import {updateTextBox} from "../../Entity/TextBox";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {presentationInfoActions} from "../../state/presentationInfoReducer";
 
 type PropsType = {
     data: TextBoxType,
@@ -12,6 +15,10 @@ type PropsType = {
 }
 
 function Textbox(props: PropsType) {
+    const store: Readonly<StoreType> = useContext(StoreContext);
+    const {
+        selection,
+    } = store.getState()
     const inputRef = useRef<HTMLTextAreaElement>(null)
     const data = {...props.data}
     const fontWeight: 'bold'|'normal' = data.font.bold ? 'bold' : 'normal'
@@ -32,9 +39,11 @@ function Textbox(props: PropsType) {
     function onChange(event: any) {
         if(inputRef.current)
         {
-            dispatch(updateTextBox, {
-                text: inputRef.current.value
-            })
+            store.dispatch(presentationInfoActions.updateTextBox(
+                Number(selection.currentSlide),
+                selection.selectedSlideElements[0],
+                inputRef.current.value,
+            ))
         }
     }
 

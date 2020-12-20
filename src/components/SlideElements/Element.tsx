@@ -1,4 +1,4 @@
-import React, {RefObject, useEffect, useLayoutEffect, useRef, useState} from 'react';
+import React, {RefObject, useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
 import { ElementStyleType, SlideElementType } from '../../Entity/types';
 import { ImageBlock } from './Image';
 import {ColorStyleType, Shape} from './Shape';
@@ -11,11 +11,13 @@ import {useElementsDragNDrop} from "../../common/useDragNDrop";
 import {dispatch} from "../../state/state-manager";
 import {moveElement, resizeElement} from "../../Entity/SlideElement";
 import { getParentRelativeCoordinates } from '../../common/getParentRelativeCoordinates';
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {presentationInfoActions} from "../../state/presentationInfoReducer";
 
 type ElementPropsType = {
     element: SlideElementType,
     isSelected: boolean,
-    index: number,
 }
 
 function SlideElement(props: ElementPropsType) {
@@ -91,6 +93,11 @@ function ResizeHandlers({
     setTop,
     setLeft,
 }: ResizeHandlersType) {
+    const store: Readonly<StoreType> = useContext(StoreContext)
+    const {
+        presentationInfo,
+        selection,
+    } = store.getState()
     const tsRef = useRef<HTMLDivElement|null>(null)
     const bsRef = useRef<HTMLDivElement|null>(null)
     const rsRef = useRef<HTMLDivElement|null>(null)
@@ -109,15 +116,18 @@ function ResizeHandlers({
         const currElement = elementRef.current && elementRef.current.getBoundingClientRect()
         if (!!currElement) {
             const [cursorX, cursorY] = getParentRelativeCoordinates(currElement.left, currElement.top, slide)
-            dispatch(moveElement, {
-                elementId: element.elementId,
-                newX: cursorX,
-                newY: cursorY,
-            })
-            dispatch(resizeElement, {
-                newWidth: currElement.width,
-                newHeight: currElement.height,
-            })
+            store.dispatch(presentationInfoActions.moveElement(
+                Number(selection.currentSlide),
+                element.elementId,
+                cursorX,
+                cursorY,
+            ))
+            store.dispatch(presentationInfoActions.resizeElement(
+                Number(selection.currentSlide),
+                element.elementId,
+                currElement.width,
+                currElement.height,
+            ))
             setWidth(null)
             setHeight(null)
             setLeft(null)
@@ -131,10 +141,12 @@ function ResizeHandlers({
         document.removeEventListener('mouseup', bsMouseUp)
         const currElement = elementRef.current && elementRef.current.getBoundingClientRect()
         if (!!currElement) {
-            dispatch(resizeElement, {
-                newWidth: currElement.width,
-                newHeight: currElement.height,
-            })
+            store.dispatch(presentationInfoActions.resizeElement(
+                Number(selection.currentSlide),
+                element.elementId,
+                currElement.width,
+                currElement.height,
+            ))
             setWidth(null)
             setHeight(null)
         }
@@ -145,10 +157,12 @@ function ResizeHandlers({
         document.removeEventListener('mouseup', rsMouseUp)
         const currElement = elementRef.current && elementRef.current.getBoundingClientRect()
         if (!!currElement) {
-            dispatch(resizeElement, {
-                newWidth: currElement.width,
-                newHeight: currElement.height,
-            })
+            store.dispatch(presentationInfoActions.resizeElement(
+                Number(selection.currentSlide),
+                element.elementId,
+                currElement.width,
+                currElement.height,
+            ))
             setWidth(null)
             setHeight(null)
         }
@@ -160,15 +174,18 @@ function ResizeHandlers({
         const currElement = elementRef.current && elementRef.current.getBoundingClientRect()
         if (!!currElement) {
             const [cursorX, cursorY] = getParentRelativeCoordinates(currElement.left, currElement.top, slide)
-            dispatch(moveElement, {
-                elementId: element.elementId,
-                newX: cursorX,
-                newY: cursorY,
-            })
-            dispatch(resizeElement, {
-                newWidth: currElement.width,
-                newHeight: currElement.height,
-            })
+            store.dispatch(presentationInfoActions.moveElement(
+                Number(selection.currentSlide),
+                element.elementId,
+                cursorX,
+                cursorY,
+            ))
+            store.dispatch(presentationInfoActions.resizeElement(
+                Number(selection.currentSlide),
+                element.elementId,
+                currElement.width,
+                currElement.height,
+            ))
             setWidth(null)
             setHeight(null)
             setLeft(null)
@@ -290,6 +307,7 @@ function renderElement(element: SlideElementType, style: ElementStyleType) {
         strokeWidth: element.borderWidth,
         strokeColor: element.borderColor,
     }
+    debugger
     switch (element.type) {
         case 'shape':
             if (isShape(element.dataElement))

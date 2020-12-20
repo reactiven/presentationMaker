@@ -1,58 +1,72 @@
-import React, {useEffect, useRef} from "react";
+import React, {useContext, useEffect, useRef} from "react";
 import minus from '../../images/minus.png';
 import plus from '../../images/add_new.png';
 import './FontSizeSwitcher.css'
 import {dispatch} from "../../state/state-manager";
-import {changeFont} from "../../Entity/TextBox";
+import {changeFont, isTextBox} from "../../Entity/TextBox";
 import {TextBoxType} from "../../Entity/types";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {presentationInfoActions} from "../../state/presentationInfoReducer";
 
-type SizeSwitcherProps = {
-    textBox: TextBoxType,
-}
-
-function FontSizeSwitcher(props: SizeSwitcherProps) {
+function FontSizeSwitcher() {
+    const store: Readonly<StoreType> = useContext(StoreContext);
+    const {
+        presentationInfo,
+        selection,
+    } = store.getState()
     const inputRef = useRef<HTMLInputElement>(null)
 
+    const element = presentationInfo.slides[Number(selection.currentSlide)].elements[selection.selectedSlideElements[0]]
+
     function sizeInc() {
-        if (props.textBox)
+        if (selection.currentSlide && isTextBox(element.dataElement))
         {
-            dispatch(changeFont, {
-                newFont: {
-                    ...props.textBox.font,
-                    fontSize: Number(props.textBox.font.fontSize) + 1,
-                }
-            })
+            store.dispatch(presentationInfoActions.changeFont(
+                selection.currentSlide,
+                element.elementId,
+                {
+                    ...element.dataElement.font,
+                    fontSize: Number(element.dataElement.font.fontSize) + 1,
+                },
+            ))
         }
     }
 
     function sizeDec() {
-        if (props.textBox)
+        if (selection.currentSlide && isTextBox(element.dataElement))
         {
-            dispatch(changeFont, {
-                newFont: {
-                    ...props.textBox.font,
-                    fontSize: props.textBox.font.fontSize - 1,
-                }
-            })
+            store.dispatch(presentationInfoActions.changeFont(
+                selection.currentSlide,
+                element.elementId,
+                {
+                    ...element.dataElement.font,
+                    fontSize: Number(element.dataElement.font.fontSize) - 1,
+                },
+            ))
         }
     }
 
     function onInput() {
-        if (inputRef.current && props.textBox) {
-            dispatch(changeFont, {
-                newFont: {
-                    ...props.textBox.font,
-                    fontSize: inputRef.current.value,
-                }
-            })
+        if (inputRef.current && selection.currentSlide && isTextBox(element.dataElement))
+        {
+            store.dispatch(presentationInfoActions.changeFont(
+                selection.currentSlide,
+                element.elementId,
+                {
+                    ...element.dataElement.font,
+                    fontSize: Number(inputRef.current.value),
+                },
+            ))
         }
     }
 
     useEffect(() => {
-        if (props.textBox && inputRef.current) {
-            inputRef.current.value = String(props.textBox.font.fontSize)
+        console.log('123')
+        if (element && isTextBox(element.dataElement) && inputRef.current) {
+            inputRef.current.value = String(element.dataElement.font.fontSize)
         }
-    }, [inputRef, props.textBox])
+    }, [inputRef, element.dataElement])
 
     return(
         <div className='switcher-container'>
@@ -60,7 +74,7 @@ function FontSizeSwitcher(props: SizeSwitcherProps) {
                 <img src={minus} alt='logo' className='switch-image-button'/>
             </button>
             <input
-                defaultValue={String(props.textBox.font.fontSize)}
+                defaultValue={isTextBox(element.dataElement) ? String(element.dataElement.font.fontSize) : 0}
                 className='input-size'
                 ref={inputRef}
                 onInput={onInput}

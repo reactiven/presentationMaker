@@ -1,11 +1,15 @@
 import {getParentRelativeCoordinates} from "./getParentRelativeCoordinates";
-import {dispatch} from "../state/state-manager";
-import {addElementToSelected, moveElement, selectElement} from "../Entity/SlideElement";
-import {RefObject, useEffect, useState} from "react";
+import {RefObject, useContext, useEffect, useState} from "react";
 import {SlideElementType} from "../Entity/types";
+import {StoreType} from "../state/store";
+import {StoreContext} from "../state/storeContext";
+import {presentationInfoActions} from "../state/presentationInfoReducer";
+import {selectionReducerActions} from "../state/selectionReducer";
 
 
 function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HTMLDivElement>) {
+    const store: Readonly<StoreType> = useContext(StoreContext)
+    const {selection} = store.getState()
     const [left, setLeft] = useState<number | null>(null)
     const [top, setTop] = useState<number | null>(null)
     const [offsetTop, setOffsetTop] = useState(0)
@@ -19,11 +23,12 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
         if (elementRef.current) {
             const elementBounds = elementRef.current.getBoundingClientRect()
             const [cursorX, cursorY] = getParentRelativeCoordinates(elementBounds.left, elementBounds.top, slide)
-            dispatch(moveElement, {
-                elementId: element.elementId,
-                newX: cursorX,
-                newY: cursorY,
-            })
+            store.dispatch(presentationInfoActions.moveElement(
+                Number(selection.currentSlide),
+                element.elementId,
+                cursorX,
+                cursorY
+            ))
             setLeft(null)
             setTop(null)
         }
@@ -39,15 +44,12 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
     function mouseDown(event: MouseEvent) {
         if (event.ctrlKey)
         {
-            dispatch(addElementToSelected, {
-                elementId: element.elementId
-            })
+            store.dispatch(selectionReducerActions.addElementToSelected(element.elementId))
         }
         else
         {
-            dispatch(selectElement, {
-                elementId: element.elementId
-            })
+            store.dispatch(selectionReducerActions.selectElement(element.elementId))
+            store.dispatch(presentationInfoActions.replaceElementToFront(Number(selection.currentSlide), element.elementId))
             if (!event.defaultPrevented) {
                 const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, elementRef.current)
                 setOffsetLeft(cursorX)

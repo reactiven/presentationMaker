@@ -1,3 +1,5 @@
+import {PresentationType} from "../Entity/types";
+
 export type PopupOpenedReducerType = typeof initialState;
 
 let initialState = {
@@ -5,8 +7,8 @@ let initialState = {
     addImageLinkPopupOpened: false,
 }
 
-const popupsOpenedReducer = (state = initialState, action: ActionTypes): PopupOpenedReducerType => {
-    let newState = { ...state }
+const popupsOpenedReducer = (state: PopupOpenedReducerType = initialState, action: ActionTypes): PopupOpenedReducerType => {
+    let newState: PopupOpenedReducerType = JSON.parse(JSON.stringify(state))
     switch (action.type) {
         case "SET_EDIT_SLIDE_BACKGROUND_POPUP_OPENED":
             newState = {

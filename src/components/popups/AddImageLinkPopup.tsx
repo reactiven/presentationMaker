@@ -1,15 +1,20 @@
 import './AddImageLinkPopup.css';
 import {Popup} from "../common/Popup";
 import {Button} from "../common/Button";
-import React, {useRef} from "react";
+import React, {useContext, useRef} from "react";
 import {dispatch} from "../../state/state-manager";
 import {setAddImageLinkPopopOpened, setInsertionMode} from "../../Entity/Presentation";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {insertionReducerActions} from "../../state/insertionModeReducer";
+import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
 
 type ContentProps = {
     inputInfo: any,
 }
 
 function Content(props: ContentProps) {
+
     const inputUrlRef = useRef<HTMLInputElement | null>(null)
 
     function onInputChange(event: any) {
@@ -35,19 +40,21 @@ function Content(props: ContentProps) {
 
 
 function AddImageLinkPopup() {
+    const store: Readonly<StoreType> = useContext(StoreContext);
     const inputInfo = useRef<any>({
         value: ''
     })
+    function closePopup() {
+        store.dispatch(popupOpenedReducerActions.setAddImageLinkPopupOpened(false))
+    }
 
     function acceptChange() {
-        dispatch(setInsertionMode, {
+        store.dispatch(insertionReducerActions.setInsertionMode({
             on: true,
             elementType: 'image',
             filepath: inputInfo.current.value
-        })
-        dispatch(setAddImageLinkPopopOpened, {
-            opened: false,
-        })
+        }))
+        store.dispatch(popupOpenedReducerActions.setAddImageLinkPopupOpened(false))
     }
 
     return (
@@ -61,9 +68,7 @@ function AddImageLinkPopup() {
                 onClick={acceptChange}
                 label={'Применить'}
             />}
-            closePopup={() => dispatch(setAddImageLinkPopopOpened, {
-                opened: false,
-            })}
+            closePopup={closePopup}
         />
     )
 }

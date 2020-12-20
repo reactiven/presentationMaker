@@ -6,27 +6,39 @@ import arrowLeft from "../../images/undo.png";
 import {redo, undo} from "../../Entity/State";
 import arrowRight from "../../images/redo.png";
 import './CommonToolBlock.css';
-import React from "react";
+import React, {useContext} from "react";
 import {ToolSeparator} from "./ToolPanel";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {selectionReducerActions} from "../../state/selectionReducer";
 
 function CommonToolBlock() {
+    const store: Readonly<StoreType> = useContext(StoreContext);
+    const {
+        selection,
+    } = store.getState()
+
+    function addSlide() {
+        store.dispatch(presentationInfoActions.addSlide(Number(selection.currentSlide)))
+    }
 
     return(
         <div className='common-tool-block'>
             <Button
                 type={'border-none'}
                 img={plusIcon}
-                onClick={() => dispatch(addSlide)}
+                onClick={addSlide}
             />
             <Button
                 type={'border-none'}
                 img={arrowLeft}
-                onClick={() => dispatch(undo)}
+                onClick={() => {}/*dispatch(undo)*/}
             />
             <Button
                 type={'border-none'}
                 img={arrowRight}
-                onClick={() => dispatch(redo)}
+                onClick={() => {}/*dispatch(redo)*/}
             />
             <ToolSeparator/>
         </div>

@@ -1,4 +1,3 @@
-import { renderApp } from "..";
 import {goToPreview, redo, saveStateForUndo, undo} from "../Entity/State";
 import { State } from "../Entity/types";
 import { initialState } from "../viewModel/initialState";
@@ -24,10 +23,8 @@ function dispatch(fn: fnType, payload?: any) {
                 state = setPreviewImage(state,{
                     image: dataUrl,
                 })
-                renderApp(state)
             });
     }
-    renderApp(state)
 }
 
 export {

@@ -1,12 +1,13 @@
 import {PreviewInfoType} from "../Entity/types";
+import {SelectionStateType} from "./selectionReducer";
 
 let initialState = {
     currentSlide: 0,
     onPreview: false,
 }
 
-const previewReducer = (state = initialState, action: ActionTypes): PreviewInfoType => {
-    let newState = { ...state }
+const previewReducer = (state: PreviewInfoType = initialState, action: ActionTypes): PreviewInfoType => {
+    let newState: PreviewInfoType = JSON.parse(JSON.stringify(state))
     switch (action.type) {
         case "PREV_SLIDE":
             newState = {

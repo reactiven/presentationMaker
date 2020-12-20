@@ -1,39 +1,39 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import './ToolPanel.css';
-import {State} from "../../Entity/types";
 import {isTextBox} from "../../Entity/TextBox";
 import {CommonToolBlock} from "./CommonToolBlock";
 import { ColorEditColor } from './ColorEditColor';
 import {FontEditBlock} from "./FontEditBlock";
 import { AddElementsBlock } from './AddElementsBlock';
 import {Button} from "../common/Button";
-import {dispatch} from "../../state/state-manager";
-import {setEditSlideBackgroundPopupOpened} from "../../Entity/Presentation";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
 
-type PropsType = {
-    state: State,
-}
+function ToolPanel() {
+    const store: Readonly<StoreType> = useContext(StoreContext);
+    const {
+        presentationInfo,
+        selection,
+    } = store.getState()
 
-function ToolPanel(props: PropsType) {
-    const selectedElements = props.state.selectedSlideElements
-    const slides = props.state.presentationInfo.slides
-    const currentSlide = slides[Number(props.state.currentSlide)]
+    const selectedElements = selection.selectedSlideElements
+    const slides = presentationInfo.slides
+    const currentSlide = slides[Number(selection.currentSlide)]
 
     const selectedElement = selectedElements.length > 0
         ? currentSlide.elements[selectedElements[0]]
         : null
 
     function openEditSlideBackgroundPopup() {
-        dispatch(setEditSlideBackgroundPopupOpened, {
-            opened: true,
-        })
+        store.dispatch(popupOpenedReducerActions.setEditSlideBackgroundPopupOpened(true))
     }
 
     return(
         <div className='toolpanel'>
             <CommonToolBlock/>
             {currentSlide && <AddElementsBlock />}
-            {selectedElement && selectedElements.length === 1 && <ColorEditColor element={selectedElement}/>}
+            {selectedElement && selectedElements.length === 1 && <ColorEditColor />}
             {selectedElement && selectedElements.length === 1 &&  isTextBox(selectedElement.dataElement)
             && <FontEditBlock
                 dataElement={selectedElement.dataElement}

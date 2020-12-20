@@ -3,7 +3,7 @@ import {Button} from "../common/Button";
 import textbox from  '../../images/textbox.png';
 import shape from '../../images/shape.png';
 import image from '../../images/image-logo.png'
-import React, { useRef } from "react";
+import React, {useContext, useRef} from "react";
 import {Button_WithPopover} from "../common/Button_WithPopover";
 import {ActionList} from "../common/ActionList";
 import circle from '../../images/circle.png';
@@ -13,20 +13,31 @@ import './AddElementsBlock.css';
 import {setAddImageLinkPopopOpened, setInsertionMode} from "../../Entity/Presentation";
 import {ToolSeparator} from "./ToolPanel";
 import {toDataURL} from "../../common/toDataURL";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {presentationInfoActions, presentationInfoReducer} from "../../state/presentationInfoReducer";
+import {insertionReducerActions} from "../../state/insertionModeReducer";
+import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
 
 
 function AddElementsBlock() {
+    const store: Readonly<StoreType> = useContext(StoreContext);
+    const {
+        presentationInfo,
+        selection,
+    } = store.getState()
+
     const inputFileRef = useRef<HTMLInputElement|null>(null)
 
     function onImageChange(event: any) {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0]
             toDataURL(URL.createObjectURL(img), function(dataUrl: any) {
-                dispatch(setInsertionMode, {
+                store.dispatch(insertionReducerActions.setInsertionMode({
                     on: true,
                     elementType: 'image',
                     filepath: dataUrl,
-                })
+                }))
             })
 
         }
@@ -67,11 +78,19 @@ function AddElementsBlock() {
     }
 
     function handleAddShape(id: string) {
-        dispatch(setInsertionMode, {
+        store.dispatch(insertionReducerActions.setInsertionMode({
             on: true,
             elementType: 'shape',
+            // @ts-ignore
             shapeType: id,
-        })
+        }))
+    }
+
+    function handleTextBox() {
+        store.dispatch(insertionReducerActions.setInsertionMode({
+            on: true,
+            elementType: 'textBox',
+        }))
     }
 
     function handleAddImage(id: string) {
@@ -79,9 +98,7 @@ function AddElementsBlock() {
             inputFileRef.current && inputFileRef.current.click()
         }
         if (id === 'ref') {
-            dispatch(setAddImageLinkPopopOpened, {
-                opened: true,
-            })
+            store.dispatch(popupOpenedReducerActions.setAddImageLinkPopupOpened(true))
         }
     }
 
@@ -90,10 +107,7 @@ function AddElementsBlock() {
             <Button
                 type={'border-none'}
                 img={textbox}
-                onClick={() => dispatch(setInsertionMode, {
-                    on: true,
-                    elementType: 'textBox',
-                })}
+                onClick={handleTextBox}
             />
             <Button_WithPopover
                 img={shape}

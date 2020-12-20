@@ -1,20 +1,18 @@
-import {SlidesMapType} from "../../Entity/types";
 import './PreviewMode.css';
-import {useEffect} from "react";
+import {useContext, useEffect} from "react";
 import React from "react";
-import {dispatch} from "../../state/state-manager";
-import {closePreview, nextSlide, prevSlide} from "../../Entity/State";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {previewReducerActions} from "../../state/previewReducer";
 
-type PropsType = {
-    slides: SlidesMapType,
-    slidesOrder: Array<number>,
-    currentSlide: number,
-}
-
-function PreviewMode(props: PropsType) {
-    debugger
-    const currentSlideId = props.slidesOrder[props.currentSlide]
-    const currentSlideInfo = props.slides[currentSlideId]
+function PreviewMode() {
+    const store: Readonly<StoreType> = useContext(StoreContext);
+    const {
+        selection,
+        presentationInfo,
+    } = store.getState()
+    const currentSlideId = presentationInfo.slidesOrder[Number(selection.currentSlide)]
+    const currentSlideInfo = presentationInfo.slides[currentSlideId]
 
     const slideBack = {
         background: `url("${currentSlideInfo.previewImage}") no-repeat center/100% 100%`
@@ -22,13 +20,13 @@ function PreviewMode(props: PropsType) {
 
     function keydownHandler(event: KeyboardEvent) {
         if (event.keyCode === 39) {
-            dispatch(nextSlide)
+            store.dispatch(previewReducerActions.nextSlide())
         }
         if (event.keyCode === 37) {
-            dispatch(prevSlide)
+            store.dispatch(previewReducerActions.prevSlide())
         }
         if (event.keyCode === 27) {
-            dispatch(closePreview)
+            store.dispatch(previewReducerActions.setPreviewOpened(false))
         }
     }
 
@@ -38,7 +36,7 @@ function PreviewMode(props: PropsType) {
     })
 
     return(
-        <div className={'preview-container'} onClick={() => dispatch(nextSlide)}>
+        <div className={'preview-container'} onClick={() => store.dispatch(previewReducerActions.nextSlide())}>
             <div className={'preview-slide-container'} style={slideBack}>
             </div>
         </div>

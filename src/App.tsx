@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useContext, useEffect} from 'react';
 import './App.css';
 import {SideBar} from './components/sidebar/Sidebar';
 import {TopPanel} from './components/topPanel/TopPanel';
@@ -8,17 +8,22 @@ import {dispatch} from "./state/state-manager";
 import {DeleteElements} from "./Entity/Slide";
 import {redo, undo} from "./Entity/State";
 import {deleteSlides} from "./Entity/Presentation";
+import { StoreType } from './state/store';
+import { StoreContext } from './state/storeContext';
+import {presentationInfoActions} from "./state/presentationInfoReducer";
+import {selectionReducerActions} from "./state/selectionReducer";
 
 
-type PropsType = {
-    state: State
-}
-
-function App(props: PropsType): JSX.Element {
+function App(): JSX.Element {
+    const store: Readonly<StoreType> = useContext(StoreContext);
+    const {
+        presentationInfo,
+        selection,
+    } = store.getState()
 
     useEffect(() => {
-        document.title = props.state.presentationInfo.name
-    }, [props.state])
+        document.title = presentationInfo.name
+    }, [presentationInfo])
 
     useEffect(() => {
         document.addEventListener("keydown", keydownHandler);
@@ -30,11 +35,12 @@ function App(props: PropsType): JSX.Element {
     const keydownHandler = (e: KeyboardEvent): void => {
         if (e.keyCode === 46) {
 
-            if (!!props.state.selectedSlides.length) {
-                dispatch(deleteSlides)
+            if (!!selection.selectedSlides.length) {
+                store.dispatch(presentationInfoActions.deleteSlides(selection.selectedSlides))
             }
-            else {
-                dispatch(DeleteElements)
+            else if (selection.currentSlide) {
+                store.dispatch(presentationInfoActions.deleteElements(selection.currentSlide, selection.selectedSlideElements))
+                store.dispatch(selectionReducerActions.deleteElementSelection())
             }
         }
         if (e.keyCode === 90 && e.ctrlKey) {
@@ -47,12 +53,10 @@ function App(props: PropsType): JSX.Element {
 
     return (
         <div className="app-layout">
-            <TopPanel
-                state={props.state}
-            />
+            <TopPanel />
             <div className="presentation-block">
-                <SideBar state={props.state}/>
-                <Workspace state={props.state}/>
+                <SideBar />
+                <Workspace />
             </div>
         </div>
     )
