@@ -1,12 +1,11 @@
 import {TextBoxType} from "../../Entity/types";
-import {changeFont, isTextBox} from "../../Entity/TextBox";
+import {isTextBox} from "../../Entity/TextBox";
 import {Button_TwoState} from "../common/Button_TwoState";
 import bold from "../../images/bold.png";
 import italic from "../../images/italic.png";
 import underline from "../../images/underline.png";
 import {FontSizeSwitcher} from "../common/FontSizeSwitcher";
 import React, {useContext} from "react";
-import {dispatch} from "../../state/state-manager";
 import './FontEditBlock.css';
 import {ToolSeparator} from "./ToolPanel";
 import { SelectList } from "../common/SelectList";
@@ -22,17 +21,14 @@ function FontEditBlock(props: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
-        selection,
     } = store.getState()
 
-    const element = presentationInfo.slides[Number(selection.currentSlide)].elements[selection.selectedSlideElements[0]]
+    const element = presentationInfo.presentation.slides[Number(presentationInfo.currentSlide)].elements[presentationInfo.selectedSlideElements[0]]
 
     function changeFontBold(value: boolean) {
-        if (selection.currentSlide && isTextBox(element.dataElement))
+        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
         {
             store.dispatch(presentationInfoActions.changeFont(
-                selection.currentSlide,
-                element.elementId,
                 {
                     ...element.dataElement.font,
                     bold: value,
@@ -42,11 +38,9 @@ function FontEditBlock(props: PropsType) {
     }
 
     function changeFontItalic(value: boolean) {
-        if (selection.currentSlide && isTextBox(element.dataElement))
+        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
         {
             store.dispatch(presentationInfoActions.changeFont(
-                selection.currentSlide,
-                element.elementId,
                 {
                     ...element.dataElement.font,
                     italic: value,
@@ -56,11 +50,9 @@ function FontEditBlock(props: PropsType) {
     }
 
     function changeFontUnderline(value: boolean) {
-        if (selection.currentSlide && isTextBox(element.dataElement))
+        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
         {
             store.dispatch(presentationInfoActions.changeFont(
-                selection.currentSlide,
-                element.elementId,
                 {
                     ...element.dataElement.font,
                     underline: value,
@@ -70,11 +62,9 @@ function FontEditBlock(props: PropsType) {
     }
 
     function changeFontFamily(value: string) {
-        if (selection.currentSlide && isTextBox(element.dataElement))
+        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
         {
             store.dispatch(presentationInfoActions.changeFont(
-                selection.currentSlide,
-                element.elementId,
                 {
                     ...element.dataElement.font,
                     fontStyle: value,

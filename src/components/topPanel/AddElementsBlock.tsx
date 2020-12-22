@@ -1,4 +1,3 @@
-import {dispatch} from "../../state/state-manager";
 import {Button} from "../common/Button";
 import textbox from  '../../images/textbox.png';
 import shape from '../../images/shape.png';
@@ -10,12 +9,10 @@ import circle from '../../images/circle.png';
 import rect from '../../images/rect.png';
 import triangle from '../../images/triangle.png';
 import './AddElementsBlock.css';
-import {setAddImageLinkPopopOpened, setInsertionMode} from "../../Entity/Presentation";
 import {ToolSeparator} from "./ToolPanel";
 import {toDataURL} from "../../common/toDataURL";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
-import {presentationInfoActions, presentationInfoReducer} from "../../state/presentationInfoReducer";
 import {insertionReducerActions} from "../../state/insertionModeReducer";
 import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
 
@@ -24,7 +21,6 @@ function AddElementsBlock() {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
-        selection,
     } = store.getState()
 
     const inputFileRef = useRef<HTMLInputElement|null>(null)

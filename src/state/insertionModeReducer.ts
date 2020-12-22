@@ -1,5 +1,4 @@
 import {InsertionModeType} from "../Entity/types";
-import {PopupOpenedReducerType} from "./popupsOpenedReducers";
 
 
 let initialState = {
@@ -12,6 +11,12 @@ const insertionModeReducer = (state: InsertionModeType = initialState, action: A
     switch (action.type) {
         case "SET_INSERTION_MODE":
             newState = {...action.data.payload}
+            break
+        case "RESET_STATE_TO_DEFAULT":
+            newState = {
+                on: false,
+                elementType: null,
+            }
             break
         default:
             break
@@ -31,6 +36,11 @@ const insertionReducerActions = {
             }
         } as const
     },
+    resetStateToDefault: () => {
+        return {
+            type: 'RESET_STATE_TO_DEFAULT',
+        } as const
+    }
 }
 
 export {

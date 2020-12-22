@@ -4,12 +4,10 @@ import {SlideElementType} from "../Entity/types";
 import {StoreType} from "../state/store";
 import {StoreContext} from "../state/storeContext";
 import {presentationInfoActions} from "../state/presentationInfoReducer";
-import {selectionReducerActions} from "../state/selectionReducer";
 
 
 function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HTMLDivElement>) {
     const store: Readonly<StoreType> = useContext(StoreContext)
-    const {selection} = store.getState()
     const [left, setLeft] = useState<number | null>(null)
     const [top, setTop] = useState<number | null>(null)
     const [offsetTop, setOffsetTop] = useState(0)
@@ -24,7 +22,6 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
             const elementBounds = elementRef.current.getBoundingClientRect()
             const [cursorX, cursorY] = getParentRelativeCoordinates(elementBounds.left, elementBounds.top, slide)
             store.dispatch(presentationInfoActions.moveElement(
-                Number(selection.currentSlide),
                 element.elementId,
                 cursorX,
                 cursorY
@@ -44,12 +41,12 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
     function mouseDown(event: MouseEvent) {
         if (event.ctrlKey)
         {
-            store.dispatch(selectionReducerActions.addElementToSelected(element.elementId))
+            store.dispatch(presentationInfoActions.addElementToSelected(element.elementId))
         }
         else
         {
-            store.dispatch(selectionReducerActions.selectElement(element.elementId))
-            store.dispatch(presentationInfoActions.replaceElementToFront(Number(selection.currentSlide), element.elementId))
+            store.dispatch(presentationInfoActions.selectElement(element.elementId))
+            store.dispatch(presentationInfoActions.replaceElementToFront(element.elementId))
             if (!event.defaultPrevented) {
                 const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, elementRef.current)
                 setOffsetLeft(cursorX)

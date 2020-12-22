@@ -1,28 +1,21 @@
 import React, {useContext, useRef, useState} from 'react';
-import {deleteSlideSelection, getCurrentSlideInfo, setInsertionMode} from '../../Entity/Presentation';
-import { deleteElementSelection } from '../../Entity/SlideElement';
-import { State } from '../../Entity/types';
-import { dispatch } from '../../state/state-manager';
 import { Slide } from './Slide';
 import './WorkSpace.css';
-import {AddImage, AddShape, AddTextBox} from "../../Entity/Slide";
 import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordinates";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 import {insertionReducerActions} from "../../state/insertionModeReducer";
-import {selectionReducerActions} from "../../state/selectionReducer";
 
 function Workspace() {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
-        selection,
         insertionMode,
     } = store.getState()
 
-    const slideInfo = selection.currentSlide !== null
-        ? presentationInfo.slides[selection.currentSlide]
+    const slideInfo = presentationInfo.currentSlide !== null
+        ? presentationInfo.presentation.slides[presentationInfo.currentSlide]
         : null
     const workspaceRef = useRef<HTMLDivElement|null>(null)
     const slideRef = useRef<HTMLDivElement|null>(null)
@@ -44,7 +37,6 @@ function Workspace() {
                     if (insertionMode.shapeType)
                     {
                         store.dispatch(presentationInfoActions.addShape(
-                            slideInfo.slideId,
                             insertionMode.shapeType,
                             {
                                 x: Number(insX > cursorX ? cursorX : insX),
@@ -55,14 +47,12 @@ function Workspace() {
                                 h: Math.abs(cursorY - insY),
                             }
                         ))
-                        store.dispatch(selectionReducerActions.selectElement((presentationInfo.slidesOrder[presentationInfo.slidesOrder.length-1])))
                     }
                     break
                 case "image":
                     if (insertionMode.filepath)
                     {
                         store.dispatch(presentationInfoActions.addImage(
-                            slideInfo.slideId,
                             insertionMode.filepath,
                             {
                                 x: Number(insX > cursorX ? cursorX : insX),
@@ -77,7 +67,6 @@ function Workspace() {
                     break
                 case "textBox":
                     store.dispatch(presentationInfoActions.addTextBox(
-                        slideInfo.slideId,
                         {
                             x: Number(insX > cursorX ? cursorX : insX),
                             y: Number(insY > cursorY ? cursorY : insY),
@@ -107,9 +96,9 @@ function Workspace() {
     }
 
     function mouseDown(event: any) {
-        if (selection.selectedSlides.length)
+        if (presentationInfo.selectedSlides.length)
         {
-            store.dispatch(selectionReducerActions.deleteSlideSelection())
+            store.dispatch(presentationInfoActions.deleteSlideSelection())
         }
         if (insertionMode.on && slideRef.current) {
             const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slideRef.current)
@@ -125,9 +114,9 @@ function Workspace() {
     }
 
     function onClick(event: any) {
-        if (!event.defaultPrevented && selection.selectedSlideElements.length)
+        if (!event.defaultPrevented && presentationInfo.selectedSlideElements.length)
         {
-            store.dispatch(selectionReducerActions.deleteElementSelection())
+            store.dispatch(presentationInfoActions.deleteElementSelection())
         }
     }
 

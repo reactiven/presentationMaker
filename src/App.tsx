@@ -3,26 +3,20 @@ import './App.css';
 import {SideBar} from './components/sidebar/Sidebar';
 import {TopPanel} from './components/topPanel/TopPanel';
 import {Workspace} from './components/workspace/Workspace';
-import {State} from './Entity/types';
-import {dispatch} from "./state/state-manager";
-import {DeleteElements} from "./Entity/Slide";
 import {redo, undo} from "./Entity/State";
-import {deleteSlides} from "./Entity/Presentation";
 import { StoreType } from './state/store';
 import { StoreContext } from './state/storeContext';
 import {presentationInfoActions} from "./state/presentationInfoReducer";
-import {selectionReducerActions} from "./state/selectionReducer";
 
 
 function App(): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
-        selection,
     } = store.getState()
 
     useEffect(() => {
-        document.title = presentationInfo.name
+        document.title = presentationInfo.presentation.name
     }, [presentationInfo])
 
     useEffect(() => {
@@ -35,19 +29,19 @@ function App(): JSX.Element {
     const keydownHandler = (e: KeyboardEvent): void => {
         if (e.keyCode === 46) {
 
-            if (!!selection.selectedSlides.length) {
-                store.dispatch(presentationInfoActions.deleteSlides(selection.selectedSlides))
+            if (!!presentationInfo.selectedSlides.length) {
+                store.dispatch(presentationInfoActions.deleteSlides())
             }
-            else if (selection.currentSlide) {
-                store.dispatch(presentationInfoActions.deleteElements(selection.currentSlide, selection.selectedSlideElements))
-                store.dispatch(selectionReducerActions.deleteElementSelection())
+            else if (presentationInfo.currentSlide) {
+                store.dispatch(presentationInfoActions.deleteElements())
+                store.dispatch(presentationInfoActions.deleteElementSelection())
             }
         }
         if (e.keyCode === 90 && e.ctrlKey) {
-            dispatch(undo)
+            // dispatch(undo)
         }
         if (e.keyCode === 89 && e.ctrlKey) {
-            dispatch(redo)
+            // dispatch(redo)
         }
     }
 

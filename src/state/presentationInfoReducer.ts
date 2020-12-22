@@ -1,13 +1,18 @@
 import {BackgroundType, FontType, PresentationType, ShapeTypeType} from "../Entity/types";
-import {generateSlideId} from "../Entity/Presentation";
-import {generateElementId} from "../Entity/SlideElement";
 import {isTextBox} from "../Entity/TextBox";
+import {addImage, addShape, addSlide, addTextbox} from "./actions/addElements";
+import { moveSlides } from "./actions/moveSlides";
 
 
-let initialState = {
-    name: 'new presentation',
-    slidesOrder: [],
-    slides: {},
+let initialState: PresentationType = {
+    currentSlide: null as null|number,
+    selectedSlideElements: [] as Array<number>,
+    selectedSlides: [] as Array<number>,
+    presentation: {
+        name: 'new presentation',
+        slidesOrder: [],
+        slides: {},
+    },
 }
 type ElementPosition = {
     x: number,
@@ -19,167 +24,179 @@ type ElementSize = {
     h: number
 }
 
+
+if (localStorage.getItem("state") !== null) {
+    let storageState: PresentationType = JSON.parse(String(localStorage.getItem("state")))
+    initialState = {...storageState}
+}
+
 const presentationInfoReducer = (state: PresentationType = initialState, action: ActionTypes): PresentationType => {
-    let newState: PresentationType = JSON.parse(JSON.stringify(state))
+    let newState: PresentationType = {...state}
     switch (action.type) {
         case "CHANGE_NAME":
-            newState.name = action.data.newName
+            newState.presentation.name = action.data.newName
             break
         case "SET_SLIDE_BACKGROUND":
-            newState.slides[Number(action.data.slideId)].background = action.data.newBackground
+            if (newState.currentSlide)
+            {
+                newState.presentation.slides[newState.currentSlide].background = action.data.newBackground
+            }
             break
         case "ADD_SLIDE":
-            let slideId = generateSlideId()
-            const insertPosition = newState.slidesOrder.findIndex(slideId => slideId === action.data.currentSlide)
-            newState.slidesOrder.splice(insertPosition + 1, 0, slideId)
-            newState.slides[slideId] = {
-                slideId,
-                elements: {},
-                elementsOrder: [],
-                background: '#ffffff',
-                previewImage: null,
-            }
+            newState = addSlide(newState)
             break
         case "DELETE_SLIDES":
-            action.data.selectedSlides.forEach((slideId => {
-                delete newState.slides[slideId]
+            newState.selectedSlides.forEach((slideId => {
+                delete newState.presentation.slides[slideId]
             }))
-            newState.slidesOrder = newState.slidesOrder.filter(slideId => (action.data.selectedSlides.indexOf(slideId) === -1))
+            newState.presentation.slidesOrder = newState.presentation.slidesOrder.filter(slideId => (state.selectedSlides.indexOf(slideId) === -1))
             break
         case "MOVE_SLIDES":
-            const selectedSlideId = [...action.data.selectedSlides][0]
-            const selectedSlideIndex = newState.slidesOrder.findIndex(id => selectedSlideId === id)
-            let finalArray
-            if (action.data.newPosition == 0) {
-                let newSlidesOrder = newState.slidesOrder.filter(slideId => slideId !== selectedSlideId)
-                finalArray = [selectedSlideId].concat(newSlidesOrder)
-            }
-            else if (action.data.newPosition == newState.slidesOrder.length) {
-                let newSlidesOrder = newState.slidesOrder.filter(slideId => slideId !== selectedSlideId)
-                finalArray = newSlidesOrder.concat([selectedSlideId])
-            }
-            else {
-                let nextSlideId = newState.slidesOrder[action.data.newPosition]
-                newState.slidesOrder.splice(selectedSlideIndex, 1)
-                const insertPosition = newState.slidesOrder.findIndex(id => nextSlideId === id)
-                const firstPart = newState.slidesOrder.slice(0, insertPosition)
-                const secondPart = newState.slidesOrder.slice(insertPosition)
-                finalArray = firstPart.concat([selectedSlideId]).concat(secondPart)
-            }
-            newState.slidesOrder = finalArray
+            newState = moveSlides(newState, action.data.newPosition)
             break
         case "ADD_IMAGE":
-            const imageId = generateElementId()
-            newState.slides[action.data.slideId].elements[imageId] = {
-                type: 'image',
-                dataElement: {
-                    src: action.data.filepath,
-                },
-                elementId: imageId,
-                width: (action.data.size && action.data.size.w) ||  200,
-                height: (action.data.size && action.data.size.h) ||  200,
-                xPos: action.data.position.x,
-                yPos: action.data.position.y,
-                background: null,
-                borderWidth: null,
-                borderColor: null,
-            }
-            newState.slides[action.data.slideId].elementsOrder.push(imageId)
+            newState = addImage(newState, action.data.filepath, action.data.position, action.data.size)
             break
         case "ADD_SHAPE":
-            const shapeId = generateElementId()
-            newState.slides[action.data.slideId].elements[shapeId] = {
-                type: 'shape',
-                dataElement: {
-                    shapeType: action.data.type,
-                },
-                elementId: shapeId,
-                width: (action.data.size && action.data.size.w) ||  200,
-                height: (action.data.size && action.data.size.h) ||  200,
-                xPos: action.data.position.x,
-                yPos: action.data.position.y,
-                background: null,
-                borderWidth: null,
-                borderColor: null,
-            }
-            newState.slides[action.data.slideId].elementsOrder.push(shapeId)
+            newState = addShape(newState, action.data.type, action.data.position, action.data.size)
             break
         case "ADD_TEXT_BOX":
-            const textBoxId = generateElementId()
-            newState.slides[action.data.slideId].elements[textBoxId] = {
-                type: 'textBox',
-                dataElement: {
-                    font: {
-                        fontStyle: 'Times New Roman',
-                        fontSize: 20,
-                        fontColor: '#000000',
-                        bold: false,
-                        italic: false,
-                        underline: false,
-                    },
-                    text: '',
-                },
-                elementId: textBoxId,
-                width: (action.data.size && action.data.size.w) ||  200,
-                height: (action.data.size && action.data.size.h) ||  200,
-                xPos: action.data.position.x,
-                yPos: action.data.position.y,
-                background: null,
-                borderWidth: null,
-                borderColor: null,
-            }
-            newState.slides[action.data.slideId].elementsOrder.push(textBoxId)
+            newState = addTextbox(newState, action.data.position, action.data.size)
             break
         case "DELETE_ELEMENTS":
-            action.data.selectedElements.forEach(elementId => {
-                delete newState.slides[action.data.slideId].elements[elementId]
-            })
-            newState.slides[action.data.slideId].elementsOrder = newState.slides[action.data.slideId].elementsOrder.filter(elementId => {
-                const isSelected = action.data.selectedElements.indexOf(elementId) !== -1
-                return !isSelected
-            })
+            if (newState.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    delete newState.presentation.slides[Number(newState.currentSlide)].elements[elementId]
+                })
+                newState.presentation.slides[newState.currentSlide].elementsOrder = newState.presentation.slides[newState.currentSlide].elementsOrder.filter(elementId => {
+                    const isSelected = newState.selectedSlideElements.indexOf(elementId) !== -1
+                    return !isSelected
+                })
+            }
             break
         case "MOVE_ELEMENT":
-            newState.slides[action.data.slideId].elements[action.data.elementId].yPos = action.data.newY
-            newState.slides[action.data.slideId].elements[action.data.elementId].xPos = action.data.newX
+            if (state.currentSlide)
+            {
+                newState.presentation.slides[state.currentSlide].elements[action.data.elementId].yPos = action.data.newY
+                newState.presentation.slides[state.currentSlide].elements[action.data.elementId].xPos = action.data.newX
+            }
             break
         case "RESIZE_ELEMENT":
-            newState.slides[action.data.slideId].elements[action.data.elementId].width = action.data.newWidth
-            newState.slides[action.data.slideId].elements[action.data.elementId].height = action.data.newHeight
+            if (state.currentSlide)
+            {
+                newState.presentation.slides[state.currentSlide].elements[action.data.elementId].width = action.data.newWidth
+                newState.presentation.slides[state.currentSlide].elements[action.data.elementId].height = action.data.newHeight
+            }
             break
         case "SET_BACKGROUND_COLOR":
-            newState.slides[action.data.slideId].elements[action.data.elementId].background = action.data.newColor
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    const type = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].type
+                    if (type != 'image')
+                    {
+                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].background = action.data.newColor
+                    }
+                })
+            }
             break
         case "CHANGE_FONT":
-            let changeFontDataElement = newState.slides[action.data.slideId].elements[action.data.elementId].dataElement
-            if (isTextBox(changeFontDataElement)) {
-                changeFontDataElement.font = {...action.data.newFont}
-                newState.slides[action.data.slideId].elements[action.data.elementId].dataElement = changeFontDataElement
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
+                    if (isTextBox(dataElement)) {
+                        dataElement.font = {...action.data.newFont}
+                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
+                    }
+                })
             }
             break
         case "SET_STROKE_WIDTH":
-            newState.slides[action.data.slideId].elements[action.data.elementId].borderWidth = action.data.newWidth
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    newState.presentation.slides[Number(newState.currentSlide)].elements[elementId].borderWidth = action.data.newWidth
+                })
+            }
             break
         case "SET_STROKE_COLOR":
-            newState.slides[action.data.slideId].elements[action.data.elementId].borderColor = action.data.newColor
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    newState.presentation.slides[Number(newState.currentSlide)].elements[elementId].borderColor = action.data.newColor
+                })
+            }
             break
         case "UPDATE_TEXT_BOX":
-            let updateCheckboxDataElement = newState.slides[action.data.slideId].elements[action.data.elementId].dataElement
-            if (isTextBox(updateCheckboxDataElement)) {
-                updateCheckboxDataElement.text = action.data.text
-                newState.slides[action.data.slideId].elements[action.data.elementId].dataElement = updateCheckboxDataElement
+            if (state.currentSlide)
+            {
+                const dataElement = newState.presentation.slides[state.currentSlide].elements[state.selectedSlideElements[0]].dataElement
+                if (isTextBox(dataElement)) {
+                    dataElement.text = action.data.text
+                    newState.presentation.slides[state.currentSlide].elements[state.selectedSlideElements[0]].dataElement = dataElement
+                }
             }
             break
         case "SET_PREVIEW_IMAGE":
-            newState.slides[action.data.slideId].previewImage = action.data.image
+            if (newState.currentSlide)
+            {
+                newState.presentation.slides[newState.currentSlide].previewImage = action.data.image
+            }
             break
         case "REPLACE_ELEMENT_TO_FRONT":
-            newState.slides[action.data.slideId].elementsOrder = newState.slides[action.data.slideId].elementsOrder.filter((elementId) => elementId !== action.data.elementId)
-            newState.slides[action.data.slideId].elementsOrder.push(action.data.elementId)
+            if (newState.currentSlide)
+            {
+                const elementsOrder = [...newState.presentation.slides[newState.currentSlide].elementsOrder]
+                newState.presentation.slides[newState.currentSlide].elementsOrder = elementsOrder.filter((elementId) => elementId !== action.data.elementId)
+                newState.presentation.slides[newState.currentSlide].elementsOrder.push(action.data.elementId)
+            }
+            break
+        case "SELECT_SLIDE":
+            newState.currentSlide = action.data.slideId
+            newState.selectedSlideElements = []
+            newState.selectedSlides = [action.data.slideId]
+            break
+        case "ADD_ELEMENT_TO_SELECTED":
+            newState.selectedSlideElements.push(action.data.elementId)
+            break
+        case "SELECT_ELEMENT":
+            newState.selectedSlideElements = [action.data.elementId]
+            break
+        case "ADD_SLIDE_TO_SELECTED":
+            const selectedSlides = [...state.selectedSlides]
+            let newSelectedSlides = [...selectedSlides]
+            let newCurrentSlide
+            if (!!selectedSlides.find(slide => slide === action.data.slideId)) {
+                newSelectedSlides = selectedSlides.filter(slide => slide !== action.data.slideId)
+                newCurrentSlide = newSelectedSlides[newSelectedSlides.length - 1]
+            }
+            else {
+                newSelectedSlides.push(action.data.slideId)
+                newCurrentSlide = action.data.slideId
+            }
+            newState.currentSlide = newCurrentSlide
+            newState.selectedSlides = newSelectedSlides
+            break
+        case "GO_TO_SLIDE":
+            newState.currentSlide = action.data.slideId
+            newState.selectedSlides = []
+            newState.selectedSlideElements = []
+            break
+        case "DELETE_ELEMENT_SELECTION":
+            newState.selectedSlideElements = []
+            break
+        case "DELETE_SLIDE_SELECTION":
+            newState.selectedSlides = []
+            break
+        case "UPLOAD_PRESENTATION":
+            newState = action.data.state
             break
         default:
             break
     }
+    localStorage.setItem("state", JSON.stringify(newState));
     return newState;
 }
 
@@ -196,168 +213,197 @@ const presentationInfoActions = {
             }
         } as const
     },
-    addSlide: (currentSlide: number) => {
+    addSlide: () => {
         return {
             type: 'ADD_SLIDE',
-            data: {
-                currentSlide,
-            }
         } as const
     },
-    deleteSlides: (selectedSlides: Array<number>) => {
+    deleteSlides: () => {
         return {
             type: 'DELETE_SLIDES',
-            data: {
-                selectedSlides,
-            }
         } as const
     },
-    moveSlides: (newPosition: number, selectedSlides: Array<number>) => {
+    moveSlides: (newPosition: number) => {
         return {
             type: 'MOVE_SLIDES',
             data: {
                 newPosition,
-                selectedSlides,
             }
         } as const
     },
-    addShape: (slideId: number, type: ShapeTypeType, position: ElementPosition, size: ElementSize|undefined) => {
+    addShape: (type: ShapeTypeType, position: ElementPosition, size: ElementSize|undefined) => {
         return {
             type: 'ADD_SHAPE',
             data: {
-                slideId,
                 type,
                 position,
                 size,
             }
         } as const
     },
-    addImage: (slideId: number, filepath: string, position: ElementPosition, size: ElementSize|undefined) => {
+    addImage: (filepath: string, position: ElementPosition, size: ElementSize|undefined) => {
         return {
             type: 'ADD_IMAGE',
             data: {
-                slideId,
                 filepath,
                 position,
                 size,
             }
         } as const
     },
-    addTextBox: (slideId: number, position: ElementPosition, size: ElementSize|undefined) => {
+    addTextBox: (position: ElementPosition, size: ElementSize|undefined) => {
         return {
             type: 'ADD_TEXT_BOX',
             data: {
-                slideId,
                 position,
                 size,
             }
         } as const
     },
-    deleteElements: (slideId: number, selectedElements: Array<number>) => {
+    deleteElements: () => {
         return {
             type: 'DELETE_ELEMENTS',
-            data: {
-                selectedElements,
-                slideId,
-            }
         } as const
     },
-    setSlideBackground: (slideId: number, newBackground: BackgroundType) => {
+    setSlideBackground: (newBackground: BackgroundType) => {
         return {
             type: 'SET_SLIDE_BACKGROUND',
             data: {
-                slideId,
                 newBackground,
             }
         } as const
     },
-    setPreviewImage: (slideId: number, image: string) => {
+    setPreviewImage: (image: string) => {
         return {
             type: 'SET_PREVIEW_IMAGE',
             data: {
                 image,
-                slideId,
             }
         } as const
     },
-    moveElement: (slideId: number, elementId: number, newX: number, newY: number) => {
+    moveElement: (elementId: number, newX: number, newY: number) => {
         return {
             type: 'MOVE_ELEMENT',
             data: {
-                slideId,
                 elementId,
                 newX,
                 newY,
             }
         } as const
     },
-    resizeElement: (slideId: number, elementId: number, newWidth: number, newHeight: number) => {
+    resizeElement: (elementId: number, newWidth: number, newHeight: number) => {
         return {
             type: 'RESIZE_ELEMENT',
             data: {
-                slideId,
                 elementId,
                 newWidth,
                 newHeight,
             }
         } as const
     },
-    setBackgroundColor: (slideId: number, elementId: number, newColor: string) => {
+    setBackgroundColor: (newColor: string) => {
         return {
             type: 'SET_BACKGROUND_COLOR',
             data: {
-                slideId,
-                elementId,
                 newColor,
             }
         } as const
     },
-    setStrokeColor: (slideId: number, elementId: number, newColor: string) => {
+    setStrokeColor: (newColor: string) => {
         return {
             type: 'SET_STROKE_COLOR',
             data: {
-                slideId,
-                elementId,
                 newColor,
             }
         } as const
     },
-    setStrokeWidth: (slideId: number, elementId: number, newWidth: string) => {
+    setStrokeWidth: (newWidth: string) => {
         return {
             type: 'SET_STROKE_WIDTH',
             data: {
-                slideId,
-                elementId,
                 newWidth,
             }
         } as const
     },
-    changeFont: (slideId: number, elementId: number, newFont: FontType) => {
+    changeFont: (newFont: FontType) => {
         return {
             type: 'CHANGE_FONT',
             data: {
-                slideId,
-                elementId,
                 newFont,
             }
         } as const
     },
-    updateTextBox: (slideId: number, elementId: number, text: string) => {
+    updateTextBox: (text: string) => {
         return {
             type: 'UPDATE_TEXT_BOX',
             data: {
-                slideId,
-                elementId,
                 text,
             }
         } as const
     },
-    replaceElementToFront: (slideId: number, elementId: number) => {
+    replaceElementToFront: (elementId: number) => {
         return {
             type: 'REPLACE_ELEMENT_TO_FRONT',
             data: {
-                slideId,
                 elementId,
+            }
+        } as const
+    },
+    selectElement : (elementId: number) => {
+        return {
+            type: 'SELECT_ELEMENT',
+            data: {
+                elementId,
+            }
+        } as const
+    },
+    addElementToSelected : (elementId: number) => {
+        return {
+            type: 'ADD_ELEMENT_TO_SELECTED',
+            data: {
+                elementId,
+            }
+        } as const
+    },
+    selectSlide : (slideId: number) => {
+        return {
+            type: 'SELECT_SLIDE',
+            data: {
+                slideId,
+            }
+        } as const
+    },
+    addSlideToSelected: (slideId: number) => {
+        return {
+            type: 'ADD_SLIDE_TO_SELECTED',
+            data: {
+                slideId,
+            }
+        } as const
+    },
+    goToSlide: (slideId: number) => {
+        return {
+            type: 'GO_TO_SLIDE',
+            data: {
+                slideId,
+            }
+        } as const
+    },
+    deleteElementSelection: () => {
+        return {
+            type: 'DELETE_ELEMENT_SELECTION',
+        } as const
+    },
+    deleteSlideSelection: () => {
+        return {
+            type: 'DELETE_SLIDE_SELECTION',
+        } as const
+    },
+    uploadPresentation: (state: PresentationType) => {
+        return {
+            type: 'UPLOAD_PRESENTATION',
+            data: {
+                state,
             }
         } as const
     }

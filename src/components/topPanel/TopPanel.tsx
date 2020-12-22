@@ -1,10 +1,7 @@
 import React, {useContext, useEffect, useRef} from 'react';
 import './TopPanel.css';
 import logo from '../../images/logo_tcaer.png';
-import { dispatch } from '../../state/state-manager';
-import {changeName} from '../../Entity/Presentation';
 import { ToolPanel } from './ToolPanel';
-import {exportPresentation, goToPreview, savePresentation, uploadPresentation} from '../../Entity/State';
 import {Button_WithPopover} from "../common/Button_WithPopover";
 import {ActionList} from "../common/ActionList";
 import {Button} from "../common/Button";
@@ -12,6 +9,10 @@ import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 import {previewReducerActions} from "../../state/previewReducer";
+import {insertionReducerActions} from "../../state/insertionModeReducer";
+import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
+import { exportPresentation } from '../../common/exportPresentation';
+import { savePresentation } from '../../common/savePresentation';
 
 
 function TopPanel() {
@@ -26,9 +27,6 @@ function TopPanel() {
 
     function onBlur(event: any) {
         store.dispatch(presentationInfoActions.changeName(event.currentTarget.value))
-        // dispatch(changeName, {
-        //     newName: event.currentTarget.value,
-        // })
     }
 
     function onFileChange(event: any) {
@@ -38,9 +36,10 @@ function TopPanel() {
             fileread.onload = function(e: any) {
                 const content = e.target.result
                 const intern = JSON.parse(content)
-                dispatch(uploadPresentation, {
-                    newState: intern
-                })
+                store.dispatch(presentationInfoActions.uploadPresentation(intern))
+                store.dispatch(insertionReducerActions.resetStateToDefault())
+                store.dispatch(popupOpenedReducerActions.resetStateToDefault())
+                store.dispatch(previewReducerActions.resetStateToDefault())
             }
             fileread.readAsText(file)
         }
@@ -70,7 +69,11 @@ function TopPanel() {
             saveRef.current.click()
         }
         if (id === 'export') {
-            // exportPresentation(props.state)
+            exportPresentation(
+                presentationInfo.presentation.slides,
+                presentationInfo.presentation.slidesOrder,
+                presentationInfo.presentation.name,
+            )
         }
         if (id === 'upload' && inputFileRef.current) {
             inputFileRef.current.click()
@@ -79,7 +82,7 @@ function TopPanel() {
 
     useEffect(() => {
         if (nameRef.current) {
-            nameRef.current.value = presentationInfo.name
+            nameRef.current.value = presentationInfo.presentation.name
         }
     }, [presentationInfo])
     return(
@@ -90,16 +93,16 @@ function TopPanel() {
                     <input
                         type="text"
                         ref={nameRef}
-                        defaultValue={presentationInfo.name}
+                        defaultValue={presentationInfo.presentation.name}
                         onBlur={onBlur}
                         className='presentation-title'/>
                     <div className="second-row">
-                        {/*<a*/}
-                        {/*    href={savePresentation(store.getState())}*/}
-                        {/*    download={`${props.state.presentationInfo.name}.json`}*/}
-                        {/*    className={'ref'}*/}
-                        {/*    ref={saveRef}*/}
-                        {/*></a>*/}
+                        <a
+                            href={savePresentation(store.getState().presentationInfo)}
+                            download={`${presentationInfo.presentation.name}.json`}
+                            className={'ref'}
+                            ref={saveRef}
+                        ></a>
                         <Button_WithPopover
                             text={'Файл'}
                             popover={

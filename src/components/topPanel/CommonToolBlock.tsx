@@ -1,9 +1,6 @@
 import {Button} from "../common/Button";
 import plusIcon from "../../images/add_new.png";
-import {dispatch} from "../../state/state-manager";
-import {addSlide} from "../../Entity/Presentation";
 import arrowLeft from "../../images/undo.png";
-import {redo, undo} from "../../Entity/State";
 import arrowRight from "../../images/redo.png";
 import './CommonToolBlock.css';
 import React, {useContext} from "react";
@@ -11,16 +8,12 @@ import {ToolSeparator} from "./ToolPanel";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {selectionReducerActions} from "../../state/selectionReducer";
 
 function CommonToolBlock() {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const {
-        selection,
-    } = store.getState()
 
     function addSlide() {
-        store.dispatch(presentationInfoActions.addSlide(Number(selection.currentSlide)))
+        store.dispatch(presentationInfoActions.addSlide())
     }
 
     return(

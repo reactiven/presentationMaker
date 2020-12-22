@@ -1,11 +1,9 @@
 import {Button_WithColorPicker} from "../common/Button_WithColorPicker";
 import fill from "../../images/fill.png";
 import stroke from "../../images/stroke.png";
-import {changeFont, isTextBox} from "../../Entity/TextBox";
+import {isTextBox} from "../../Entity/TextBox";
 import word from "../../images/word.png";
 import React, {useContext} from "react";
-import {dispatch} from "../../state/state-manager";
-import {setBackgroundColor, setStrokeColor, setStrokeWidth} from "../../Entity/SlideElement";
 import './ColorEditColor.css';
 import { ToolSeparator } from "./ToolPanel";
 import border from "../../images/border.png";
@@ -21,56 +19,39 @@ function ColorEditColor() {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
-        selection,
     } = store.getState()
 
-    const element = presentationInfo.slides[Number(selection.currentSlide)].elements[selection.selectedSlideElements[0]]
+    const element = presentationInfo.presentation.slides[Number(presentationInfo.currentSlide)].elements[presentationInfo.selectedSlideElements[0]]
 
     function changeBgColor(value: string) {
-        if (selection.currentSlide)
+        if (presentationInfo.currentSlide)
         {
-            store.dispatch(presentationInfoActions.setBackgroundColor(
-                selection.currentSlide,
-                element.elementId,
-                value,
-            ))
+            store.dispatch(presentationInfoActions.setBackgroundColor(value))
         }
     }
 
     function changeStrokeColor(value: string) {
-        if (selection.currentSlide)
+        if (presentationInfo.currentSlide)
         {
-            store.dispatch(presentationInfoActions.setStrokeColor(
-                selection.currentSlide,
-                element.elementId,
-                value,
-            ))
+            store.dispatch(presentationInfoActions.setStrokeColor(value))
         }
     }
 
     function changeFontColor(value: string) {
-        if (selection.currentSlide && isTextBox(element.dataElement))
+        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
         {
-            store.dispatch(presentationInfoActions.changeFont(
-                selection.currentSlide,
-                element.elementId,
-                {
-                    ...element.dataElement.font,
-                    fontColor: value,
-                },
-            ))
+            store.dispatch(presentationInfoActions.changeFont({
+                ...element.dataElement.font,
+                fontColor: value,
+            }))
         }
     }
 
 
     function changeBorderWidth(id: string) {
-        if (selection.currentSlide)
+        if (presentationInfo.currentSlide)
         {
-            store.dispatch(presentationInfoActions.setStrokeWidth(
-                selection.currentSlide,
-                element.elementId,
-                `${id}px`
-            ))
+            store.dispatch(presentationInfoActions.setStrokeWidth(`${id}px`))
         }
     }
 

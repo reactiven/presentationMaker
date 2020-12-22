@@ -14,12 +14,11 @@ function ToolPanel() {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
-        selection,
     } = store.getState()
 
-    const selectedElements = selection.selectedSlideElements
-    const slides = presentationInfo.slides
-    const currentSlide = slides[Number(selection.currentSlide)]
+    const selectedElements = presentationInfo.selectedSlideElements
+    const slides = presentationInfo.presentation.slides
+    const currentSlide = slides[Number(presentationInfo.currentSlide)]
 
     const selectedElement = selectedElements.length > 0
         ? currentSlide.elements[selectedElements[0]]
@@ -33,8 +32,8 @@ function ToolPanel() {
         <div className='toolpanel'>
             <CommonToolBlock/>
             {currentSlide && <AddElementsBlock />}
-            {selectedElement && selectedElements.length === 1 && <ColorEditColor />}
-            {selectedElement && selectedElements.length === 1 &&  isTextBox(selectedElement.dataElement)
+            {selectedElement && <ColorEditColor />}
+            {selectedElement && isTextBox(selectedElement.dataElement)
             && <FontEditBlock
                 dataElement={selectedElement.dataElement}
             />}

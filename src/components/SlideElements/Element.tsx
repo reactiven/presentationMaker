@@ -8,8 +8,6 @@ import { isImage } from '../../Entity/Image';
 import { isShape } from '../../Entity/Shape';
 import { isTextBox } from '../../Entity/TextBox';
 import {useElementsDragNDrop} from "../../common/useDragNDrop";
-import {dispatch} from "../../state/state-manager";
-import {moveElement, resizeElement} from "../../Entity/SlideElement";
 import { getParentRelativeCoordinates } from '../../common/getParentRelativeCoordinates';
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
@@ -96,7 +94,6 @@ function ResizeHandlers({
     const store: Readonly<StoreType> = useContext(StoreContext)
     const {
         presentationInfo,
-        selection,
     } = store.getState()
     const tsRef = useRef<HTMLDivElement|null>(null)
     const bsRef = useRef<HTMLDivElement|null>(null)
@@ -117,13 +114,11 @@ function ResizeHandlers({
         if (!!currElement) {
             const [cursorX, cursorY] = getParentRelativeCoordinates(currElement.left, currElement.top, slide)
             store.dispatch(presentationInfoActions.moveElement(
-                Number(selection.currentSlide),
                 element.elementId,
                 cursorX,
                 cursorY,
             ))
             store.dispatch(presentationInfoActions.resizeElement(
-                Number(selection.currentSlide),
                 element.elementId,
                 currElement.width,
                 currElement.height,
@@ -142,7 +137,6 @@ function ResizeHandlers({
         const currElement = elementRef.current && elementRef.current.getBoundingClientRect()
         if (!!currElement) {
             store.dispatch(presentationInfoActions.resizeElement(
-                Number(selection.currentSlide),
                 element.elementId,
                 currElement.width,
                 currElement.height,
@@ -158,7 +152,6 @@ function ResizeHandlers({
         const currElement = elementRef.current && elementRef.current.getBoundingClientRect()
         if (!!currElement) {
             store.dispatch(presentationInfoActions.resizeElement(
-                Number(selection.currentSlide),
                 element.elementId,
                 currElement.width,
                 currElement.height,
@@ -175,13 +168,11 @@ function ResizeHandlers({
         if (!!currElement) {
             const [cursorX, cursorY] = getParentRelativeCoordinates(currElement.left, currElement.top, slide)
             store.dispatch(presentationInfoActions.moveElement(
-                Number(selection.currentSlide),
                 element.elementId,
                 cursorX,
                 cursorY,
             ))
             store.dispatch(presentationInfoActions.resizeElement(
-                Number(selection.currentSlide),
                 element.elementId,
                 currElement.width,
                 currElement.height,

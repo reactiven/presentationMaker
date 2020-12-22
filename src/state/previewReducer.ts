@@ -1,5 +1,4 @@
-import {PreviewInfoType} from "../Entity/types";
-import {SelectionStateType} from "./selectionReducer";
+import {PreviewInfoType} from "../Entity/types"
 
 let initialState = {
     currentSlide: 0,
@@ -25,6 +24,12 @@ const previewReducer = (state: PreviewInfoType = initialState, action: ActionTyp
             newState = {
                 currentSlide: 0,
                 onPreview: action.data.opened,
+            }
+            break
+        case "RESET_STATE_TO_DEFAULT":
+            newState = {
+                currentSlide: 0,
+                onPreview: false,
             }
             break
         default:
@@ -56,6 +61,11 @@ const previewReducerActions = {
             type: 'PREV_SLIDE',
         } as const
     },
+    resetStateToDefault: () => {
+        return {
+            type: 'RESET_STATE_TO_DEFAULT',
+        } as const
+    }
 }
 
 export {

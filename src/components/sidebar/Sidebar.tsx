@@ -1,21 +1,16 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
-import {addSlideToSelected, moveSlides, selectSlide} from '../../Entity/Presentation';
-import { SlideType, State } from '../../Entity/types'
-import { dispatch } from '../../state/state-manager';
+import { SlideType } from '../../Entity/types'
 import './Sidebar.css';
 import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordinates";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
-import {previewReducerActions} from "../../state/previewReducer";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {selectionReducerActions} from "../../state/selectionReducer";
 
 
 function SideBar(): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
-        selection,
     } = store.getState()
     const [moveMode, setMoveMode] = useState(false)
     const [separatorTop, setSeparatorTop] = useState(0)
@@ -26,9 +21,9 @@ function SideBar(): JSX.Element {
         top: separatorTop,
     }
 
-    const slides = {...presentationInfo.slides}
-    const selectedSlides = [...selection.selectedSlides]
-    const slidesOrder = [...presentationInfo.slidesOrder]
+    const slides = {...presentationInfo.presentation.slides}
+    const selectedSlides = [...presentationInfo.selectedSlides]
+    const slidesOrder = [...presentationInfo.presentation.slidesOrder]
     const listItems = slidesOrder.map((slideId, index) => {
         const slide = slides[slideId]
         if (!!slide)
@@ -36,7 +31,7 @@ function SideBar(): JSX.Element {
             return <SideBarItem 
                 key={slideId}
                 slide={slide}
-                isSelected={selection.currentSlide === slideId || !!selectedSlides.find(slide => slide === slideId)}
+                isSelected={presentationInfo.currentSlide === slideId || !!selectedSlides.find(slide => slide === slideId)}
                 index={index}
                 slidesCount={slidesOrder.length}
                 setSeparatorTop={setSeparatorTop}
@@ -66,9 +61,6 @@ type SidebarItemType = {
 
 function SideBarItem(props: SidebarItemType): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const {
-        selection,
-    } = store.getState()
     const slideRef = useRef<HTMLDivElement|null>(null)
 
     let sidebar: HTMLElement | null
@@ -81,7 +73,7 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
         if (moveMode) {
             const cursorY = getScrollCoordinates(sidebar, event.clientX, event.clientY)
             const pos = findSepPosition(cursorY)
-            store.dispatch(presentationInfoActions.moveSlides(pos -1, selection.selectedSlides))
+            store.dispatch(presentationInfoActions.moveSlides(pos -1))
             props.setMoveMode(false)
             props.setSeparatorTop(0)
             moveMode = false
@@ -102,10 +94,10 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
     function mouseDown(event: MouseEvent) {
         if (slideRef.current) {
             if (event.ctrlKey) {
-                store.dispatch(selectionReducerActions.addSlideToSelected(props.slide.slideId))
+                store.dispatch(presentationInfoActions.addSlideToSelected(props.slide.slideId))
             }
             else {
-                store.dispatch(selectionReducerActions.selectSlide(props.slide.slideId))
+                store.dispatch(presentationInfoActions.selectSlide(props.slide.slideId))
             }
 
             if (!event.defaultPrevented) {

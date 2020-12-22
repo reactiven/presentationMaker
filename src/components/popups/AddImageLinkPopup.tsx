@@ -2,8 +2,6 @@ import './AddImageLinkPopup.css';
 import {Popup} from "../common/Popup";
 import {Button} from "../common/Button";
 import React, {useContext, useRef} from "react";
-import {dispatch} from "../../state/state-manager";
-import {setAddImageLinkPopopOpened, setInsertionMode} from "../../Entity/Presentation";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {insertionReducerActions} from "../../state/insertionModeReducer";

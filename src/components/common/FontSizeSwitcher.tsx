@@ -2,9 +2,7 @@ import React, {useContext, useEffect, useRef} from "react";
 import minus from '../../images/minus.png';
 import plus from '../../images/add_new.png';
 import './FontSizeSwitcher.css'
-import {dispatch} from "../../state/state-manager";
-import {changeFont, isTextBox} from "../../Entity/TextBox";
-import {TextBoxType} from "../../Entity/types";
+import {isTextBox} from "../../Entity/TextBox";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
@@ -13,18 +11,15 @@ function FontSizeSwitcher() {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
-        selection,
     } = store.getState()
     const inputRef = useRef<HTMLInputElement>(null)
 
-    const element = presentationInfo.slides[Number(selection.currentSlide)].elements[selection.selectedSlideElements[0]]
+    const element = presentationInfo.presentation.slides[Number(presentationInfo.currentSlide)].elements[presentationInfo.selectedSlideElements[0]]
 
     function sizeInc() {
-        if (selection.currentSlide && isTextBox(element.dataElement))
+        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
         {
             store.dispatch(presentationInfoActions.changeFont(
-                selection.currentSlide,
-                element.elementId,
                 {
                     ...element.dataElement.font,
                     fontSize: Number(element.dataElement.font.fontSize) + 1,
@@ -34,11 +29,9 @@ function FontSizeSwitcher() {
     }
 
     function sizeDec() {
-        if (selection.currentSlide && isTextBox(element.dataElement))
+        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
         {
             store.dispatch(presentationInfoActions.changeFont(
-                selection.currentSlide,
-                element.elementId,
                 {
                     ...element.dataElement.font,
                     fontSize: Number(element.dataElement.font.fontSize) - 1,
@@ -48,11 +41,9 @@ function FontSizeSwitcher() {
     }
 
     function onInput() {
-        if (inputRef.current && selection.currentSlide && isTextBox(element.dataElement))
+        if (inputRef.current && presentationInfo.currentSlide && isTextBox(element.dataElement))
         {
             store.dispatch(presentationInfoActions.changeFont(
-                selection.currentSlide,
-                element.elementId,
                 {
                     ...element.dataElement.font,
                     fontSize: Number(inputRef.current.value),
@@ -62,7 +53,6 @@ function FontSizeSwitcher() {
     }
 
     useEffect(() => {
-        console.log('123')
         if (element && isTextBox(element.dataElement) && inputRef.current) {
             inputRef.current.value = String(element.dataElement.font.fontSize)
         }

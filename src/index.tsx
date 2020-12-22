@@ -3,8 +3,6 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import {State} from './Entity/types';
-import {initialState} from './viewModel/initialState';
 import {EditSlideBackgroundPopup} from './components/popups/EditSlideBackgroundPopup';
 import {AddImageLinkPopup} from "./components/popups/AddImageLinkPopup";
 import { store } from './state/store';
@@ -14,14 +12,13 @@ import { PreviewMode } from './components/preview/PreviewMode';
 
 function rerenderEntireTree() {
     const {
-        selection,
         preview,
         popupsOpened,
         presentationInfo,
     } = store.getState()
 
-    const currentSlideInfo = selection.currentSlide
-        ? presentationInfo.slides[selection.currentSlide]
+    const currentSlideInfo = presentationInfo.currentSlide
+        ? presentationInfo.presentation.slides[presentationInfo.currentSlide]
         : null
 
     ReactDOM.render(
@@ -37,7 +34,7 @@ function rerenderEntireTree() {
 rerenderEntireTree();
 
 store.subscribe(() => {
-    console.log('123')
+    console.log('124')
     rerenderEntireTree();
 });
 

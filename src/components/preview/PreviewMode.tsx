@@ -8,11 +8,10 @@ import {previewReducerActions} from "../../state/previewReducer";
 function PreviewMode() {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
-        selection,
         presentationInfo,
     } = store.getState()
-    const currentSlideId = presentationInfo.slidesOrder[Number(selection.currentSlide)]
-    const currentSlideInfo = presentationInfo.slides[currentSlideId]
+    const currentSlideId = presentationInfo.presentation.slidesOrder[Number(presentationInfo.currentSlide)]
+    const currentSlideInfo = presentationInfo.presentation.slides[currentSlideId]
 
     const slideBack = {
         background: `url("${currentSlideInfo.previewImage}") no-repeat center/100% 100%`

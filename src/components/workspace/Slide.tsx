@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef} from 'react';
-import {ElementsMapType, SlideType} from "../../Entity/types";
+import {ElementsMapType} from "../../Entity/types";
 import './Slide.css';
 import { SlideElement } from '../SlideElements/Element';
 import {StoreType} from "../../state/store";
@@ -12,10 +12,10 @@ function Slide() {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
-        selection,
     } = store.getState()
 
-    const slideInfo = presentationInfo.slides[Number(selection.currentSlide)]
+
+    const slideInfo = presentationInfo.presentation.slides[Number(presentationInfo.currentSlide)]
     const imageRegexp = /\.*http\.*/
     const dataRegexp = /\.*data:\.*/
     const slideRef = useRef<HTMLDivElement|null>(null)
@@ -25,9 +25,21 @@ function Slide() {
             : slideInfo.background
     }
 
+    // useEffect(() => {
+    //     const slide = slideRef.current
+    //     if (slide && presentationInfo.currentSlide) {
+    //         htmlToImage.toJpeg(slide, {
+    //             quality: 0.5,
+    //         })
+    //             .then(function (dataUrl) {
+    //                 store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
+    //             });
+    //     }
+    // }, [presentationInfo])
+
     return(
         <div className="slide" id='slide' style={style} ref={slideRef}>
-            {renderElements(slideInfo.elements, slideInfo.elementsOrder, selection.selectedSlideElements)}
+            {renderElements(slideInfo.elements, slideInfo.elementsOrder, presentationInfo.selectedSlideElements)}
         </div>
     )
 }

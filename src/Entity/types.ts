@@ -30,9 +30,14 @@ type SlidesMapType = {
 }
 
 type PresentationType = {
-    name: string,
-    slidesOrder: Array<number>,
-    slides: SlidesMapType,
+    currentSlide: null|number,
+    selectedSlideElements: Array<number>,
+    selectedSlides: Array<number>,
+    presentation: {
+        name: string,
+        slidesOrder: Array<number>,
+        slides: SlidesMapType,
+    },
 }
 
 type ElementsMapType = {

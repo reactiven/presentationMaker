@@ -1,5 +1,3 @@
-import {PresentationType} from "../Entity/types";
-
 export type PopupOpenedReducerType = typeof initialState;
 
 let initialState = {
@@ -20,6 +18,12 @@ const popupsOpenedReducer = (state: PopupOpenedReducerType = initialState, actio
             newState = {
                 ...newState,
                 addImageLinkPopupOpened: action.data.opened,
+            }
+            break
+        case "RESET_STATE_TO_DEFAULT":
+            newState = {
+                editSlideBackgroundPopupOpened: false,
+                addImageLinkPopupOpened: false,
             }
             break
         default:
@@ -49,6 +53,11 @@ const popupOpenedReducerActions = {
             }
         } as const
     },
+    resetStateToDefault: () => {
+        return {
+            type: 'RESET_STATE_TO_DEFAULT',
+        } as const
+    }
 }
 
 export {
