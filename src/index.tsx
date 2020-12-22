@@ -34,7 +34,6 @@ function rerenderEntireTree() {
 rerenderEntireTree();
 
 store.subscribe(() => {
-    console.log('124')
     rerenderEntireTree();
 });
 

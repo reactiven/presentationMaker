@@ -11,11 +11,11 @@ type ElementSize = {
 }
 
 function generateElementId(): number {
-    return (Math.random() * 10)
+    return Date.now()
 }
 
 function generateSlideId(): number {
-    return Math.random() * 10
+    return Date.now()
 }
 
 function addSlide(state: PresentationType): PresentationType {
