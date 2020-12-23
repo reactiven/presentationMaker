@@ -9,6 +9,12 @@ import {Button} from "../common/Button";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
+import {ElementsMapType} from "../../Entity/types";
+
+
+function canEditFont(slideElements: ElementsMapType, selectedElements: Array<number>) {
+    return selectedElements.every(elementId => isTextBox(slideElements[elementId].dataElement))
+}
 
 function ToolPanel() {
     const store: Readonly<StoreType> = useContext(StoreContext);
@@ -16,13 +22,11 @@ function ToolPanel() {
         presentationInfo,
     } = store.getState()
 
-    const selectedElements = presentationInfo.selectedSlideElements
     const slides = presentationInfo.presentation.slides
-    const currentSlide = slides[Number(presentationInfo.currentSlide)]
-
-    const selectedElement = selectedElements.length > 0
-        ? currentSlide.elements[selectedElements[0]]
+    const currentSlide = presentationInfo.currentSlide
+        ? slides[(presentationInfo.currentSlide)]
         : null
+    const selectedSlideElements = presentationInfo.selectedSlideElements
 
     function openEditSlideBackgroundPopup() {
         store.dispatch(popupOpenedReducerActions.setEditSlideBackgroundPopupOpened(true))
@@ -32,10 +36,10 @@ function ToolPanel() {
         <div className='toolpanel'>
             <CommonToolBlock/>
             {currentSlide && <AddElementsBlock />}
-            {selectedElement && <ColorEditColor />}
-            {selectedElement && isTextBox(selectedElement.dataElement)
+            {currentSlide && !!selectedSlideElements.length && <ColorEditColor />}
+            {currentSlide && !!selectedSlideElements.length && canEditFont(currentSlide.elements, selectedSlideElements)
             && <FontEditBlock
-                dataElement={selectedElement.dataElement}
+                currentSlide={currentSlide}
             />}
             {currentSlide && <Button
                 type={'border-none'}

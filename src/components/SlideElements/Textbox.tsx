@@ -6,6 +6,7 @@ import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 
 type PropsType = {
+    textboxId: number,
     data: TextBoxType,
     background: string|null,
     borderWidth: string|null,
@@ -35,6 +36,7 @@ function Textbox(props: PropsType) {
         if(inputRef.current)
         {
             store.dispatch(presentationInfoActions.updateTextBox(
+                props.textboxId,
                 inputRef.current.value,
             ))
         }

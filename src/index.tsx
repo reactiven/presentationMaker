@@ -16,7 +16,6 @@ function rerenderEntireTree() {
         popupsOpened,
         presentationInfo,
     } = store.getState()
-
     const currentSlideInfo = presentationInfo.currentSlide
         ? presentationInfo.presentation.slides[presentationInfo.currentSlide]
         : null
@@ -34,6 +33,8 @@ function rerenderEntireTree() {
 rerenderEntireTree();
 
 store.subscribe(() => {
+    const p = store.getState().presentationInfo
+    console.log(p.presentation.slides[Number(p.currentSlide)].elements)
     rerenderEntireTree();
 });
 

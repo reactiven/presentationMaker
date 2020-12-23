@@ -325,6 +325,7 @@ function renderElement(element: SlideElementType, style: ElementStyleType) {
             if (isTextBox(element.dataElement))
             {
                 return <Textbox
+                    textboxId={element.elementId}
                     data={element.dataElement}
                     background={element.background}
                     borderWidth={element.borderWidth}

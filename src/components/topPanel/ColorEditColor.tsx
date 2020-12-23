@@ -24,35 +24,20 @@ function ColorEditColor() {
     const element = presentationInfo.presentation.slides[Number(presentationInfo.currentSlide)].elements[presentationInfo.selectedSlideElements[0]]
 
     function changeBgColor(value: string) {
-        if (presentationInfo.currentSlide)
-        {
-            store.dispatch(presentationInfoActions.setBackgroundColor(value))
-        }
+        store.dispatch(presentationInfoActions.setBackgroundColor(value))
     }
 
     function changeStrokeColor(value: string) {
-        if (presentationInfo.currentSlide)
-        {
-            store.dispatch(presentationInfoActions.setStrokeColor(value))
-        }
+        store.dispatch(presentationInfoActions.setStrokeColor(value))
     }
 
     function changeFontColor(value: string) {
-        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
-        {
-            store.dispatch(presentationInfoActions.changeFont({
-                ...element.dataElement.font,
-                fontColor: value,
-            }))
-        }
+        store.dispatch(presentationInfoActions.changeFontColor(value))
     }
 
 
     function changeBorderWidth(id: string) {
-        if (presentationInfo.currentSlide)
-        {
-            store.dispatch(presentationInfoActions.setStrokeWidth(`${id}px`))
-        }
+        store.dispatch(presentationInfoActions.setStrokeWidth(`${id}px`))
     }
 
     return(

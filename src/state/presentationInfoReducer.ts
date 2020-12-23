@@ -2,6 +2,7 @@ import {BackgroundType, FontType, PresentationType, ShapeTypeType} from "../Enti
 import {isTextBox} from "../Entity/TextBox";
 import {addImage, addShape, addSlide, addTextbox} from "./actions/addElements";
 import { moveSlides } from "./actions/moveSlides";
+import {saveStateForUndo, stateList} from "../Entity/State";
 
 
 let initialState: PresentationType = {
@@ -34,36 +35,46 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
     let newState: PresentationType = {...state}
     switch (action.type) {
         case "CHANGE_NAME":
+            saveStateForUndo(newState)
             newState.presentation.name = action.data.newName
             break
         case "SET_SLIDE_BACKGROUND":
+            saveStateForUndo(newState)
             if (newState.currentSlide)
             {
                 newState.presentation.slides[newState.currentSlide].background = action.data.newBackground
             }
             break
         case "ADD_SLIDE":
+            saveStateForUndo(newState)
             newState = addSlide(newState)
             break
         case "DELETE_SLIDES":
+            saveStateForUndo(newState)
             newState.selectedSlides.forEach((slideId => {
                 delete newState.presentation.slides[slideId]
             }))
             newState.presentation.slidesOrder = newState.presentation.slidesOrder.filter(slideId => (state.selectedSlides.indexOf(slideId) === -1))
+            newState.selectedSlides = []
             break
         case "MOVE_SLIDES":
+            saveStateForUndo(newState)
             newState = moveSlides(newState, action.data.newPosition)
             break
         case "ADD_IMAGE":
+            saveStateForUndo(newState)
             newState = addImage(newState, action.data.filepath, action.data.position, action.data.size)
             break
         case "ADD_SHAPE":
+            saveStateForUndo(newState)
             newState = addShape(newState, action.data.type, action.data.position, action.data.size)
             break
         case "ADD_TEXT_BOX":
+            saveStateForUndo(newState)
             newState = addTextbox(newState, action.data.position, action.data.size)
             break
         case "DELETE_ELEMENTS":
+            saveStateForUndo(newState)
             if (newState.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -73,9 +84,11 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
                     const isSelected = newState.selectedSlideElements.indexOf(elementId) !== -1
                     return !isSelected
                 })
+                newState.selectedSlideElements = []
             }
             break
         case "MOVE_ELEMENT":
+            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.presentation.slides[state.currentSlide].elements[action.data.elementId].yPos = action.data.newY
@@ -83,6 +96,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "RESIZE_ELEMENT":
+            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.presentation.slides[state.currentSlide].elements[action.data.elementId].width = action.data.newWidth
@@ -90,6 +104,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "SET_BACKGROUND_COLOR":
+            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -102,6 +117,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "CHANGE_FONT":
+            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -113,7 +129,112 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
                 })
             }
             break
+        case "CHANGE_FONT_SIZE":
+            saveStateForUndo(newState)
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
+                    if (isTextBox(dataElement)) {
+                        dataElement.font.fontSize = action.data.newSize
+                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
+                    }
+                })
+            }
+            break
+        case "INC_FONT_SIZE":
+            saveStateForUndo(newState)
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
+                    if (isTextBox(dataElement)) {
+                        dataElement.font.fontSize++
+                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
+                    }
+                })
+            }
+            break
+        case "DEC_FONT_SIZE":
+            saveStateForUndo(newState)
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
+                    if (isTextBox(dataElement)) {
+                        dataElement.font.fontSize--
+                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
+                    }
+                })
+            }
+            break
+        case "CHANGE_FONT_STYLE":
+            saveStateForUndo(newState)
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
+                    if (isTextBox(dataElement)) {
+                        dataElement.font.fontStyle = action.data.newStyle
+                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
+                    }
+                })
+            }
+            break
+        case "CHANGE_FONT_BOLD":
+            saveStateForUndo(newState)
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
+                    if (isTextBox(dataElement)) {
+                        dataElement.font.bold = action.data.bold
+                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
+                    }
+                })
+            }
+            break
+        case "CHANGE_FONT_ITALIC":
+            saveStateForUndo(newState)
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
+                    if (isTextBox(dataElement)) {
+                        dataElement.font.italic = action.data.italic
+                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
+                    }
+                })
+            }
+            break
+        case "CHANGE_FONT_UNDERLINE":
+            saveStateForUndo(newState)
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
+                    if (isTextBox(dataElement)) {
+                        dataElement.font.underline = action.data.underline
+                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
+                    }
+                })
+            }
+            break
+        case "CHANGE_FONT_COLOR":
+            saveStateForUndo(newState)
+            if (state.currentSlide)
+            {
+                newState.selectedSlideElements.forEach(elementId => {
+                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
+                    if (isTextBox(dataElement)) {
+                        dataElement.font.fontColor = action.data.newColor
+                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
+                    }
+                })
+            }
+            break
         case "SET_STROKE_WIDTH":
+            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -122,6 +243,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "SET_STROKE_COLOR":
+            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -130,22 +252,25 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "UPDATE_TEXT_BOX":
+            saveStateForUndo(newState)
             if (state.currentSlide)
             {
-                const dataElement = newState.presentation.slides[state.currentSlide].elements[state.selectedSlideElements[0]].dataElement
+                const dataElement = newState.presentation.slides[state.currentSlide].elements[action.data.textboxId].dataElement
                 if (isTextBox(dataElement)) {
                     dataElement.text = action.data.text
-                    newState.presentation.slides[state.currentSlide].elements[state.selectedSlideElements[0]].dataElement = dataElement
+                    newState.presentation.slides[state.currentSlide].elements[action.data.textboxId].dataElement = dataElement
                 }
             }
             break
         case "SET_PREVIEW_IMAGE":
+            saveStateForUndo(newState)
             if (newState.currentSlide)
             {
                 newState.presentation.slides[newState.currentSlide].previewImage = action.data.image
             }
             break
         case "REPLACE_ELEMENT_TO_FRONT":
+            saveStateForUndo(newState)
             if (newState.currentSlide)
             {
                 const elementsOrder = [...newState.presentation.slides[newState.currentSlide].elementsOrder]
@@ -180,6 +305,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             newState.selectedSlides = newSelectedSlides
             break
         case "GO_TO_SLIDE":
+            saveStateForUndo(newState)
             newState.currentSlide = action.data.slideId
             newState.selectedSlides = []
             newState.selectedSlideElements = []
@@ -192,6 +318,23 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             break
         case "UPLOAD_PRESENTATION":
             newState = action.data.state
+            break
+        case "UNDO":
+            debugger
+            const undoState = stateList.undoStateList.pop()
+            console.log(stateList.undoStateList)
+            if (undoState) {
+                stateList.redoStateList.push(newState)
+                newState = undoState
+            }
+            break
+        case "REDO":
+            debugger
+            const redoState= stateList.redoStateList.pop()
+            if (redoState) {
+                saveStateForUndo(newState)
+                newState = redoState
+            }
             break
         default:
             break
@@ -333,11 +476,20 @@ const presentationInfoActions = {
             }
         } as const
     },
-    updateTextBox: (text: string) => {
+    updateTextBox: (textboxId: number, text: string) => {
         return {
             type: 'UPDATE_TEXT_BOX',
             data: {
+                textboxId,
                 text,
+            }
+        } as const
+    },
+    changeFontColor: (newColor: string) => {
+        return {
+            type: 'CHANGE_FONT_COLOR',
+            data: {
+                newColor,
             }
         } as const
     },
@@ -354,6 +506,56 @@ const presentationInfoActions = {
             type: 'SELECT_ELEMENT',
             data: {
                 elementId,
+            }
+        } as const
+    },
+    changeFontSize: (newSize: number) => {
+        return {
+            type: 'CHANGE_FONT_SIZE',
+            data: {
+                newSize,
+            }
+        } as const
+    },
+    incFontSize: () => {
+        return {
+            type: 'INC_FONT_SIZE',
+        } as const
+    },
+    decFontSize: () => {
+        return {
+            type: 'DEC_FONT_SIZE',
+        } as const
+    },
+    changeFontStyle: (newStyle: string) => {
+        return {
+            type: 'CHANGE_FONT_STYLE',
+            data: {
+                newStyle,
+            }
+        } as const
+    },
+    changeFontBold: (bold: boolean) => {
+        return {
+            type: 'CHANGE_FONT_BOLD',
+            data: {
+                bold,
+            }
+        } as const
+    },
+    changeFontUnderline: (underline: boolean) => {
+        return {
+            type: 'CHANGE_FONT_UNDERLINE',
+            data: {
+                underline,
+            }
+        } as const
+    },
+    changeFontItalic: (italic: boolean) => {
+        return {
+            type: 'CHANGE_FONT_ITALIC',
+            data: {
+                italic,
             }
         } as const
     },
@@ -406,7 +608,17 @@ const presentationInfoActions = {
                 state,
             }
         } as const
-    }
+    },
+    undo: () => {
+        return {
+            type: 'UNDO',
+        } as const
+    },
+    redo: () => {
+        return {
+            type: 'REDO',
+        } as const
+    },
 }
 
 export {

@@ -26,12 +26,12 @@ function CommonToolBlock() {
             <Button
                 type={'border-none'}
                 img={arrowLeft}
-                onClick={() => {}/*dispatch(undo)*/}
+                onClick={() => store.dispatch(presentationInfoActions.undo())}
             />
             <Button
                 type={'border-none'}
                 img={arrowRight}
-                onClick={() => {}/*dispatch(redo)*/}
+                onClick={() => store.dispatch(presentationInfoActions.redo())}
             />
             <ToolSeparator/>
         </div>

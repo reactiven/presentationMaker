@@ -3,7 +3,6 @@ import './App.css';
 import {SideBar} from './components/sidebar/Sidebar';
 import {TopPanel} from './components/topPanel/TopPanel';
 import {Workspace} from './components/workspace/Workspace';
-import {redo, undo} from "./Entity/State";
 import { StoreType } from './state/store';
 import { StoreContext } from './state/storeContext';
 import {presentationInfoActions} from "./state/presentationInfoReducer";
@@ -34,14 +33,13 @@ function App(): JSX.Element {
             }
             else if (presentationInfo.currentSlide) {
                 store.dispatch(presentationInfoActions.deleteElements())
-                store.dispatch(presentationInfoActions.deleteElementSelection())
             }
         }
         if (e.keyCode === 90 && e.ctrlKey) {
-            // dispatch(undo)
+            store.dispatch(presentationInfoActions.undo())
         }
         if (e.keyCode === 89 && e.ctrlKey) {
-            // dispatch(redo)
+            store.dispatch(presentationInfoActions.redo())
         }
     }
 

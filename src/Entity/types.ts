@@ -21,8 +21,8 @@ type InsertionModeType = {
 }
 
 type StateList = {
-    undoStateList: Array<State>,
-    redoStateList: Array<State>,
+    undoStateList: Array<PresentationType>,
+    redoStateList: Array<PresentationType>,
 }
 
 type SlidesMapType = {

@@ -1,12 +1,12 @@
-import {TextBoxType} from "../../Entity/types";
+import {ElementsMapType, SlideType} from "../../Entity/types";
 import {isTextBox} from "../../Entity/TextBox";
 import {Button_TwoState} from "../common/Button_TwoState";
-import bold from "../../images/bold.png";
-import italic from "../../images/italic.png";
-import underline from "../../images/underline.png";
 import {FontSizeSwitcher} from "../common/FontSizeSwitcher";
 import React, {useContext} from "react";
 import './FontEditBlock.css';
+import boldIcon from "../../images/bold.png";
+import italicIcon from "../../images/italic.png";
+import underlineIcon from "../../images/underline.png";
 import {ToolSeparator} from "./ToolPanel";
 import { SelectList } from "../common/SelectList";
 import { Button_WithPopover } from "../common/Button_WithPopover";
@@ -14,91 +14,106 @@ import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 
-type PropsType = {
-    dataElement: TextBoxType,
+
+function getFontInfo(elements: ElementsMapType, selectedElements: Array<number>) {
+    let fontSize: number|null = 0
+    let fontFamily: string|null = ''
+    let bold: boolean|null = false
+    let italic: boolean|null = false
+    let underline: boolean|null = false
+    const firstElementData = elements[selectedElements[0]].dataElement
+    selectedElements.forEach(elementId => {
+        const currentElementData = elements[elementId].dataElement
+        if (isTextBox(firstElementData) && isTextBox(currentElementData))
+        {
+            fontSize = firstElementData.font.fontSize === currentElementData.font.fontSize && fontSize !== null
+                ? currentElementData.font.fontSize
+                : null
+            fontFamily = firstElementData.font.fontStyle === currentElementData.font.fontStyle && fontFamily !== null
+                ? currentElementData.font.fontStyle
+                : null
+            bold = firstElementData.font.bold === currentElementData.font.bold && bold !== null
+                ? currentElementData.font.bold
+                : null
+            italic = firstElementData.font.italic === currentElementData.font.italic && italic !== null
+                ? currentElementData.font.italic
+                : null
+            underline = firstElementData.font.underline === currentElementData.font.underline && underline !== null
+                ? currentElementData.font.underline
+                : null
+        }
+    })
+    return {
+        fontSize,
+        fontFamily,
+        underline,
+        italic,
+        bold,
+    }
 }
+
+type PropsType = {
+    currentSlide: SlideType,
+}
+
 function FontEditBlock(props: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
     } = store.getState()
 
-    const element = presentationInfo.presentation.slides[Number(presentationInfo.currentSlide)].elements[presentationInfo.selectedSlideElements[0]]
+    const {
+        bold,
+        italic,
+        underline,
+        fontFamily,
+        fontSize,
+    } = getFontInfo(props.currentSlide.elements, presentationInfo.selectedSlideElements)
 
     function changeFontBold(value: boolean) {
-        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
-        {
-            store.dispatch(presentationInfoActions.changeFont(
-                {
-                    ...element.dataElement.font,
-                    bold: value,
-                },
-            ))
-        }
+        store.dispatch(presentationInfoActions.changeFontBold(value))
     }
 
     function changeFontItalic(value: boolean) {
-        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
-        {
-            store.dispatch(presentationInfoActions.changeFont(
-                {
-                    ...element.dataElement.font,
-                    italic: value,
-                },
-            ))
-        }
+        store.dispatch(presentationInfoActions.changeFontItalic(value))
     }
 
     function changeFontUnderline(value: boolean) {
-        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
-        {
-            store.dispatch(presentationInfoActions.changeFont(
-                {
-                    ...element.dataElement.font,
-                    underline: value,
-                },
-            ))
-        }
+        store.dispatch(presentationInfoActions.changeFontUnderline(value))
     }
 
     function changeFontFamily(value: string) {
-        if (presentationInfo.currentSlide && isTextBox(element.dataElement))
-        {
-            store.dispatch(presentationInfoActions.changeFont(
-                {
-                    ...element.dataElement.font,
-                    fontStyle: value,
-                },
-            ))
-        }
+        store.dispatch(presentationInfoActions.changeFontStyle(value))
     }
 
     return(
         <div className='font-edit-block'>
             <Button_TwoState
-                img={bold}
+                img={boldIcon}
                 onClick={changeFontBold}
-                checked={props.dataElement.font.bold}
+                checked={Boolean(bold)}
             />
             <Button_TwoState
-                img={italic}
+                img={italicIcon}
                 onClick={changeFontItalic}
-                checked={props.dataElement.font.italic}
+                checked={Boolean(italic)}
             />
             <Button_TwoState
-                img={underline}
+                img={underlineIcon}
                 onClick={changeFontUnderline}
-                checked={props.dataElement.font.underline}
+                checked={Boolean(underline)}
             />
             <Button_WithPopover
-                text={props.dataElement.font.fontStyle}
+                text={fontFamily ? String(fontFamily) : 'Выберите стиль'}
                 popover={<SelectList
                     onChange={changeFontFamily}
-                    selected={props.dataElement.font.fontStyle}
+                    selected={String(fontFamily)}
                     items={getFontStyleItems()}
                 />}
             />
-            <FontSizeSwitcher />
+            <FontSizeSwitcher
+                fontSize={fontSize}
+            />
             <ToolSeparator />
         </div>
     )
