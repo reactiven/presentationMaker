@@ -5,6 +5,7 @@ import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordi
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {saveSlidePreview} from "../../common/saveSlidePreview";
 
 
 function SideBar(): JSX.Element {
@@ -61,6 +62,7 @@ type SidebarItemType = {
 
 function SideBarItem(props: SidebarItemType): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
+    const handleSetPreviewImage = (dataUrl: string) => store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
     const slideRef = useRef<HTMLDivElement|null>(null)
 
     let sidebar: HTMLElement | null
@@ -97,7 +99,10 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
                 store.dispatch(presentationInfoActions.addSlideToSelected(props.slide.slideId))
             }
             else {
-                store.dispatch(presentationInfoActions.selectSlide(props.slide.slideId))
+                saveSlidePreview((dataUrl) => {
+                    handleSetPreviewImage(dataUrl)
+                    store.dispatch(presentationInfoActions.selectSlide(props.slide.slideId))
+                })
             }
 
             if (!event.defaultPrevented) {

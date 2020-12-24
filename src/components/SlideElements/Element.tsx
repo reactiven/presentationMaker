@@ -298,7 +298,6 @@ function renderElement(element: SlideElementType, style: ElementStyleType) {
         strokeWidth: element.borderWidth,
         strokeColor: element.borderColor,
     }
-    debugger
     switch (element.type) {
         case 'shape':
             if (isShape(element.dataElement))

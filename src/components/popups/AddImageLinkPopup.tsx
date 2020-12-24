@@ -15,7 +15,7 @@ function Content(props: ContentProps) {
 
     const inputUrlRef = useRef<HTMLInputElement | null>(null)
 
-    function onInputChange(event: any) {
+    function onInputChange() {
         props.inputInfo.current.value = inputUrlRef.current!.value
     }
 

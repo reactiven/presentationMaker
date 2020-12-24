@@ -14,7 +14,6 @@ import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
 import { exportPresentation } from '../../common/exportPresentation';
 import { savePresentation } from '../../common/savePresentation';
 
-
 function TopPanel() {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
@@ -24,6 +23,12 @@ function TopPanel() {
     const saveRef = useRef<any|null>(null)
     const nameRef = useRef<HTMLInputElement|null>(null)
     const inputFileRef = useRef<HTMLInputElement|null>(null)
+
+    const slides = presentationInfo.presentation.slides
+    const currentSlide = presentationInfo.currentSlide
+        ? slides[presentationInfo.currentSlide]
+        : null
+    const selectedSlideElements = presentationInfo.selectedSlideElements
 
     function onBlur(event: any) {
         store.dispatch(presentationInfoActions.changeName(event.currentTarget.value))
@@ -127,7 +132,10 @@ function TopPanel() {
                     onClick={() => store.dispatch(previewReducerActions.setPreviewOpened(true))}
                 />
             </div>
-            <ToolPanel/>
+            <ToolPanel
+                currentSlide={currentSlide}
+                selectedSlideElements={selectedSlideElements}
+            />
         </div>
     )
 }

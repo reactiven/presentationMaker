@@ -7,10 +7,12 @@ import {previewReducerActions} from "../../state/previewReducer";
 
 function PreviewMode() {
     const store: Readonly<StoreType> = useContext(StoreContext);
+    debugger
     const {
         presentationInfo,
+        preview,
     } = store.getState()
-    const currentSlideId = presentationInfo.presentation.slidesOrder[Number(presentationInfo.currentSlide)]
+    const currentSlideId = presentationInfo.presentation.slidesOrder[Number(preview.currentSlide)]
     const currentSlideInfo = presentationInfo.presentation.slides[currentSlideId]
 
     const slideBack = {
@@ -18,10 +20,10 @@ function PreviewMode() {
     }
 
     function keydownHandler(event: KeyboardEvent) {
-        if (event.keyCode === 39) {
+        if (event.keyCode === 39 && preview.currentSlide < presentationInfo.presentation.slidesOrder.length - 1) {
             store.dispatch(previewReducerActions.nextSlide())
         }
-        if (event.keyCode === 37) {
+        if (event.keyCode === 37 && preview.currentSlide > 0) {
             store.dispatch(previewReducerActions.prevSlide())
         }
         if (event.keyCode === 27) {

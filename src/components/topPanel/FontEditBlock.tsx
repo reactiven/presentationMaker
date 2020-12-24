@@ -54,13 +54,11 @@ function getFontInfo(elements: ElementsMapType, selectedElements: Array<number>)
 
 type PropsType = {
     currentSlide: SlideType,
+    selectedSlideElements: Array<number>,
 }
 
 function FontEditBlock(props: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const {
-        presentationInfo,
-    } = store.getState()
 
     const {
         bold,
@@ -68,7 +66,7 @@ function FontEditBlock(props: PropsType) {
         underline,
         fontFamily,
         fontSize,
-    } = getFontInfo(props.currentSlide.elements, presentationInfo.selectedSlideElements)
+    } = getFontInfo(props.currentSlide.elements, props.selectedSlideElements)
 
     function changeFontBold(value: boolean) {
         store.dispatch(presentationInfoActions.changeFontBold(value))

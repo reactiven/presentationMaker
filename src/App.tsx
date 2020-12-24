@@ -7,26 +7,15 @@ import {store, StoreType} from './state/store';
 import { StoreContext } from './state/storeContext';
 import {presentationInfoActions} from "./state/presentationInfoReducer";
 import {stateList} from "./Entity/State";
-import * as htmlToImage from "html-to-image";
-
-function saveSlidePreview() {
-    const slide = document.getElementById('slide')
-    if (slide) {
-        htmlToImage.toJpeg(slide, {
-            quality: 0.9,
-        })
-            .then(function (dataUrl) {
-                store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
-            });
-    }
-}
-
+import { saveSlidePreview } from './common/saveSlidePreview';
 
 function App(): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
     } = store.getState()
+
+    const handleSetPreviewImage = (dataUrl: string) => store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
 
     useEffect(() => {
         document.title = presentationInfo.presentation.name
@@ -45,9 +34,9 @@ function App(): JSX.Element {
                 ? stateList.undoStateList[stateList.undoStateList.length]
                 : null
             if (lastState != presentationInfo && presentationInfo.currentSlide) {
-                saveSlidePreview()
+                saveSlidePreview(handleSetPreviewImage)
             }
-        }, 5000);
+        }, 1500);
         return () => clearInterval(timerId)
     })
 

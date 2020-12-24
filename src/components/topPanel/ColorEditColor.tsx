@@ -57,20 +57,18 @@ function getColorInfo(elements: ElementsMapType, selectedElements: Array<number>
 
 type PropsType = {
     currentSlide: SlideType,
+    selectedSlideElements: Array<number>,
 }
 
 function ColorEditColor(props: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const {
-        presentationInfo,
-    } = store.getState()
 
     const {
         borderColor,
         background,
         borderWidth,
         fontColor
-    } = getColorInfo(props.currentSlide.elements, presentationInfo.selectedSlideElements)
+    } = getColorInfo(props.currentSlide.elements, props.selectedSlideElements)
 
     function changeBgColor(value: string) {
         store.dispatch(presentationInfoActions.setBackgroundColor(value))

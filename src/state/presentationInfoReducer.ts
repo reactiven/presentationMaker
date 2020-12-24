@@ -265,7 +265,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "SET_PREVIEW_IMAGE":
-            saveStateForUndo(newState)
             if (newState.currentSlide)
             {
                 newState.presentation.slides[newState.currentSlide].previewImage = action.data.image
@@ -322,16 +321,13 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             newState = action.data.state
             break
         case "UNDO":
-            debugger
             const undoState = stateList.undoStateList.pop()
-            console.log(stateList.undoStateList)
             if (undoState) {
                 stateList.redoStateList.push(newState)
                 newState = undoState
             }
             break
         case "REDO":
-            debugger
             const redoState= stateList.redoStateList.pop()
             if (redoState) {
                 saveStateForUndo(newState)
