@@ -3,19 +3,16 @@ import './App.css';
 import {SideBar} from './components/sidebar/Sidebar';
 import {TopPanel} from './components/topPanel/TopPanel';
 import {Workspace} from './components/workspace/Workspace';
-import {store, StoreType} from './state/store';
+import {StoreType} from './state/store';
 import { StoreContext } from './state/storeContext';
 import {presentationInfoActions} from "./state/presentationInfoReducer";
-import {stateList} from "./Entity/State";
-import { saveSlidePreview } from './common/saveSlidePreview';
+import {dispatchDecorator} from "./state/dispatchDecarator";
 
 function App(): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
     } = store.getState()
-
-    const handleSetPreviewImage = (dataUrl: string) => store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
 
     useEffect(() => {
         document.title = presentationInfo.presentation.name
@@ -28,26 +25,14 @@ function App(): JSX.Element {
         }
     })
 
-    useEffect(() => {
-        let timerId = setInterval(() => {
-            const lastState = !!stateList.undoStateList.length
-                ? stateList.undoStateList[stateList.undoStateList.length]
-                : null
-            if (lastState != presentationInfo && presentationInfo.currentSlide) {
-                saveSlidePreview(handleSetPreviewImage)
-            }
-        }, 1500);
-        return () => clearInterval(timerId)
-    })
-
     const keydownHandler = (e: KeyboardEvent): void => {
         if (e.keyCode === 46) {
 
             if (!!presentationInfo.selectedSlides.length) {
-                store.dispatch(presentationInfoActions.deleteSlides())
+                dispatchDecorator(store, () => presentationInfoActions.deleteSlides())
             }
             else if (presentationInfo.currentSlide) {
-                store.dispatch(presentationInfoActions.deleteElements())
+                dispatchDecorator(store, () => presentationInfoActions.deleteElements())
             }
         }
         if (e.keyCode === 90 && e.ctrlKey) {
@@ -69,4 +54,6 @@ function App(): JSX.Element {
     )
 }
 
-export default App
+export {
+    App,
+}

@@ -5,6 +5,7 @@ import './FontSizeSwitcher.css'
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 type PropsType = {
     fontSize: number,
@@ -15,17 +16,18 @@ function FontSizeSwitcher(props: PropsType) {
     const inputRef = useRef<HTMLInputElement>(null)
 
     function sizeInc() {
-        store.dispatch(presentationInfoActions.incFontSize())
+        dispatchDecorator(store, () => presentationInfoActions.incFontSize())
     }
 
     function sizeDec() {
-        store.dispatch(presentationInfoActions.decFontSize())
+        dispatchDecorator(store, () => presentationInfoActions.decFontSize())
     }
 
     function onInput() {
         if (inputRef.current)
         {
-            store.dispatch(presentationInfoActions.changeFontSize(Number(inputRef.current.value)))
+            const value = inputRef.current.value
+            dispatchDecorator(store, () => presentationInfoActions.changeFontSize(Number(value)))
         }
     }
 

@@ -12,6 +12,7 @@ import { getParentRelativeCoordinates } from '../../common/getParentRelativeCoor
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 type ElementPropsType = {
     element: SlideElementType,
@@ -92,9 +93,6 @@ function ResizeHandlers({
     setLeft,
 }: ResizeHandlersType) {
     const store: Readonly<StoreType> = useContext(StoreContext)
-    const {
-        presentationInfo,
-    } = store.getState()
     const tsRef = useRef<HTMLDivElement|null>(null)
     const bsRef = useRef<HTMLDivElement|null>(null)
     const rsRef = useRef<HTMLDivElement|null>(null)
@@ -118,7 +116,7 @@ function ResizeHandlers({
                 cursorX,
                 cursorY,
             ))
-            store.dispatch(presentationInfoActions.resizeElement(
+            dispatchDecorator(store, () => presentationInfoActions.resizeElement(
                 element.elementId,
                 currElement.width,
                 currElement.height,
@@ -136,7 +134,7 @@ function ResizeHandlers({
         document.removeEventListener('mouseup', bsMouseUp)
         const currElement = elementRef.current && elementRef.current.getBoundingClientRect()
         if (!!currElement) {
-            store.dispatch(presentationInfoActions.resizeElement(
+            dispatchDecorator(store, () => presentationInfoActions.resizeElement(
                 element.elementId,
                 currElement.width,
                 currElement.height,
@@ -151,7 +149,7 @@ function ResizeHandlers({
         document.removeEventListener('mouseup', rsMouseUp)
         const currElement = elementRef.current && elementRef.current.getBoundingClientRect()
         if (!!currElement) {
-            store.dispatch(presentationInfoActions.resizeElement(
+            dispatchDecorator(store, () => presentationInfoActions.resizeElement(
                 element.elementId,
                 currElement.width,
                 currElement.height,
@@ -172,7 +170,7 @@ function ResizeHandlers({
                 cursorX,
                 cursorY,
             ))
-            store.dispatch(presentationInfoActions.resizeElement(
+            dispatchDecorator(store, () => presentationInfoActions.resizeElement(
                 element.elementId,
                 currElement.width,
                 currElement.height,

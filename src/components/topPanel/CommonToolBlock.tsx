@@ -8,12 +8,13 @@ import {ToolSeparator} from "./ToolPanel";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 function CommonToolBlock() {
     const store: Readonly<StoreType> = useContext(StoreContext);
 
     function addSlide() {
-        store.dispatch(presentationInfoActions.addSlide())
+        dispatchDecorator(store, () => presentationInfoActions.addSlide())
     }
 
     return(

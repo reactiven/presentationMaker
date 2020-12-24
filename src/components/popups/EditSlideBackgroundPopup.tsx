@@ -8,6 +8,7 @@ import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
+import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 type ContentProps = {
     currentSlideInfo: SlideType,
@@ -27,7 +28,7 @@ function Content(props: ContentProps) {
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0]
             toDataURL(URL.createObjectURL(img), function(dataUrl: any) {
-                presentationInfo.currentSlide && store.dispatch(presentationInfoActions.setSlideBackground(dataUrl))
+                dispatchDecorator(store, () => presentationInfoActions.setSlideBackground(dataUrl))
             })
         }
     }
@@ -35,7 +36,8 @@ function Content(props: ContentProps) {
     function onInputColor() {
         if (inputColorRef.current) {
             setColor(inputColorRef.current.value)
-            presentationInfo.currentSlide && store.dispatch(presentationInfoActions.setSlideBackground(inputColorRef.current.value))
+            const value = inputColorRef.current.value
+            dispatchDecorator(store, () => presentationInfoActions.setSlideBackground(value))
         }
     }
 
@@ -52,7 +54,8 @@ function Content(props: ContentProps) {
     function findImageUrl(event: any) {
         if (inputUrlRef.current) {
             setColor(inputUrlRef.current.value)
-            presentationInfo.currentSlide && store.dispatch(presentationInfoActions.setSlideBackground(inputUrlRef.current.value))
+            const value = inputUrlRef.current.value
+            dispatchDecorator(store, () => presentationInfoActions.setSlideBackground(value))
         }
     }
 

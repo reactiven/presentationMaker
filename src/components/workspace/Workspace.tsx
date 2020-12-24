@@ -6,6 +6,7 @@ import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 import {insertionReducerActions} from "../../state/insertionModeReducer";
+import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 function Workspace() {
     const store: Readonly<StoreType> = useContext(StoreContext);
@@ -44,8 +45,9 @@ function Workspace() {
                 case 'shape':
                     if (insertionMode.shapeType)
                     {
-                        store.dispatch(presentationInfoActions.addShape(
-                            insertionMode.shapeType,
+                        const shapeType = insertionMode.shapeType
+                        dispatchDecorator(store, () => presentationInfoActions.addShape(
+                            shapeType,
                             position,
                             bounds,
                         ))
@@ -54,15 +56,16 @@ function Workspace() {
                 case "image":
                     if (insertionMode.filepath)
                     {
-                        store.dispatch(presentationInfoActions.addImage(
-                            insertionMode.filepath,
+                        const filepath = insertionMode.filepath
+                        dispatchDecorator(store, () => presentationInfoActions.addImage(
+                            filepath,
                             position,
                             bounds,
                         ))
                     }
                     break
                 case "textBox":
-                    store.dispatch(presentationInfoActions.addTextBox(
+                    dispatchDecorator(store, () => presentationInfoActions.addTextBox(
                         position,
                         bounds,
                     ))

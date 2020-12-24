@@ -4,8 +4,6 @@ import './Slide.css';
 import { SlideElement } from '../SlideElements/Element';
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
-import * as htmlToImage from "html-to-image";
-import {presentationInfoActions} from "../../state/presentationInfoReducer";
 
 
 function Slide() {
@@ -24,18 +22,6 @@ function Slide() {
             ? `url("${slideInfo.background}") no-repeat center/100% 100%`
             : slideInfo.background
     }
-
-    // useEffect(() => {
-    //     const slide = slideRef.current
-    //     if (slide && presentationInfo.currentSlide) {
-    //         htmlToImage.toJpeg(slide, {
-    //             quality: 0.5,
-    //         })
-    //             .then(function (dataUrl) {
-    //                 store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
-    //             });
-    //     }
-    // }, [presentationInfo])
 
     return(
         <div className="slide" id='slide' style={style} ref={slideRef}>

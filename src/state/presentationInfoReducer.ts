@@ -2,7 +2,7 @@ import {BackgroundType, FontType, PresentationType, ShapeTypeType} from "../Enti
 import {isTextBox} from "../Entity/TextBox";
 import {addImage, addShape, addSlide, addTextbox} from "./actions/addElements";
 import { moveSlides } from "./actions/moveSlides";
-import {saveStateForUndo, stateList} from "../Entity/State";
+import {stateList} from "../Entity/State";
 
 
 let initialState: PresentationType = {
@@ -35,23 +35,19 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
     let newState: PresentationType = {...state}
     switch (action.type) {
         case "CHANGE_NAME":
-            saveStateForUndo(newState)
             newState.presentation.name = action.data.newName
             break
         case "SET_SLIDE_BACKGROUND":
-            saveStateForUndo(newState)
             if (newState.currentSlide)
             {
                 newState.presentation.slides[newState.currentSlide].background = action.data.newBackground
             }
             break
         case "ADD_SLIDE":
-            saveStateForUndo(newState)
             newState = addSlide(newState)
             newState.selectedSlideElements = []
             break
         case "DELETE_SLIDES":
-            saveStateForUndo(newState)
             newState.selectedSlides.forEach((slideId => {
                 delete newState.presentation.slides[slideId]
             }))
@@ -60,23 +56,18 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             newState.currentSlide = null
             break
         case "MOVE_SLIDES":
-            saveStateForUndo(newState)
             newState = moveSlides(newState, action.data.newPosition)
             break
         case "ADD_IMAGE":
-            saveStateForUndo(newState)
             newState = addImage(newState, action.data.filepath, action.data.position, action.data.size)
             break
         case "ADD_SHAPE":
-            saveStateForUndo(newState)
             newState = addShape(newState, action.data.type, action.data.position, action.data.size)
             break
         case "ADD_TEXT_BOX":
-            saveStateForUndo(newState)
             newState = addTextbox(newState, action.data.position, action.data.size)
             break
         case "DELETE_ELEMENTS":
-            saveStateForUndo(newState)
             if (newState.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -90,7 +81,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "MOVE_ELEMENT":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.presentation.slides[state.currentSlide].elements[action.data.elementId].yPos = action.data.newY
@@ -98,7 +88,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "RESIZE_ELEMENT":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.presentation.slides[state.currentSlide].elements[action.data.elementId].width = action.data.newWidth
@@ -106,7 +95,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "SET_BACKGROUND_COLOR":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -119,7 +107,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "CHANGE_FONT":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -132,7 +119,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "CHANGE_FONT_SIZE":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -145,7 +131,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "INC_FONT_SIZE":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -158,7 +143,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "DEC_FONT_SIZE":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -171,7 +155,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "CHANGE_FONT_STYLE":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -184,7 +167,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "CHANGE_FONT_BOLD":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -197,7 +179,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "CHANGE_FONT_ITALIC":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -210,7 +191,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "CHANGE_FONT_UNDERLINE":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -223,7 +203,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "CHANGE_FONT_COLOR":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -236,7 +215,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "SET_STROKE_WIDTH":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -245,7 +223,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "SET_STROKE_COLOR":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 newState.selectedSlideElements.forEach(elementId => {
@@ -254,7 +231,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "UPDATE_TEXT_BOX":
-            saveStateForUndo(newState)
             if (state.currentSlide)
             {
                 const dataElement = newState.presentation.slides[state.currentSlide].elements[action.data.textboxId].dataElement
@@ -271,7 +247,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }
             break
         case "REPLACE_ELEMENT_TO_FRONT":
-            saveStateForUndo(newState)
             if (newState.currentSlide)
             {
                 const elementsOrder = [...newState.presentation.slides[newState.currentSlide].elementsOrder]
@@ -306,7 +281,6 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             newState.selectedSlides = newSelectedSlides
             break
         case "GO_TO_SLIDE":
-            saveStateForUndo(newState)
             newState.currentSlide = action.data.slideId
             newState.selectedSlides = []
             newState.selectedSlideElements = []
@@ -330,7 +304,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
         case "REDO":
             const redoState= stateList.redoStateList.pop()
             if (redoState) {
-                saveStateForUndo(newState)
+                
                 newState = redoState
             }
             break

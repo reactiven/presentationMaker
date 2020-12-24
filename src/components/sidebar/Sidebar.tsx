@@ -5,7 +5,7 @@ import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordi
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {saveSlidePreview} from "../../common/saveSlidePreview";
+import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 
 function SideBar(): JSX.Element {
@@ -62,7 +62,7 @@ type SidebarItemType = {
 
 function SideBarItem(props: SidebarItemType): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const handleSetPreviewImage = (dataUrl: string) => store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
+    // const handleSetPreviewImage = (dataUrl: string) => store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
     const slideRef = useRef<HTMLDivElement|null>(null)
 
     let sidebar: HTMLElement | null
@@ -75,7 +75,7 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
         if (moveMode) {
             const cursorY = getScrollCoordinates(sidebar, event.clientX, event.clientY)
             const pos = findSepPosition(cursorY)
-            store.dispatch(presentationInfoActions.moveSlides(pos -1))
+            dispatchDecorator(store, () => presentationInfoActions.moveSlides(pos -1))
             props.setMoveMode(false)
             props.setSeparatorTop(0)
             moveMode = false
@@ -99,10 +99,7 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
                 store.dispatch(presentationInfoActions.addSlideToSelected(props.slide.slideId))
             }
             else {
-                saveSlidePreview((dataUrl) => {
-                    handleSetPreviewImage(dataUrl)
-                    store.dispatch(presentationInfoActions.selectSlide(props.slide.slideId))
-                })
+                store.dispatch(presentationInfoActions.selectSlide(props.slide.slideId))
             }
 
             if (!event.defaultPrevented) {

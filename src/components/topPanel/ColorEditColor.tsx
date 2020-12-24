@@ -13,6 +13,7 @@ import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 import {ElementsMapType, SlideType} from "../../Entity/types";
+import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 
 function getColorInfo(elements: ElementsMapType, selectedElements: Array<number>) {
@@ -71,19 +72,19 @@ function ColorEditColor(props: PropsType) {
     } = getColorInfo(props.currentSlide.elements, props.selectedSlideElements)
 
     function changeBgColor(value: string) {
-        store.dispatch(presentationInfoActions.setBackgroundColor(value))
+        dispatchDecorator(store, () => presentationInfoActions.setBackgroundColor(value))
     }
 
     function changeStrokeColor(value: string) {
-        store.dispatch(presentationInfoActions.setStrokeColor(value))
+        dispatchDecorator(store, () => presentationInfoActions.setStrokeColor(value))
     }
 
     function changeFontColor(value: string) {
-        store.dispatch(presentationInfoActions.changeFontColor(value))
+        dispatchDecorator(store, () => presentationInfoActions.changeFontColor(value))
     }
 
     function changeBorderWidth(id: string) {
-        store.dispatch(presentationInfoActions.setStrokeWidth(`${id}px`))
+        dispatchDecorator(store, () => presentationInfoActions.setStrokeWidth(`${id}px`))
     }
 
     return(

@@ -13,6 +13,7 @@ import {insertionReducerActions} from "../../state/insertionModeReducer";
 import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
 import { exportPresentation } from '../../common/exportPresentation';
 import { savePresentation } from '../../common/savePresentation';
+import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 function TopPanel() {
     const store: Readonly<StoreType> = useContext(StoreContext);
@@ -31,7 +32,7 @@ function TopPanel() {
     const selectedSlideElements = presentationInfo.selectedSlideElements
 
     function onBlur(event: any) {
-        store.dispatch(presentationInfoActions.changeName(event.currentTarget.value))
+        dispatchDecorator(store, () => presentationInfoActions.changeName(event.currentTarget.value))
     }
 
     function onFileChange(event: any) {

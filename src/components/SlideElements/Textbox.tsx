@@ -4,6 +4,7 @@ import './Textbox.css';
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 type PropsType = {
     textboxId: number,
@@ -35,9 +36,10 @@ function Textbox(props: PropsType) {
     function onChange(event: any) {
         if(inputRef.current)
         {
-            store.dispatch(presentationInfoActions.updateTextBox(
+            const value = inputRef.current.value
+            dispatchDecorator(store, () => presentationInfoActions.updateTextBox(
                 props.textboxId,
-                inputRef.current.value,
+                value,
             ))
         }
     }

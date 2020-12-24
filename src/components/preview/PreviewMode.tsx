@@ -19,9 +19,15 @@ function PreviewMode() {
         background: `url("${currentSlideInfo.previewImage}") no-repeat center/100% 100%`
     }
 
-    function keydownHandler(event: KeyboardEvent) {
-        if (event.keyCode === 39 && preview.currentSlide < presentationInfo.presentation.slidesOrder.length - 1) {
+    function goToNextSlide() {
+        if (preview.currentSlide < presentationInfo.presentation.slidesOrder.length - 1) {
             store.dispatch(previewReducerActions.nextSlide())
+        }
+    }
+
+    function keydownHandler(event: KeyboardEvent) {
+        if (event.keyCode === 39) {
+            goToNextSlide()
         }
         if (event.keyCode === 37 && preview.currentSlide > 0) {
             store.dispatch(previewReducerActions.prevSlide())
@@ -37,7 +43,7 @@ function PreviewMode() {
     })
 
     return(
-        <div className={'preview-container'} onClick={() => store.dispatch(previewReducerActions.nextSlide())}>
+        <div className={'preview-container'} onClick={goToNextSlide}>
             <div className={'preview-slide-container'} style={slideBack}>
             </div>
         </div>

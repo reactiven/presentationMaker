@@ -4,6 +4,7 @@ import {SlideElementType} from "../Entity/types";
 import {StoreType} from "../state/store";
 import {StoreContext} from "../state/storeContext";
 import {presentationInfoActions} from "../state/presentationInfoReducer";
+import {dispatchDecorator} from "../state/dispatchDecarator";
 
 
 function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HTMLDivElement>) {
@@ -21,7 +22,7 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
         if (elementRef.current) {
             const elementBounds = elementRef.current.getBoundingClientRect()
             const [cursorX, cursorY] = getParentRelativeCoordinates(elementBounds.left, elementBounds.top, slide)
-            store.dispatch(presentationInfoActions.moveElement(
+            dispatchDecorator(store, () => presentationInfoActions.moveElement(
                 element.elementId,
                 cursorX,
                 cursorY

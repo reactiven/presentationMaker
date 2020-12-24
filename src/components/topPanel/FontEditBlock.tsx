@@ -13,6 +13,7 @@ import { Button_WithPopover } from "../common/Button_WithPopover";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 
 function getFontInfo(elements: ElementsMapType, selectedElements: Array<number>) {
@@ -69,19 +70,19 @@ function FontEditBlock(props: PropsType) {
     } = getFontInfo(props.currentSlide.elements, props.selectedSlideElements)
 
     function changeFontBold(value: boolean) {
-        store.dispatch(presentationInfoActions.changeFontBold(value))
+        dispatchDecorator(store, () => presentationInfoActions.changeFontBold(value))
     }
 
     function changeFontItalic(value: boolean) {
-        store.dispatch(presentationInfoActions.changeFontItalic(value))
+        dispatchDecorator(store, () => presentationInfoActions.changeFontItalic(value))
     }
 
     function changeFontUnderline(value: boolean) {
-        store.dispatch(presentationInfoActions.changeFontUnderline(value))
+        dispatchDecorator(store, () => presentationInfoActions.changeFontUnderline(value))
     }
 
     function changeFontFamily(value: string) {
-        store.dispatch(presentationInfoActions.changeFontStyle(value))
+        dispatchDecorator(store, () => presentationInfoActions.changeFontStyle(value))
     }
 
     return(
