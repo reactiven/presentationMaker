@@ -36,7 +36,10 @@ function ToolPanel() {
         <div className='toolpanel'>
             <CommonToolBlock/>
             {currentSlide && <AddElementsBlock />}
-            {currentSlide && !!selectedSlideElements.length && <ColorEditColor />}
+            {currentSlide && !!selectedSlideElements.length
+            && <ColorEditColor
+                currentSlide={currentSlide}
+            />}
             {currentSlide && !!selectedSlideElements.length && canEditFont(currentSlide.elements, selectedSlideElements)
             && <FontEditBlock
                 currentSlide={currentSlide}

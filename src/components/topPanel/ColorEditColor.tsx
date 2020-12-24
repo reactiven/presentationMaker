@@ -9,19 +9,68 @@ import { ToolSeparator } from "./ToolPanel";
 import border from "../../images/border.png";
 import { Button_WithPopover } from "../common/Button_WithPopover";
 import { SelectList } from "../common/SelectList";
-import { isImage } from "../../Entity/Image";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {ElementsMapType, SlideType} from "../../Entity/types";
 
 
-function ColorEditColor() {
+function getColorInfo(elements: ElementsMapType, selectedElements: Array<number>) {
+    let background: string|null = ''
+    let borderColor: string|null = ''
+    let fontColor: string|null = ''
+    let borderWidth: string|null = ''
+    const firstElement = elements[selectedElements[0]]
+    const firstElementData = firstElement.dataElement
+    selectedElements.forEach(elementId => {
+        const currentElement = elements[elementId]
+        const currentElementData = currentElement.dataElement
+
+        if (isTextBox(currentElementData) && isTextBox(firstElementData))
+        {
+            fontColor = firstElementData.font.fontColor === currentElementData.font.fontColor && fontColor !== null
+                ? currentElementData.font.fontColor
+                : null
+        }
+        else
+        {
+            fontColor = null
+        }
+        background = firstElement.background === currentElement.background && background !== null
+            ? currentElement.background
+            : null
+        borderColor = firstElement.borderColor === currentElement.borderColor && borderColor !== null
+            ? currentElement.borderColor
+            : null
+        borderWidth = firstElement.borderWidth === currentElement.borderWidth && borderWidth !== null
+            ? currentElement.borderWidth
+            : null
+
+    })
+    return {
+        fontColor,
+        background,
+        borderColor,
+        borderWidth,
+    }
+}
+
+type PropsType = {
+    currentSlide: SlideType,
+}
+
+function ColorEditColor(props: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {
         presentationInfo,
     } = store.getState()
 
-    const element = presentationInfo.presentation.slides[Number(presentationInfo.currentSlide)].elements[presentationInfo.selectedSlideElements[0]]
+    const {
+        borderColor,
+        background,
+        borderWidth,
+        fontColor
+    } = getColorInfo(props.currentSlide.elements, presentationInfo.selectedSlideElements)
 
     function changeBgColor(value: string) {
         store.dispatch(presentationInfoActions.setBackgroundColor(value))
@@ -35,33 +84,32 @@ function ColorEditColor() {
         store.dispatch(presentationInfoActions.changeFontColor(value))
     }
 
-
     function changeBorderWidth(id: string) {
         store.dispatch(presentationInfoActions.setStrokeWidth(`${id}px`))
     }
 
     return(
         <div className='color-edit-block'>
-            {!isImage(element.dataElement) && <Button_WithColorPicker
+            {<Button_WithColorPicker
                 img={fill}
                 onChange={changeBgColor}
-                value={String(element.background)}
+                value={background ? background : 'transparent'}
             />}
             <Button_WithColorPicker
                 img={stroke}
                 onChange={changeStrokeColor}
-                value={String(element.borderColor)}
+                value={borderColor ? borderColor : 'transparent'}
             />
-            {isTextBox(element.dataElement) && <Button_WithColorPicker
+            {fontColor && <Button_WithColorPicker
                 img={word}
                 onChange={changeFontColor}
-                value={element.dataElement.font.fontColor}
+                value={fontColor ? fontColor : 'transparent'}
             />}
             <Button_WithPopover
                 img={border}
                 popover={<SelectList
                     onChange={changeBorderWidth}
-                    selected={getSelectedBorderWidth(element.borderWidth)}
+                    selected={getSelectedBorderWidth(borderWidth)}
                     items={getBorderWidthItems()}
                 />}
             />
@@ -72,6 +120,10 @@ function ColorEditColor() {
 
 function getBorderWidthItems() {
     return [
+        {
+          id: '0',
+          text: '0px'
+        },
         {
             id: '1',
             text: '1px'

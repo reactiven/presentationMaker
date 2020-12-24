@@ -32,20 +32,22 @@ function Workspace() {
             document.removeEventListener('mousedown', mouseMove)
             document.removeEventListener('mouseup', mouseUp)
             const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slideRef.current)
+            const position = {
+                x: Number(insX > cursorX ? cursorX : insX),
+                y: Number(insY > cursorY ? cursorY : insY),
+            }
+            const bounds = {
+                w: Math.abs(cursorX - insX),
+                h: Math.abs(cursorY - insY),
+            }
             switch (insertionMode.elementType) {
                 case 'shape':
                     if (insertionMode.shapeType)
                     {
                         store.dispatch(presentationInfoActions.addShape(
                             insertionMode.shapeType,
-                            {
-                                x: Number(insX > cursorX ? cursorX : insX),
-                                y: Number(insY > cursorY ? cursorY : insY),
-                            },
-                            {
-                                w: Math.abs(cursorX - insX),
-                                h: Math.abs(cursorY - insY),
-                            }
+                            position,
+                            bounds,
                         ))
                     }
                     break
@@ -54,27 +56,15 @@ function Workspace() {
                     {
                         store.dispatch(presentationInfoActions.addImage(
                             insertionMode.filepath,
-                            {
-                                x: Number(insX > cursorX ? cursorX : insX),
-                                y: Number(insY > cursorY ? cursorY : insY),
-                            },
-                            {
-                                w: Math.abs(cursorX - insX),
-                                h: Math.abs(cursorY - insY),
-                            }
+                            position,
+                            bounds,
                         ))
                     }
                     break
                 case "textBox":
                     store.dispatch(presentationInfoActions.addTextBox(
-                        {
-                            x: Number(insX > cursorX ? cursorX : insX),
-                            y: Number(insY > cursorY ? cursorY : insY),
-                        },
-                        {
-                            w: Math.abs(cursorX - insX),
-                            h: Math.abs(cursorY - insY),
-                        }
+                        position,
+                        bounds,
                     ))
                     break
             }

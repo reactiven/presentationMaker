@@ -33,8 +33,6 @@ function rerenderEntireTree() {
 rerenderEntireTree();
 
 store.subscribe(() => {
-    const p = store.getState().presentationInfo
-    console.log(p.presentation.slides[Number(p.currentSlide)].elements)
     rerenderEntireTree();
 });
 

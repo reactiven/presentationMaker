@@ -19,9 +19,6 @@ import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
 
 function AddElementsBlock() {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const {
-        presentationInfo,
-    } = store.getState()
 
     const inputFileRef = useRef<HTMLInputElement|null>(null)
 
@@ -35,7 +32,6 @@ function AddElementsBlock() {
                     filepath: dataUrl,
                 }))
             })
-
         }
         event.currentTarget.value = ''
     }

@@ -48,9 +48,9 @@ function addImage(state: PresentationType, filepath: string, position: ElementPo
             height: (size && size.h) ||  200,
             xPos: position.x,
             yPos: position.y,
-            background: null,
-            borderWidth: null,
-            borderColor: null,
+            background: 'transparent',
+            borderWidth: '0',
+            borderColor: 'transparent',
         }
         state.presentation.slides[state.currentSlide].elementsOrder.push(imageId)
         state.selectedSlideElements = [imageId]
@@ -72,9 +72,9 @@ function addShape(state: PresentationType, type: ShapeTypeType, position: Elemen
             height: (size && size.h) ||  200,
             xPos: position.x,
             yPos: position.y,
-            background: null,
-            borderWidth: null,
-            borderColor: null,
+            background: 'transparent',
+            borderWidth: '1',
+            borderColor: 'gray',
         }
         state.presentation.slides[state.currentSlide].elementsOrder.push(shapeId)
         state.selectedSlideElements = [shapeId]
@@ -104,9 +104,9 @@ function addTextbox(state: PresentationType, position: ElementPosition, size: El
             height: (size && size.h) ||  200,
             xPos: position.x,
             yPos: position.y,
-            background: null,
-            borderWidth: null,
-            borderColor: null,
+            background: 'transparent',
+            borderWidth: '0',
+            borderColor: 'transparent',
         }
         state.presentation.slides[state.currentSlide].elementsOrder.push(textBoxId)
         state.selectedSlideElements = [textBoxId]

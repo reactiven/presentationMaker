@@ -48,6 +48,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
         case "ADD_SLIDE":
             saveStateForUndo(newState)
             newState = addSlide(newState)
+            newState.selectedSlideElements = []
             break
         case "DELETE_SLIDES":
             saveStateForUndo(newState)
@@ -56,6 +57,7 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             }))
             newState.presentation.slidesOrder = newState.presentation.slidesOrder.filter(slideId => (state.selectedSlides.indexOf(slideId) === -1))
             newState.selectedSlides = []
+            newState.currentSlide = null
             break
         case "MOVE_SLIDES":
             saveStateForUndo(newState)
