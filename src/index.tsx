@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
@@ -8,7 +8,6 @@ import {AddImageLinkPopup} from "./components/popups/AddImageLinkPopup";
 import { store } from './state/store';
 import { StoreContext } from './state/storeContext';
 import { PreviewMode } from './components/preview/PreviewMode';
-
 
 function rerenderEntireTree() {
     const {

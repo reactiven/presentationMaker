@@ -3,9 +3,23 @@ import './App.css';
 import {SideBar} from './components/sidebar/Sidebar';
 import {TopPanel} from './components/topPanel/TopPanel';
 import {Workspace} from './components/workspace/Workspace';
-import { StoreType } from './state/store';
+import {store, StoreType} from './state/store';
 import { StoreContext } from './state/storeContext';
 import {presentationInfoActions} from "./state/presentationInfoReducer";
+import {stateList} from "./Entity/State";
+import * as htmlToImage from "html-to-image";
+
+function saveSlidePreview() {
+    const slide = document.getElementById('slide')
+    if (slide) {
+        htmlToImage.toJpeg(slide, {
+            quality: 0.9,
+        })
+            .then(function (dataUrl) {
+                store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
+            });
+    }
+}
 
 
 function App(): JSX.Element {
@@ -23,6 +37,18 @@ function App(): JSX.Element {
         return () => {
             document.removeEventListener("keydown", keydownHandler);
         }
+    })
+
+    useEffect(() => {
+        let timerId = setInterval(() => {
+            const lastState = !!stateList.undoStateList.length
+                ? stateList.undoStateList[stateList.undoStateList.length]
+                : null
+            if (lastState != presentationInfo && presentationInfo.currentSlide) {
+                saveSlidePreview()
+            }
+        }, 5000);
+        return () => clearInterval(timerId)
     })
 
     const keydownHandler = (e: KeyboardEvent): void => {
