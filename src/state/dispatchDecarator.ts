@@ -14,10 +14,7 @@ function dispatchDecorator(store: any, action: () => void) {
         htmlToImage.toJpeg(slide, {
             quality: 0.9,
         }).then((dataUrl) => {
-            if (presentationInfo.currentSlide == stateList.undoStateList[stateList.undoStateList.length - 1].currentSlide)
-            {
-                store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
-            }
+            store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
         });
     }
 }

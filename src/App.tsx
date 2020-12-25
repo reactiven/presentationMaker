@@ -27,7 +27,6 @@ function App(): JSX.Element {
 
     const keydownHandler = (e: KeyboardEvent): void => {
         if (e.keyCode === 46) {
-
             if (!!presentationInfo.selectedSlides.length) {
                 dispatchDecorator(store, () => presentationInfoActions.deleteSlides())
             }

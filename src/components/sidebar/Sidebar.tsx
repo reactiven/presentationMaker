@@ -62,7 +62,6 @@ type SidebarItemType = {
 
 function SideBarItem(props: SidebarItemType): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    // const handleSetPreviewImage = (dataUrl: string) => store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
     const slideRef = useRef<HTMLDivElement|null>(null)
 
     let sidebar: HTMLElement | null
@@ -99,7 +98,7 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
                 store.dispatch(presentationInfoActions.addSlideToSelected(props.slide.slideId))
             }
             else {
-                store.dispatch(presentationInfoActions.selectSlide(props.slide.slideId))
+                dispatchDecorator(store, () => presentationInfoActions.selectSlide(props.slide.slideId))
             }
 
             if (!event.defaultPrevented) {

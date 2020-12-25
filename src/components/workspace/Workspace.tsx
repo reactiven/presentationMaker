@@ -109,7 +109,7 @@ function Workspace() {
     function onClick(event: any) {
         if (!event.defaultPrevented && presentationInfo.selectedSlideElements.length)
         {
-            store.dispatch(presentationInfoActions.deleteElementSelection())
+            dispatchDecorator(store, () => presentationInfoActions.deleteElementSelection())
         }
     }
 
