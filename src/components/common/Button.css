@@ -35,7 +35,7 @@
     border-radius: 5px;
     outline: none;
     border: 1px solid transparent;
-    box-shadow: 0 0 0 2px #87CEFA;
+    /*box-shadow: 0 0 0 2px #87CEFA;*/
 }
 
 .button-image {

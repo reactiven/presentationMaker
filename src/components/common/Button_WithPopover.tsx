@@ -1,6 +1,7 @@
 import React, {useEffect} from "react";
 import {useRef, useState} from "react";
-import './Button_WithPopover.css'
+import styles from './Button_WithPopover.module.css'
+import {Button} from "./Button";
 
 
 type Button_WithPopover = {
@@ -18,8 +19,7 @@ function Button_WithPopover(props: Button_WithPopover) {
         top: Number(buttonRef.current && buttonRef.current.getBoundingClientRect().top + 30),
     }
 
-    function onClick(event: any) {
-        event.preventDefault()
+    function onClick() {
         setOpen(!open)
     }
 
@@ -31,7 +31,7 @@ function Button_WithPopover(props: Button_WithPopover) {
 
     function positionPopover() {
         return(
-            <div className='popover-container' style={popoverStyle}>
+            <div className={styles.popoverContainer} style={popoverStyle}>
                 {props.popover}
             </div>
         )
@@ -44,10 +44,13 @@ function Button_WithPopover(props: Button_WithPopover) {
 
     return(
         <div>
-            <button className='button-with-popover' ref={buttonRef} onClick={onClick}>
-                {props.img && <img src={props.img} alt='button-logo' className='button-image'/>}
-                {props.text}
-            </button>
+            <Button
+                type={"border-none"}
+                onClick={onClick}
+                label={props.text}
+                img={props.img}
+                ref={buttonRef}
+            />
             {open && positionPopover()}
         </div>
     )

@@ -1,0 +1,8 @@
+.buttonChecked {
+    background: rgb(253, 138, 92, 0.2);
+}
+
+.button:focus {
+    outline: none;
+    box-shadow: none;
+}

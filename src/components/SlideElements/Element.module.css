@@ -11,72 +11,72 @@
     outline: none;
 }
 
-.element_selected {
+.elementSelected {
     outline: 2px solid #2a9df4;
 }
 
-.resize-handle {
+.resizeHandle {
     position: absolute;
     width: 8px;
     height: 8px;
     background-color: #2a9df4;
 }
 
-.resize-handle-tl {
+.resizeHandleTl {
     top: -6px;
     left: -6px;
 }
 
-.resize-handle-tr {
+.resizeHandleTr {
     top: -6px;
     right: -6px;
 }
 
-.resize-handle-bl {
+.resizeHandleBl {
     bottom: -6px;
     left: -6px;
 }
-.resize-handle-br {
+.resizeHandleBr {
     bottom: -6px;
     right: -6px;
 }
 
-.resize-handle-ts {
+.resizeHandleTs {
     top: -6px;
     left: calc(50% - 6px);
 }
 
-.resize-handle-rs {
+.resizeHandleRs {
     right: -6px;
     top: calc(50% - 6px);
 }
 
-.resize-handle-bs {
+.resizeHandleBs {
     bottom: -6px;
     left: calc(50% - 6px);
 }
 
-.resize-handle-ls {
+.resizeHandleLs {
     top: calc(50% - 6px);
     left: -6px;
 }
 
-.resize-handle-tl:hover,
-.resize-handle-br:hover {
+.resizeHandleTl:hover,
+.resizeHandleBr:hover {
     cursor: se-resize;
 }
 
-.resize-handle-tr:hover,
-.resize-handle-bl:hover {
+.resizeHandleTr:hover,
+.resizeHandleBl:hover {
     cursor: ne-resize;
 }
 
-.resize-handle-ts:hover,
-.resize-handle-bs:hover {
+.resizeHandleTs:hover,
+.resizeHandleBs:hover {
     cursor: n-resize;
 }
 
-.resize-handle-rs:hover,
-.resize-handle-ls:hover {
+.resizeHandleRs:hover,
+.resizeHandleLs:hover {
     cursor: e-resize;
 }

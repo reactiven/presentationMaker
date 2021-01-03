@@ -1,6 +1,7 @@
 import React, {useEffect, useRef, useState} from "react";
 
-import './Button_WithColorPicker.css';
+import styles from './Button_WithColorPicker.module.css';
+import {Button} from "./Button";
 
 type ButtonWithColorPickerProps = {
     img?: any,
@@ -21,7 +22,7 @@ function Button_WithColorPicker(props: ButtonWithColorPickerProps): JSX.Element 
         }
     }
     
-    function onClick(event: any) {
+    function onClick() {
         if (inputRef.current) {
             inputRef.current.click()
         }
@@ -36,9 +37,14 @@ function Button_WithColorPicker(props: ButtonWithColorPickerProps): JSX.Element 
     }, [props.value])
 
     return(
-        <div className='color-picker-container' onClick={onClick}>
-            {<img src={props.img} alt='button-logo' className='color-picker-image'/>}
-            <input type='color' ref={inputRef} onInput={onInput} defaultValue={value} className='color-picker'/>
+        <div className={styles.colorPickerContainer}>
+            <Button
+                type={"border-none"}
+                onClick={onClick}
+                img={props.img}
+                className={styles.colorPickerButton}
+            />
+            <input type='color' ref={inputRef} onInput={onInput} defaultValue={value} className={styles.colorPicker}/>
         </div>
     )
 }

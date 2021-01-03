@@ -1,6 +1,6 @@
-import React, {useContext, useEffect, useRef} from 'react';
+import React, {useContext, useRef} from 'react';
 import {ElementsMapType} from "../../Entity/types";
-import './Slide.css';
+import styles from './Slide.module.css';
 import { SlideElement } from '../SlideElements/Element';
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
@@ -24,7 +24,7 @@ function Slide() {
     }
 
     return(
-        <div className="slide" id='slide' style={style} ref={slideRef}>
+        <div className={styles.slide} id='slide' style={style} ref={slideRef}>
             {renderElements(slideInfo.elements, slideInfo.elementsOrder, presentationInfo.selectedSlideElements)}
         </div>
     )

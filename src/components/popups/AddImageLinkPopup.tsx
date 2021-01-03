@@ -1,4 +1,4 @@
-import './AddImageLinkPopup.css';
+import styles from './AddImageLinkPopup.module.css';
 import {Popup} from "../common/Popup";
 import {Button} from "../common/Button";
 import React, {useContext, useRef} from "react";
@@ -20,9 +20,9 @@ function Content(props: ContentProps) {
     }
 
     return (
-        <div className='add-image-content-container'>
-            <div className='add-image-content-row'>
-                <div className='add-image-content-row-title'>Ссылка на изображение</div>
+        <div className={styles.addImageContentContainer}>
+            <div className={styles.addImageContentRow}>
+                <div>Ссылка на изображение</div>
                 <div>
                     <input
                         type='text'

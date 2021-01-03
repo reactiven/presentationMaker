@@ -1,0 +1,14 @@
+.addImageContentContainer {
+    padding: 10px 12px;
+}
+
+.addImageContentRow {
+    display: flex;
+    justify-content: space-between;
+    min-height: 50px;
+    align-items: center;
+}
+
+.addImageContentRow:not(:last-child) {
+    margin-bottom: 10px;
+}

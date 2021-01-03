@@ -1,5 +1,6 @@
 import React from "react";
-import './Button_TwoState.css'
+import styles from './Button_TwoState.module.css'
+import {Button} from "./Button";
 
 type PropsType = {
     img: any,
@@ -9,17 +10,19 @@ type PropsType = {
 
 function Button_TwoState(props: PropsType) {
 
-    function onClick(event: any) {
+    function onClick() {
         props.onClick(!props.checked)
-        event.preventDefault()
     }
 
-    const className = `button ${props.checked ? 'button_checked': ''}`
+    const className = `${styles.button} ${props.checked ? styles.buttonChecked : ''}`
 
     return (
-        <button className={className} onClick={onClick}>
-            {props.img && <img src={props.img} alt='button-logo' className='button-image'/>}
-        </button>
+        <Button
+            type={"border-none"}
+            onClick={onClick}
+            img={props.img}
+            className={className}
+        />
     )
 }
 

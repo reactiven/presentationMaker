@@ -1,11 +1,12 @@
 import React, {useContext, useEffect, useRef} from "react";
 import minus from '../../images/minus.png';
 import plus from '../../images/add_new.png';
-import './FontSizeSwitcher.css'
+import styles from './FontSizeSwitcher.module.css'
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 import {dispatchDecorator} from "../../state/dispatchDecarator";
+import {Button} from "./Button";
 
 type PropsType = {
     fontSize: number,
@@ -38,19 +39,23 @@ function FontSizeSwitcher(props: PropsType) {
     }, [props.fontSize])
 
     return(
-        <div className='switcher-container'>
-            <button className='switch-button' onClick={sizeDec}>
-                <img src={minus} alt='logo' className='switch-image-button'/>
-            </button>
+        <div className={styles.switcherContainer}>
+            <Button
+                type={"border-none"}
+                onClick={sizeDec}
+                img={minus}
+            />
             <input
                 defaultValue={props.fontSize ? props.fontSize : ''}
-                className='input-size'
+                className={styles.inputSize}
                 ref={inputRef}
                 onInput={onInput}
             />
-            <button className='switch-button' onClick={sizeInc}>
-                <img src={plus} alt='logo' className='switch-image-button'/>
-            </button>
+            <Button
+                type={"border-none"}
+                onClick={sizeInc}
+                img={plus}
+            />
         </div>
     )
 }

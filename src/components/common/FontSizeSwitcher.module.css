@@ -1,0 +1,16 @@
+.switcherContainer {
+    display: flex;
+    align-items: center;
+    height: 26px;
+    border: 1px solid #000;
+    border-radius: 5px;
+}
+
+.inputSize {
+    width: 35px;
+    height: 100%;
+    box-sizing: border-box;
+    border: 1px solid #000;
+    border-top: none;
+    border-bottom: none;
+}

@@ -1,6 +1,6 @@
 import React, {useContext, useRef} from 'react';
 import { TextBoxType } from '../../Entity/types';
-import './Textbox.css';
+import styles from './Textbox.module.css';
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
@@ -46,7 +46,7 @@ function Textbox(props: PropsType) {
 
     return(
         <textarea ref={inputRef}
-                  className='textBox-block richtext'
+                  className={`${styles.textBoxBlock} ${styles.richtext}`}
                   style={inputStyle}
                   onBlur={onChange}
                   defaultValue={props.data.text || ''}

@@ -1,22 +1,22 @@
-.slide-background-content-container {
+.contentContainer {
     padding: 10px 12px;
 }
 
-.slide-background-content-row {
+.contentRow {
     display: flex;
     justify-content: space-between;
     min-height: 50px;
     align-items: center;
 }
 
-.slide-background-content-row:not(:last-child) {
+.contentRow:not(:last-child) {
     margin-bottom: 10px;
 }
 
-.slide-background-content-file-input {
+.contentFileInput {
     display: none;
 }
 
-.slide-background-content-url-input {
+.contentUrlInput {
     width: 125px;
 }

@@ -1,4 +1,3 @@
-
 .workspace {
     width: 100%;
     background-color: #f8f9fa;
@@ -6,17 +5,17 @@
     position: relative;
 }
 
-.workspace_insertion:hover {
+.workspaceInsertion:hover {
     cursor: crosshair;
 }
 
-.insertion-area {
+.insertionArea {
     position: absolute;
     border: 1px dashed #1a73e8;
     z-index: 2;
 }
 
-.slide-container {
+.slideContainer {
     position: absolute;
     left: 50%;
     top: 50%;

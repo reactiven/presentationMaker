@@ -1,5 +1,5 @@
 import React, {useContext, useEffect} from 'react';
-import './App.css';
+import styles from './App.module.css';
 import {SideBar} from './components/sidebar/Sidebar';
 import {TopPanel} from './components/topPanel/TopPanel';
 import {Workspace} from './components/workspace/Workspace';
@@ -43,9 +43,9 @@ function App(): JSX.Element {
     }
 
     return (
-        <div className="app-layout">
+        <div className={styles.appLayout}>
             <TopPanel />
-            <div className="presentation-block">
+            <div className={styles.presentationBlock}>
                 <SideBar />
                 <Workspace />
             </div>

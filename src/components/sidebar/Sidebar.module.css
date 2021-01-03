@@ -1,4 +1,4 @@
-.side-bar {
+.sideBar {
     border-right: 1px solid #d9d9d9;
     width: 220px;
     min-width: 220px;
@@ -11,12 +11,12 @@
     position: relative;
 }
 
-.sidebar-item:hover {
+.sidebarItem:hover {
     cursor: pointer;
     text-decoration: underline;
 }
 
-.sidebar-item {
+.sidebarItem {
     text-align: center;
     height: 100px;
     min-height: 100px;
@@ -27,17 +27,17 @@
     margin-top: 10px;
 }
 
-.sidebar-item:hover {
+.sidebarItem:hover {
     border: 1px solid #000;
 }
 
-.sidebar-item_selected,
-.sidebar-item_selected:hover {
+.sidebarItemSelected,
+.sidebarItemSelected:hover {
     box-shadow: 0 0 0 2px #FA8258;
     border: 1px solid transparent;
 }
 
-.sidebar-separator {
+.sidebarSeparator {
     position: absolute;
     width: 200px;
     height: 2px;

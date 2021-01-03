@@ -2,7 +2,7 @@ import React, {useRef} from "react";
 import { Button } from "./Button";
 import close from '../../images/close.png';
 
-import './Popup.css'
+import styles from './Popup.module.css'
 
 type PropsType = {
     headerText: string,
@@ -28,10 +28,10 @@ function Popup(props: PropsType) {
     }
 
     return(
-        <div className='popup-layer' ref={layerRef} onClick={layerClick}>
-            <div className='popup-container' ref={popupRef} onClick={popupClick}>
-                <div className='popup-header'>
-                    <div className='popup-title'>{props.headerText}</div>
+        <div className={styles.popupLayer} ref={layerRef} onClick={layerClick}>
+            <div className={styles.popupContainer} ref={popupRef} onClick={popupClick}>
+                <div className={styles.popupHeader}>
+                    <div className={styles.popupTitle}>{props.headerText}</div>
                     <Button
                         type={'normal'}
                         onClick={props.closePopup}
@@ -39,7 +39,7 @@ function Popup(props: PropsType) {
                     />
                 </div>
                 {props.content}
-                <div className='popup-footer'>
+                <div className={styles.popupFooter}>
                     <Button
                         onClick={props.closePopup}
                         label={'Отмена'}

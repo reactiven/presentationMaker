@@ -8,7 +8,7 @@ import {ActionList} from "../common/ActionList";
 import circle from '../../images/circle.png';
 import rect from '../../images/rect.png';
 import triangle from '../../images/triangle.png';
-import './AddElementsBlock.css';
+import styles from './AddElementsBlock.module.css';
 import {ToolSeparator} from "./ToolPanel";
 import {toDataURL} from "../../common/toDataURL";
 import {StoreType} from "../../state/store";
@@ -95,7 +95,7 @@ function AddElementsBlock() {
     }
 
     return(
-        <div className='add-elements-block'>
+        <div className={styles.addElementsBlock}>
             <Button
                 type={'border-none'}
                 img={textbox}
@@ -121,7 +121,7 @@ function AddElementsBlock() {
                     accept=".png, .jpg"
                     ref={inputFileRef}
                     onInput={onImageChange}
-                    className='slide-background-content-file-input'
+                    className={styles.addImageInput}
                 />
             </div>
             <ToolSeparator/>

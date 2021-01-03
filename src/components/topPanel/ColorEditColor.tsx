@@ -4,7 +4,7 @@ import stroke from "../../images/stroke.png";
 import {isTextBox} from "../../Entity/TextBox";
 import word from "../../images/word.png";
 import React, {useContext} from "react";
-import './ColorEditColor.css';
+import styles from './ColorEditColor.module.css';
 import { ToolSeparator } from "./ToolPanel";
 import border from "../../images/border.png";
 import { Button_WithPopover } from "../common/Button_WithPopover";
@@ -88,7 +88,7 @@ function ColorEditColor(props: PropsType) {
     }
 
     return(
-        <div className='color-edit-block'>
+        <div className={styles.colorEditBlock}>
             {<Button_WithColorPicker
                 img={fill}
                 onChange={changeBgColor}

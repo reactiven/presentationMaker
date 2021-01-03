@@ -1,10 +1,10 @@
-.app-layout {
+.appLayout {
     display: flex;
     flex-direction: column;
     height: 100vh;
 }
 
-.presentation-block {
+.presentationBlock {
     display: flex;
     height: 100%;
 }

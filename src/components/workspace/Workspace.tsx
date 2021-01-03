@@ -1,6 +1,6 @@
 import React, {useContext, useRef, useState} from 'react';
 import { Slide } from './Slide';
-import './WorkSpace.css';
+import styles from './WorkSpace.module.css';
 import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordinates";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
@@ -129,15 +129,15 @@ function Workspace() {
             ref={workspaceRef}
             onMouseDown={mouseDown}
             onClick={onClick}
-            className={`workspace ${insertionMode.on && 'workspace_insertion'}`}
+            className={`${styles.workspace} ${insertionMode.on && styles.workspaceInsertion}`}
         >
-            <div className='slide-container' ref={slideRef}>
+            <div className={styles.slideContainer} ref={slideRef}>
                 {insertionMode.on
                 && insertionAreaX
                 && insertionAreaH
                 && insertionAreaY
                 && insertionAreaW
-                && <div className={'insertion-area'} style={insertionStyle}></div>}
+                && <div className={styles.insertionArea} style={insertionStyle}></div>}
                 {!!slideInfo && <Slide />}
             </div>
         </div>

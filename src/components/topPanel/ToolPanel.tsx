@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import './ToolPanel.css';
+import styles from './ToolPanel.module.css';
 import {isTextBox} from "../../Entity/TextBox";
 import {CommonToolBlock} from "./CommonToolBlock";
 import { ColorEditColor } from './ColorEditColor';
@@ -31,7 +31,7 @@ function ToolPanel({
     }
 
     return(
-        <div className='toolpanel'>
+        <div className={styles.toolpanel}>
             <CommonToolBlock/>
             {currentSlide && <AddElementsBlock />}
             {currentSlide && !!selectedSlideElements.length
@@ -56,7 +56,7 @@ function ToolPanel({
 
 function ToolSeparator() {
     return(
-        <div className='separator'></div>
+        <div className={styles.separator}></div>
     )
 }
 

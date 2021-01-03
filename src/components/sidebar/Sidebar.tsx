@@ -1,6 +1,6 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
 import { SlideType } from '../../Entity/types'
-import './Sidebar.css';
+import styles from './Sidebar.module.css';
 import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordinates";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
@@ -43,7 +43,7 @@ function SideBar(): JSX.Element {
         return null
     })
     return (
-        <div className='side-bar' ref={sidebarRef}>
+        <div className={styles.sideBar} ref={sidebarRef}>
             {moveMode && <SidebarSeparator style={separatorStyle}/>}
             {listItems}
         </div>
@@ -126,8 +126,8 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
     }
 
     const className = props.isSelected
-        ? 'sidebar-item sidebar-item_selected'
-        : 'sidebar-item'
+        ? `${styles.sidebarItem} ${styles.sidebarItemSelected}`
+        : `${styles.sidebarItem}`
 
     const styleBackground = {
         background: props.slide.previewImage
@@ -150,7 +150,7 @@ type SepType = {
 function SidebarSeparator(props: SepType) {
 
     return(
-        <div className='sidebar-separator' style={props.style}></div>
+        <div className={styles.sidebarSeparator} style={props.style}></div>
     )
 }
 

@@ -1,4 +1,4 @@
-.list-container {
+.listСontainer {
     min-width: 100px;
     display: flex;
     flex-direction: column;
@@ -7,7 +7,7 @@
     border-radius: 4px;
 }
 
-.list-item {
+.listItem {
     height: 30px;
     width: 100%;
     display: flex;
@@ -17,21 +17,21 @@
     padding: 0 9px;
 }
 
-.list-item:not(:last-child) {
+.listItem:not(:last-child) {
     border-bottom: 1px solid black;
 }
 
-.list-item:hover {
+.listItem:hover {
     cursor: pointer;
     background: #eed8d8;
 }
 
-.item-block-image {
+.itemBlockImage {
     height: 20px;
     width: 20px;
     margin-right: 5px;
 }
 
-.item-image {
+.itemImage {
     width: 100%;
 }

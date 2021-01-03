@@ -1,0 +1,8 @@
+.addElementsBlock {
+    display: flex;
+    align-items: center;
+}
+
+.addImageInput {
+    display: none;
+}

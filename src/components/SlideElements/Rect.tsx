@@ -1,5 +1,5 @@
 import React from 'react';
-import './Element.css';
+import './Element.module.css';
 import {ColorStyleType} from "./Shape";
 
 type PropsType = {

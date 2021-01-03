@@ -1,11 +1,11 @@
-.preview-container {
+.previewContainer {
     width: 100vw;
     height: 100vh;
     position: relative;
     background: black;
 }
 
-.preview-slide-container {
+.previewSlideContainer {
     width: 760px;
     height: 430px;
     position: absolute;

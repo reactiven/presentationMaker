@@ -1,5 +1,5 @@
 import React, {useContext, useEffect, useRef} from 'react';
-import './TopPanel.css';
+import styles from './TopPanel.module.css';
 import logo from '../../images/logo_tcaer.png';
 import { ToolPanel } from './ToolPanel';
 import {Button_WithPopover} from "../common/Button_WithPopover";
@@ -92,21 +92,21 @@ function TopPanel() {
         }
     }, [presentationInfo])
     return(
-        <div className="top-panel">
-            <div className='header-panel'>
-                <img src={logo} className='logo' alt='logo'/>
-                <div className='tool-bar'>
+        <div className={styles.topPanel}>
+            <div className={styles.headerPanel}>
+                <img src={logo} className={styles.logo} alt='logo'/>
+                <div className={styles.toolBar}>
                     <input
                         type="text"
                         ref={nameRef}
                         defaultValue={presentationInfo.presentation.name}
                         onBlur={onBlur}
-                        className='presentation-title'/>
+                        className={styles.presentationTitle}/>
                     <div className="second-row">
                         <a
                             href={savePresentation(store.getState().presentationInfo)}
                             download={`${presentationInfo.presentation.name}.json`}
-                            className={'ref'}
+                            className={styles.ref}
                             ref={saveRef}
                         ></a>
                         <Button_WithPopover
@@ -123,7 +123,7 @@ function TopPanel() {
                             accept=".json"
                             ref={inputFileRef}
                             onInput={onFileChange}
-                            className='upload-file-input'
+                            className={styles.uploadFileInput}
                         />
                     </div>
                 </div>

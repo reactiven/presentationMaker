@@ -3,7 +3,7 @@ import {isTextBox} from "../../Entity/TextBox";
 import {Button_TwoState} from "../common/Button_TwoState";
 import {FontSizeSwitcher} from "../common/FontSizeSwitcher";
 import React, {useContext} from "react";
-import './FontEditBlock.css';
+import styles from './FontEditBlock.module.css';
 import boldIcon from "../../images/bold.png";
 import italicIcon from "../../images/italic.png";
 import underlineIcon from "../../images/underline.png";
@@ -86,7 +86,7 @@ function FontEditBlock(props: PropsType) {
     }
 
     return(
-        <div className='font-edit-block'>
+        <div className={styles.fontEditBlock}>
             <Button_TwoState
                 img={boldIcon}
                 onClick={changeFontBold}

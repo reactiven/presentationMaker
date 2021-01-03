@@ -1,4 +1,4 @@
-import './PreviewMode.css';
+import styles from './PreviewMode.module.css';
 import {useContext, useEffect} from "react";
 import React from "react";
 import {StoreType} from "../../state/store";
@@ -43,8 +43,8 @@ function PreviewMode() {
     })
 
     return(
-        <div className={'preview-container'} onClick={goToNextSlide}>
-            <div className={'preview-slide-container'} style={slideBack}>
+        <div className={styles.previewContainer} onClick={goToNextSlide}>
+            <div className={styles.previewSlideContainer} style={slideBack}>
             </div>
         </div>
     )

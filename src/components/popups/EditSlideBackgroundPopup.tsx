@@ -2,7 +2,7 @@ import React, {useContext, useRef, useState} from "react"
 import {Popup} from "../common/Popup"
 import {Button} from "../common/Button";
 import {SlideType} from "../../Entity/types";
-import './EditSlideBackgroundPopup.css';
+import styles from './EditSlideBackgroundPopup.module.css';
 import { toDataURL } from "../../common/toDataURL";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
@@ -16,9 +16,7 @@ type ContentProps = {
 
 function Content(props: ContentProps) {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const {
-        presentationInfo,
-    } = store.getState()
+
     const [color, setColor] = useState<string>(props.currentSlideInfo.background)
     const inputColorRef = useRef<HTMLInputElement | null>(null)
     const inputFileRef = useRef<HTMLInputElement | null>(null)
@@ -60,9 +58,9 @@ function Content(props: ContentProps) {
     }
 
     return (
-        <div className='slide-background-content-container'>
-            <div className='slide-background-content-row'>
-                <div className='slide-background-content-row-title'>Цвет</div>
+        <div className={styles.contentContainer}>
+            <div className={styles.contentRow}>
+                <div>Цвет</div>
                 <div onClick={onInputClick}>
                     <input
                         type='color'
@@ -72,8 +70,8 @@ function Content(props: ContentProps) {
                     />
                 </div>
             </div>
-            <div className='slide-background-content-row'>
-                <div className='slide-background-content-row-title'>Изображение с компьютера</div>
+            <div className={styles.contentRow}>
+                <div>Изображение с компьютера</div>
                 <div onClick={onInputClick}>
                     <Button
                         type={'normal'}
@@ -85,18 +83,18 @@ function Content(props: ContentProps) {
                         accept=".png, .jpg"
                         ref={inputFileRef}
                         onInput={onImageChange}
-                        className='slide-background-content-file-input'
+                        className={styles.contentFileInput}
                     />
                 </div>
             </div>
-            <div className='slide-background-content-row'>
-                <div className='slide-background-content-row-title'>Изображение из интернета</div>
+            <div className={styles.contentRow}>
+                <div>Изображение из интернета</div>
                 <div onClick={onInputClick}>
                     <input
                         type='text'
                         ref={inputUrlRef}
                         onBlur={findImageUrl}
-                        className='slide-background-content-url-input'
+                        className={styles.contentUrlInput}
                         placeholder={'Введите ссылку на изображение'}
                     />
                 </div>

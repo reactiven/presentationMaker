@@ -2,7 +2,7 @@ import {Button} from "../common/Button";
 import plusIcon from "../../images/add_new.png";
 import arrowLeft from "../../images/undo.png";
 import arrowRight from "../../images/redo.png";
-import './CommonToolBlock.css';
+import styles from './CommonToolBlock.module.css';
 import React, {useContext} from "react";
 import {ToolSeparator} from "./ToolPanel";
 import {StoreType} from "../../state/store";
@@ -18,7 +18,7 @@ function CommonToolBlock() {
     }
 
     return(
-        <div className='common-tool-block'>
+        <div className={styles.commonToolBlock}>
             <Button
                 type={'border-none'}
                 img={plusIcon}

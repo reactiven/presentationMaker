@@ -3,7 +3,7 @@ import { ElementStyleType, SlideElementType } from '../../Entity/types';
 import { ImageBlock } from './Image';
 import {ColorStyleType, Shape} from './Shape';
 import { Textbox } from './Textbox';
-import './Element.css';
+import styles from'./Element.module.css';
 import { isImage } from '../../Entity/Image';
 import { isShape } from '../../Entity/Shape';
 import { isTextBox } from '../../Entity/TextBox';
@@ -54,7 +54,7 @@ function SlideElement(props: ElementPropsType) {
             ? width
             : element.width,
     }
-    const className = `element ${props.isSelected ? 'element_selected' : ''}`
+    const className = `${styles.element} ${props.isSelected ? styles.elementSelected : ''}`
 
     function onClick(event: any) {
         event.preventDefault()
@@ -278,14 +278,14 @@ function ResizeHandlers({
 
     return(
         <div>
-            <div className='resize-handle resize-handle-tl' ref={tlRef}></div>
-            <div className='resize-handle resize-handle-tr' ref={trRef}></div>
-            <div className='resize-handle resize-handle-bl' ref={blRef}></div>
-            <div className='resize-handle resize-handle-br' ref={brRef}></div>
-            <div className='resize-handle resize-handle-ts' ref={tsRef}></div>
-            <div className='resize-handle resize-handle-rs' ref={rsRef}></div>
-            <div className='resize-handle resize-handle-bs' ref={bsRef}></div>
-            <div className='resize-handle resize-handle-ls' ref={lsRef}></div>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleTl}`} ref={tlRef}></div>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleTr}`} ref={trRef}></div>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleBl}`} ref={blRef}></div>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleBr}`} ref={brRef}></div>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleTs}`} ref={tsRef}></div>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleRs}`} ref={rsRef}></div>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleBs}`} ref={bsRef}></div>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleLs}`} ref={lsRef}></div>
         </div>
     )
 }

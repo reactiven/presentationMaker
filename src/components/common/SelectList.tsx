@@ -1,6 +1,6 @@
 import tick from "../../images/tick.png";
 import React from "react";
-import './SelectList.css';
+import styles from './SelectList.module.css';
 
 type ItemType = {
     id: string,
@@ -29,7 +29,7 @@ function SelectList(props: SelectListProps) {
     );
 
     return(
-        <div className={'list-container'}>
+        <div className={styles.listСontainer}>
             {listItems}
         </div>
     )
@@ -48,9 +48,9 @@ function SelectListItem(props: SelectListItemProps) {
     }
 
     return(
-        <div className={'list-item'} onClick={onClick}>
-            <div className={'item-block-image'}>
-                {props.isSelected && <img src={tick} alt='button-logo' className={'item-image'}/>}
+        <div className={styles.listItem} onClick={onClick}>
+            <div className={styles.itemBlockImage}>
+                {props.isSelected && <img src={tick} alt='button-logo' className={styles.itemImage}/>}
             </div>
             {props.item.text}
         </div>

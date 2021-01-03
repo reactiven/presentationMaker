@@ -1,5 +1,5 @@
 import React from "react";
-import "./ActionList.css";
+import styles from "./ActionList.module.css";
 
 type ItemType = {
     id: string,
@@ -27,7 +27,7 @@ function ActionList(props: ActionListProps) {
     );
 
     return(
-        <div className={'list-container'}>
+        <div className={styles.listContainer}>
             {listItems}
         </div>
     )
@@ -45,9 +45,9 @@ function ActionListItem(props: SelectListItemProps) {
     }
 
     return(
-        <div className={'list-item'} onClick={onClick}>
-            <div className={'item-block-image'}>
-                {props.item.img && <img src={props.item.img} alt='button-logo' className={'item-image'}/>}
+        <div className={styles.listItem} onClick={onClick}>
+            <div className={styles.itemBlockImage}>
+                {props.item.img && <img src={props.item.img} alt='button-logo' className={styles.itemImage}/>}
             </div>
             {props.item.text}
         </div>

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {forwardRef, Ref} from 'react'
 import './Button.css'
 
 type ButtonProps = {
@@ -6,10 +6,11 @@ type ButtonProps = {
     onClick: () => void,
     label?: string,
     img?: any,
+    className?: any,
     disabled?: boolean,
   }
 
-function Button(props: ButtonProps): JSX.Element {
+const Button = forwardRef((props: ButtonProps, ref: Ref<HTMLButtonElement>|undefined): JSX.Element =>  {
     const className = `standard-button standard-button_${props.type}`
 
     function onClick(event: any) {
@@ -18,12 +19,17 @@ function Button(props: ButtonProps): JSX.Element {
     }
 
     return (
-        <button className={className} onClick={onClick} disabled={!!props.disabled}>
+        <button
+            className={`${props.className ? props.className : ''} ${className} `}
+            onClick={onClick}
+            disabled={!!props.disabled}
+            ref={ref}
+        >
             {props.label && props.label}
-            {props.img && <img src={props.img} alt='button-logo'  className='button-image'/>}
+            {props.img && <img src={props.img} alt='button-logo' className='button-image'/>}
         </button>
     )
-}
+})
 
 export {
     Button
