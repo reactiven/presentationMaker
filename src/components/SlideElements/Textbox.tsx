@@ -14,10 +14,15 @@ type PropsType = {
     borderColor: string|null,
 }
 
-function Textbox(props: PropsType) {
+function Textbox({
+    borderWidth,
+    borderColor,
+    data,
+    textboxId,
+    background,
+}: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const inputRef = useRef<HTMLTextAreaElement>(null)
-    const data = {...props.data}
     const fontWeight: 'bold'|'normal' = data.font.bold ? 'bold' : 'normal'
     const fontDecoration: 'underline'|'none' = data.font.underline ? 'underline' : 'none'
     const inputStyle = {
@@ -25,10 +30,10 @@ function Textbox(props: PropsType) {
         fontStyle: data.font.italic ? 'italic' : 'normal',
         fontFamily: data.font.fontStyle,
         color: data.font.fontColor,
-        background: props.background
-            ? props.background
+        background: background
+            ? background
             : 'transparent',
-        border: `${props.borderWidth} solid ${props.borderColor}`,
+        border: `${borderWidth} solid ${borderColor}`,
         fontWeight,
         textDecoration: fontDecoration,
     }
@@ -38,18 +43,19 @@ function Textbox(props: PropsType) {
         {
             const value = inputRef.current.value
             dispatchDecorator(store, () => presentationInfoActions.updateTextBox(
-                props.textboxId,
+                textboxId,
                 value,
             ))
         }
     }
 
     return(
-        <textarea ref={inputRef}
-                  className={`${styles.textBoxBlock} ${styles.richtext}`}
-                  style={inputStyle}
-                  onBlur={onChange}
-                  defaultValue={props.data.text || ''}
+        <textarea
+            ref={inputRef}
+            className={`${styles.textBoxBlock} ${styles.richtext}`}
+            style={inputStyle}
+            onBlur={onChange}
+            defaultValue={data.text || ''}
         >
         </textarea>
     )

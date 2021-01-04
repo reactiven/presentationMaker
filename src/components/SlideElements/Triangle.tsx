@@ -8,12 +8,11 @@ type PropsType = {
     height: number,
 }
 
-function Triangle(props: PropsType) {
-    const {
-        width,
-        height,
-      } = props
-    const style = {...props.style}
+function Triangle({
+    width,
+    height,
+    style,
+}: PropsType) {
     const viewBox = [0, 0, width, height]
     const points = `5,${height - 5} ${width/2},5 ${width-5},${height-5}`
     return(

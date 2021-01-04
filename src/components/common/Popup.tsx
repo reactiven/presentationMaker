@@ -11,13 +11,18 @@ type PropsType = {
     closePopup: () => void,
 }
 
-function Popup(props: PropsType) {
+function Popup({
+    closePopup,
+    acceptButton,
+    headerText,
+    content,
+}: PropsType) {
     const layerRef = useRef<HTMLDivElement|null>(null)
     const popupRef = useRef<HTMLDivElement|null>(null)
 
     function layerClick(event: any) {
         if (!event.defaultPrevented) {
-            props.closePopup()
+            closePopup()
         }
     }
 
@@ -31,21 +36,21 @@ function Popup(props: PropsType) {
         <div className={styles.popupLayer} ref={layerRef} onClick={layerClick}>
             <div className={styles.popupContainer} ref={popupRef} onClick={popupClick}>
                 <div className={styles.popupHeader}>
-                    <div className={styles.popupTitle}>{props.headerText}</div>
+                    <div className={styles.popupTitle}>{headerText}</div>
                     <Button
-                        type={'normal'}
-                        onClick={props.closePopup}
+                        type={'border-none'}
+                        onClick={closePopup}
                         img={close}
                     />
                 </div>
-                {props.content}
+                {content}
                 <div className={styles.popupFooter}>
                     <Button
-                        onClick={props.closePopup}
+                        onClick={closePopup}
                         label={'Отмена'}
                         type={'normal'}
                     />
-                    {props.acceptButton}
+                    {acceptButton}
                 </div>
             </div>
         </div>

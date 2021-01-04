@@ -61,7 +61,10 @@ type PropsType = {
     selectedSlideElements: Array<number>,
 }
 
-function ColorEditColor(props: PropsType) {
+function ColorEditColor({
+    currentSlide,
+    selectedSlideElements,
+}: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
 
     const {
@@ -69,7 +72,7 @@ function ColorEditColor(props: PropsType) {
         background,
         borderWidth,
         fontColor
-    } = getColorInfo(props.currentSlide.elements, props.selectedSlideElements)
+    } = getColorInfo(currentSlide.elements, selectedSlideElements)
 
     function changeBgColor(value: string) {
         dispatchDecorator(store, () => presentationInfoActions.setBackgroundColor(value))
@@ -106,7 +109,7 @@ function ColorEditColor(props: PropsType) {
             />}
             <Button_WithPopover
                 img={border}
-                popover={<SelectList
+                popoverContent={<SelectList
                     onChange={changeBorderWidth}
                     selected={getSelectedBorderWidth(borderWidth)}
                     items={getBorderWidthItems()}

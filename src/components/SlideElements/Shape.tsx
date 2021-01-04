@@ -17,15 +17,20 @@ type PropsType = {
     height: number,
 }
 
-function Shape(props: PropsType) {
+function Shape({
+    height,
+    width,
+    colorStyle,
+    type,
+}: PropsType) {
 
-    switch (props.type) {
+    switch (type) {
         case 'rect':
-            return <Rect style={props.colorStyle} width={props.width} height={props.height} />
+            return <Rect style={colorStyle} width={width} height={height} />
         case 'circle':
-            return <Circle style={props.colorStyle} width={props.width} height={props.height} />
+            return <Circle style={colorStyle} width={width} height={height} />
         case 'triangle':
-            return <Triangle style={props.colorStyle} width={props.width} height={props.height} />
+            return <Triangle style={colorStyle} width={width} height={height} />
         default:
             return null
     }

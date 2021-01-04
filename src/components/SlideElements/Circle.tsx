@@ -8,12 +8,11 @@ type PropsType = {
     height: number,
 }
 
-function Circle(props: PropsType) {
-    const {
-        width,
-        height,
-    } = props
-    const style = {...props.style}
+function Circle({
+    height,
+    width,
+    style,
+}: PropsType) {
     const viewBox = [0, 0, width, height]
     return(
         <svg 

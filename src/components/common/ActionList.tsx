@@ -12,13 +12,11 @@ type ActionListProps = {
     onChange: (id: string) => void,
 }
 
-function ActionList(props: ActionListProps) {
-
-    function onChange(id: string) {
-        props.onChange(id)
-    }
-
-    const listItems = props.items.map((item) =>
+function ActionList({
+    items,
+    onChange,
+}: ActionListProps) {
+    const listItems = items.map((item) =>
         <ActionListItem
             key={item.id}
             onClick={onChange}
@@ -38,18 +36,16 @@ type SelectListItemProps = {
     onClick: (id: string) => void,
 }
 
-function ActionListItem(props: SelectListItemProps) {
-
-    function onClick() {
-        props.onClick(props.item.id)
-    }
-
+function ActionListItem({
+    item,
+    onClick,
+}: SelectListItemProps) {
     return(
-        <div className={styles.listItem} onClick={onClick}>
+        <div className={styles.listItem} onClick={() => onClick(item.id)}>
             <div className={styles.itemBlockImage}>
-                {props.item.img && <img src={props.item.img} alt='button-logo' className={styles.itemImage}/>}
+                {item.img && <img src={item.img} alt='button-logo' className={styles.itemImage}/>}
             </div>
-            {props.item.text}
+            {item.text}
         </div>
     )
 }

@@ -13,18 +13,17 @@ type SelectListProps = {
     onChange: (id: string) => void,
 }
 
-function SelectList(props: SelectListProps) {
-
-    function onChange(id: string) {
-        props.onChange(id)
-    }
-
-    const listItems = props.items.map((item) =>
+function SelectList({
+    items,
+    selected,
+    onChange,
+}: SelectListProps) {
+    const listItems = items.map((item) =>
         <SelectListItem
             key={item.id}
             onClick={onChange}
             item={item}
-            isSelected={props.selected === item.id}
+            isSelected={selected === item.id}
         />
     );
 
@@ -41,18 +40,20 @@ type SelectListItemProps = {
     isSelected: boolean,
 }
 
-function SelectListItem(props: SelectListItemProps) {
-
-    function onClick() {
-        props.onClick(props.item.id)
-    }
-
+function SelectListItem({
+    item,
+    isSelected,
+    onClick,
+}: SelectListItemProps) {
     return(
-        <div className={styles.listItem} onClick={onClick}>
+        <div
+            className={styles.listItem}
+            onClick={() => onClick(item.id)}
+        >
             <div className={styles.itemBlockImage}>
-                {props.isSelected && <img src={tick} alt='button-logo' className={styles.itemImage}/>}
+                {isSelected && <img src={tick} alt='button-logo' className={styles.itemImage}/>}
             </div>
-            {props.item.text}
+            {item.text}
         </div>
     )
 }

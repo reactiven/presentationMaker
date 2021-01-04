@@ -19,12 +19,14 @@ type ElementPropsType = {
     isSelected: boolean,
 }
 
-function SlideElement(props: ElementPropsType) {
+function SlideElement({
+    isSelected,
+    element,
+}: ElementPropsType) {
     const [height, setHeight] = useState<number|null>(null)
     const [width, setWidth] = useState<number|null>(null)
     const [left, setLeft] = useState<number|null>(null)
     const [top, setTop] = useState<number|null>(null)
-    const element = {...props.element}
 
     const elementRef = useRef<HTMLDivElement>(null)
 
@@ -36,9 +38,9 @@ function SlideElement(props: ElementPropsType) {
     }, [dndlLeft, dndTop])
 
     useLayoutEffect(() => {
-        setLeft(props.element.xPos)
-        setTop(props.element.yPos)
-    }, [props.element])
+        setLeft(element.xPos)
+        setTop(element.yPos)
+    }, [element])
 
     const style = {
         top: top !== null
@@ -54,7 +56,7 @@ function SlideElement(props: ElementPropsType) {
             ? width
             : element.width,
     }
-    const className = `${styles.element} ${props.isSelected ? styles.elementSelected : ''}`
+    const className = `${styles.element} ${isSelected ? styles.elementSelected : ''}`
 
     function onClick(event: any) {
         event.preventDefault()
@@ -62,7 +64,7 @@ function SlideElement(props: ElementPropsType) {
 
     return(
         <div style={style} className={className} onClick={onClick} ref={elementRef}>
-            {props.isSelected && <ResizeHandlers
+            {isSelected && <ResizeHandlers
                 element={element}
                 elementRef={elementRef}
                 setHeight={setHeight}

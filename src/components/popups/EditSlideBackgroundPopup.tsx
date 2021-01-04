@@ -14,10 +14,12 @@ type ContentProps = {
     currentSlideInfo: SlideType,
 }
 
-function Content(props: ContentProps) {
+function Content({
+    currentSlideInfo,
+}: ContentProps) {
     const store: Readonly<StoreType> = useContext(StoreContext);
 
-    const [color, setColor] = useState<string>(props.currentSlideInfo.background)
+    const [color, setColor] = useState<string>(currentSlideInfo.background)
     const inputColorRef = useRef<HTMLInputElement | null>(null)
     const inputFileRef = useRef<HTMLInputElement | null>(null)
     const inputUrlRef = useRef<HTMLInputElement | null>(null)
@@ -107,7 +109,9 @@ type PropsType = {
     currentSlideInfo: SlideType,
 }
 
-function EditSlideBackgroundPopup(props: PropsType) {
+function EditSlideBackgroundPopup({
+    currentSlideInfo,
+}: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
     function closePopup() {
         store.dispatch(popupOpenedReducerActions.setEditSlideBackgroundPopupOpened(false))
@@ -121,7 +125,7 @@ function EditSlideBackgroundPopup(props: PropsType) {
         <Popup
             headerText={'Фон слайда'}
             content={<Content
-                currentSlideInfo={props.currentSlideInfo}
+                currentSlideInfo={currentSlideInfo}
             />}
             acceptButton={<Button
                 type={'normal'}

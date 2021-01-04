@@ -12,7 +12,9 @@ type PropsType = {
     fontSize: number,
 }
 
-function FontSizeSwitcher(props: PropsType) {
+function FontSizeSwitcher({
+    fontSize,
+}: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const inputRef = useRef<HTMLInputElement>(null)
 
@@ -34,9 +36,9 @@ function FontSizeSwitcher(props: PropsType) {
 
     useEffect(() => {
         if (inputRef.current) {
-            inputRef.current.value = props.fontSize ? String(props.fontSize) : ''
+            inputRef.current.value = fontSize ? String(fontSize) : ''
         }
-    }, [props.fontSize])
+    }, [fontSize])
 
     return(
         <div className={styles.switcherContainer}>
@@ -46,7 +48,7 @@ function FontSizeSwitcher(props: PropsType) {
                 img={minus}
             />
             <input
-                defaultValue={props.fontSize ? props.fontSize : ''}
+                defaultValue={fontSize ? fontSize : ''}
                 className={styles.inputSize}
                 ref={inputRef}
                 onInput={onInput}

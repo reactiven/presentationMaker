@@ -8,12 +8,11 @@ type PropsType = {
     height: number,
 }
 
-function Rect(props: PropsType) {
-    const style = {...props.style}
-    const {
-      width,
-      height,
-    } = props
+function Rect({
+    style,
+    width,
+    height,
+}: PropsType) {
     const viewBox = [0, 0, width, height]
     return (
         <svg 

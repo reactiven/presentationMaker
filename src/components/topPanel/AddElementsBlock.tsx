@@ -103,7 +103,7 @@ function AddElementsBlock() {
             />
             <Button_WithPopover
                 img={shape}
-                popover={<ActionList
+                popoverContent={<ActionList
                     items={getShapePopoverItems()}
                     onChange={handleAddShape}
                 />}
@@ -111,7 +111,7 @@ function AddElementsBlock() {
             <div>
                 <Button_WithPopover
                     img={image}
-                    popover={<ActionList
+                    popoverContent={<ActionList
                         items={getImagePopoverItems()}
                         onChange={handleAddImage}
                     />}

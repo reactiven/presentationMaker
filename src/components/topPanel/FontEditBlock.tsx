@@ -58,7 +58,10 @@ type PropsType = {
     selectedSlideElements: Array<number>,
 }
 
-function FontEditBlock(props: PropsType) {
+function FontEditBlock({
+    selectedSlideElements,
+    currentSlide,
+}: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
 
     const {
@@ -67,7 +70,7 @@ function FontEditBlock(props: PropsType) {
         underline,
         fontFamily,
         fontSize,
-    } = getFontInfo(props.currentSlide.elements, props.selectedSlideElements)
+    } = getFontInfo(currentSlide.elements, selectedSlideElements)
 
     function changeFontBold(value: boolean) {
         dispatchDecorator(store, () => presentationInfoActions.changeFontBold(value))
@@ -104,7 +107,7 @@ function FontEditBlock(props: PropsType) {
             />
             <Button_WithPopover
                 text={fontFamily ? String(fontFamily) : 'Выберите стиль'}
-                popover={<SelectList
+                popoverContent={<SelectList
                     onChange={changeFontFamily}
                     selected={String(fontFamily)}
                     items={getFontStyleItems()}

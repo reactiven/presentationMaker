@@ -10,9 +10,7 @@ import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 function SideBar(): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const {
-        presentationInfo,
-    } = store.getState()
+    const {presentationInfo} = store.getState()
     const [moveMode, setMoveMode] = useState(false)
     const [separatorTop, setSeparatorTop] = useState(0)
 

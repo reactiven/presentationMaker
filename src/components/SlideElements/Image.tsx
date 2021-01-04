@@ -8,12 +8,15 @@ type PropsType = {
     borderColor: string|null,
 }
 
-function ImageBlock(props: PropsType) {
-    //TODO: Сделать валидацию ссылки 
-    const data = {...props.data}
+function ImageBlock({
+    data,
+    borderColor,
+    borderWidth,
+}: PropsType) {
+    //TODO: Сделать валидацию ссылки
     const style = {
         background: `url('${data.src}') no-repeat center/100% 100%`,
-        border: `${props.borderWidth} solid ${props.borderColor}`,
+        border: `${borderWidth} solid ${borderColor}`,
     }
 
     return(

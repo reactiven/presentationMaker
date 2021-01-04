@@ -8,19 +8,18 @@ type PropsType = {
     checked: boolean,
 }
 
-function Button_TwoState(props: PropsType) {
-
-    function onClick() {
-        props.onClick(!props.checked)
-    }
-
-    const className = `${styles.button} ${props.checked ? styles.buttonChecked : ''}`
+function Button_TwoState({
+    img,
+    checked,
+    onClick,
+}: PropsType) {
+    const className = `${styles.button} ${checked ? styles.buttonChecked : ''}`
 
     return (
         <Button
             type={"border-none"}
-            onClick={onClick}
-            img={props.img}
+            onClick={() => onClick(!checked)}
+            img={img}
             className={className}
         />
     )

@@ -17,9 +17,7 @@ import {dispatchDecorator} from "../../state/dispatchDecarator";
 
 function TopPanel() {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const {
-        presentationInfo,
-    } = store.getState()
+    const {presentationInfo} = store.getState()
 
     const saveRef = useRef<any|null>(null)
     const nameRef = useRef<HTMLInputElement|null>(null)
@@ -111,7 +109,7 @@ function TopPanel() {
                         ></a>
                         <Button_WithPopover
                             text={'Файл'}
-                            popover={
+                            popoverContent={
                                 <ActionList
                                     items={getFileActionsItem()}
                                     onChange={handleClickAction}

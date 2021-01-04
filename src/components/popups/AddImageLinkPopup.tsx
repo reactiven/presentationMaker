@@ -11,12 +11,14 @@ type ContentProps = {
     inputInfo: any,
 }
 
-function Content(props: ContentProps) {
+function Content({
+    inputInfo
+}: ContentProps) {
 
     const inputUrlRef = useRef<HTMLInputElement | null>(null)
 
     function onInputChange() {
-        props.inputInfo.current.value = inputUrlRef.current!.value
+        inputInfo.current.value = inputUrlRef.current!.value
     }
 
     return (
@@ -28,7 +30,7 @@ function Content(props: ContentProps) {
                         type='text'
                         ref={inputUrlRef}
                         onChange={onInputChange}
-                        defaultValue={props.inputInfo.current.value}
+                        defaultValue={inputInfo.current.value}
                     />
                 </div>
             </div>

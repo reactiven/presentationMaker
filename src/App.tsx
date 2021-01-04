@@ -10,9 +10,7 @@ import {dispatchDecorator} from "./state/dispatchDecarator";
 
 function App(): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const {
-        presentationInfo,
-    } = store.getState()
+    const {presentationInfo} = store.getState()
 
     useEffect(() => {
         document.title = presentationInfo.presentation.name

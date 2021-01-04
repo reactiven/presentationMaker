@@ -10,27 +10,37 @@ type ButtonProps = {
     disabled?: boolean,
   }
 
-const Button = forwardRef((props: ButtonProps, ref: Ref<HTMLButtonElement>|undefined): JSX.Element =>  {
-    const className = `standard-button standard-button_${props.type}`
+const Button = forwardRef((
+    {
+        type,
+        onClick,
+        label,
+        img,
+        className,
+        disabled,
+    }: ButtonProps,
+    ref: Ref<HTMLButtonElement>|undefined,
+): JSX.Element =>  {
+    const commonStyle = `standard-button standard-button_${type}`
 
-    function onClick(event: any) {
-        props.onClick()
+    function handleOnClick(event: any) {
+        onClick()
         event.preventDefault()
     }
 
     return (
         <button
-            className={`${props.className ? props.className : ''} ${className} `}
-            onClick={onClick}
-            disabled={!!props.disabled}
+            className={`${className ? className : ''} ${commonStyle} `}
+            onClick={handleOnClick}
+            disabled={!!disabled}
             ref={ref}
         >
-            {props.label && props.label}
-            {props.img && <img src={props.img} alt='button-logo' className='button-image'/>}
+            {label}
+            {img && <img src={img} alt='button-logo' className='button-image'/>}
         </button>
     )
 })
 
 export {
-    Button
+    Button,
 }
