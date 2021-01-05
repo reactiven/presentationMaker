@@ -3,6 +3,23 @@ import {isTextBox} from "../Entity/TextBox";
 import {addImage, addShape, addSlide, addTextbox} from "./actions/addElements";
 import { moveSlides } from "./actions/moveSlides";
 import {saveStateForUndo, stateList} from "../Entity/State";
+import {deleteSlides} from "./actions/deleteSlides";
+import {deleteSlideElements} from "./actions/deleteSlideElements";
+import {
+    changeElement,
+    changeElements,
+    changeFont,
+    changeFontBold, changeFontColor,
+    changeFontItalic,
+    changeFontSize,
+    changeFontStyle, changeFontUnderline, changeStrokeColor, changeStrokeWidth,
+    decFontSize,
+    incFontSize,
+    moveElement,
+    resizeElement,
+    setElementBackground,
+    updateTextBox
+} from "./actions/editElementAction";
 
 
 let initialState: PresentationType = {
@@ -35,235 +52,247 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
     let newState: PresentationType = {...state}
     switch (action.type) {
         case "CHANGE_NAME":
-            newState.presentation.name = action.data.newName
-            break
-        case "SET_SLIDE_BACKGROUND":
-            if (newState.currentSlide)
-            {
-                newState.presentation.slides[newState.currentSlide].background = action.data.newBackground
-            }
-            break
-        case "ADD_SLIDE":
-            newState = addSlide(newState)
-            newState.selectedSlideElements = []
-            break
-        case "DELETE_SLIDES":
-            newState.selectedSlides.forEach((slideId => {
-                delete newState.presentation.slides[slideId]
-            }))
-            newState.presentation.slidesOrder = newState.presentation.slidesOrder.filter(slideId => (state.selectedSlides.indexOf(slideId) === -1))
-            newState.selectedSlides = []
-            newState.currentSlide = null
-            break
-        case "MOVE_SLIDES":
-            newState = moveSlides(newState, action.data.newPosition)
-            break
-        case "ADD_IMAGE":
-            newState = addImage(newState, action.data.filepath, action.data.position, action.data.size)
-            break
-        case "ADD_SHAPE":
-            newState = addShape(newState, action.data.type, action.data.position, action.data.size)
-            break
-        case "ADD_TEXT_BOX":
-            newState = addTextbox(newState, action.data.position, action.data.size)
-            break
-        case "DELETE_ELEMENTS":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    delete newState.presentation.slides[Number(newState.currentSlide)].elements[elementId]
-                })
-                newState.presentation.slides[newState.currentSlide].elementsOrder = newState.presentation.slides[newState.currentSlide].elementsOrder.filter(elementId => {
-                    const isSelected = newState.selectedSlideElements.indexOf(elementId) !== -1
-                    return !isSelected
-                })
-                newState.selectedSlideElements = []
-            }
-            break
-        case "MOVE_ELEMENT":
-            if (newState.currentSlide)
-            {
-                newState.presentation.slides[newState.currentSlide].elements[action.data.elementId].yPos = action.data.newY
-                newState.presentation.slides[newState.currentSlide].elements[action.data.elementId].xPos = action.data.newX
-            }
-            break
-        case "RESIZE_ELEMENT":
-            if (newState.currentSlide)
-            {
-                newState.presentation.slides[newState.currentSlide].elements[action.data.elementId].width = action.data.newWidth
-                newState.presentation.slides[newState.currentSlide].elements[action.data.elementId].height = action.data.newHeight
-            }
-            break
-        case "SET_BACKGROUND_COLOR":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    const type = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].type
-                    if (type != 'image')
-                    {
-                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].background = action.data.newColor
-                    }
-                })
-            }
-            break
-        case "CHANGE_FONT":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
-                    if (isTextBox(dataElement)) {
-                        dataElement.font = {...action.data.newFont}
-                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
-                    }
-                })
-            }
-            break
-        case "CHANGE_FONT_SIZE":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
-                    if (isTextBox(dataElement)) {
-                        dataElement.font.fontSize = action.data.newSize
-                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
-                    }
-                })
-            }
-            break
-        case "INC_FONT_SIZE":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
-                    if (isTextBox(dataElement)) {
-                        dataElement.font.fontSize++
-                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
-                    }
-                })
-            }
-            break
-        case "DEC_FONT_SIZE":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
-                    if (isTextBox(dataElement)) {
-                        dataElement.font.fontSize--
-                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
-                    }
-                })
-            }
-            break
-        case "CHANGE_FONT_STYLE":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
-                    if (isTextBox(dataElement)) {
-                        dataElement.font.fontStyle = action.data.newStyle
-                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
-                    }
-                })
-            }
-            break
-        case "CHANGE_FONT_BOLD":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
-                    if (isTextBox(dataElement)) {
-                        dataElement.font.bold = action.data.bold
-                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
-                    }
-                })
-            }
-            break
-        case "CHANGE_FONT_ITALIC":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
-                    if (isTextBox(dataElement)) {
-                        dataElement.font.italic = action.data.italic
-                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
-                    }
-                })
-            }
-            break
-        case "CHANGE_FONT_UNDERLINE":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
-                    if (isTextBox(dataElement)) {
-                        dataElement.font.underline = action.data.underline
-                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
-                    }
-                })
-            }
-            break
-        case "CHANGE_FONT_COLOR":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    const dataElement = newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement
-                    if (isTextBox(dataElement)) {
-                        dataElement.font.fontColor = action.data.newColor
-                        newState.presentation.slides[Number(state.currentSlide)].elements[elementId].dataElement = dataElement
-                    }
-                })
-            }
-            break
-        case "SET_STROKE_WIDTH":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    newState.presentation.slides[Number(newState.currentSlide)].elements[elementId].borderWidth = action.data.newWidth
-                })
-            }
-            break
-        case "SET_STROKE_COLOR":
-            if (newState.currentSlide)
-            {
-                newState.selectedSlideElements.forEach(elementId => {
-                    newState.presentation.slides[Number(newState.currentSlide)].elements[elementId].borderColor = action.data.newColor
-                })
-            }
-            break
-        case "UPDATE_TEXT_BOX":
-            if (newState.currentSlide)
-            {
-                const dataElement = newState.presentation.slides[newState.currentSlide].elements[action.data.textboxId].dataElement
-                if (isTextBox(dataElement)) {
-                    dataElement.text = action.data.text
-                    newState.presentation.slides[newState.currentSlide].elements[action.data.textboxId].dataElement = dataElement
+            newState = {
+                ...state,
+                presentation: {
+                    ...state.presentation,
+                    name: action.data.newName
                 }
             }
             break
-        case "SET_PREVIEW_IMAGE":
-            if (newState.currentSlide)
+        case "SET_SLIDE_BACKGROUND":
+            if (state.currentSlide)
             {
-                newState.presentation.slides[newState.currentSlide].previewImage = action.data.image
+                newState = {
+                    ...state,
+                    presentation: {
+                        ...state.presentation,
+                        slides: {
+                            ...state.presentation.slides,
+                            [state.currentSlide]: {
+                                ...state.presentation.slides[state.currentSlide],
+                                background: action.data.newBackground,
+                            }
+                        }
+                    }
+                }
+            }
+
+            break
+        case "ADD_SLIDE":
+            newState = {...addSlide(state)}
+            break
+        case "DELETE_SLIDES":
+            newState = {...deleteSlides(state)}
+            break
+        case "MOVE_SLIDES":
+            newState = {...moveSlides(state, action.data.newPosition)}
+            break
+        case "ADD_IMAGE":
+            newState = {...addImage(state, action.data.filepath, action.data.position, action.data.size)}
+            break
+        case "ADD_SHAPE":
+            newState = {...addShape(state, action.data.type, action.data.position, action.data.size)}
+            break
+        case "ADD_TEXT_BOX":
+            newState = {...addTextbox(state, action.data.position, action.data.size)}
+            break
+        case "DELETE_ELEMENTS":
+            newState = {...deleteSlideElements(state)}
+            break
+        case "MOVE_ELEMENT":
+            newState = changeElement(
+                state,
+                action.data.elementId,
+                moveElement,
+                {
+                    newX: action.data.newX,
+                    newY: action.data.newY,
+                }
+            )
+            break
+        case "RESIZE_ELEMENT":
+            newState = changeElement(
+                state,
+                action.data.elementId,
+                resizeElement,
+                {
+                    newWidth: action.data.newWidth,
+                    newHeight: action.data.newHeight,
+                }
+            )
+            break
+        case "SET_BACKGROUND_COLOR":
+            newState = changeElements(
+                state,
+                setElementBackground,
+                {
+                    newBackground: action.data.newColor,
+                }
+            )
+            break
+        case "CHANGE_FONT":
+            newState = changeElements(
+                state,
+                changeFont,
+                {
+                    newFont: action.data.newFont,
+                },
+            )
+            break
+        case "CHANGE_FONT_SIZE":
+            newState = changeElements(
+                state,
+                changeFontSize,
+                {
+                    newSize: action.data.newSize,
+                }
+            )
+            break
+        case "INC_FONT_SIZE":
+            newState = changeElements(
+                state,
+                incFontSize,
+            )
+            break
+        case "DEC_FONT_SIZE":
+            newState = changeElements(
+                state,
+                decFontSize,
+            )
+            break
+        case "CHANGE_FONT_STYLE":
+            newState = changeElements(
+                state,
+                changeFontStyle,
+                {
+                    newFontStyle: action.data.newStyle,
+                },
+            )
+            break
+        case "CHANGE_FONT_BOLD":
+            newState = changeElements(
+                state,
+                changeFontBold,
+                {
+                    bold: action.data.bold,
+                },
+            )
+            break
+        case "CHANGE_FONT_ITALIC":
+            newState = changeElements(
+                state,
+                changeFontItalic,
+                {
+                    italic: action.data.italic,
+                },
+            )
+            break
+        case "CHANGE_FONT_UNDERLINE":
+            newState = changeElements(
+                state,
+                changeFontUnderline,
+                {
+                    underline: action.data.underline,
+                },
+            )
+            break
+        case "CHANGE_FONT_COLOR":
+            newState = changeElements(
+                state,
+                changeFontColor,
+                {
+                    newColor: action.data.newColor,
+                },
+            )
+            break
+        case "SET_STROKE_WIDTH":
+            newState = changeElements(
+                state,
+                changeStrokeWidth,
+                {
+                    newWidth: action.data.newWidth,
+                },
+            )
+            break
+        case "SET_STROKE_COLOR":
+            newState = changeElements(
+                state,
+                changeStrokeColor,
+                {
+                    newColor: action.data.newColor,
+                },
+            )
+            break
+        case "UPDATE_TEXT_BOX":
+            newState = changeElement(
+                state,
+                action.data.textboxId,
+                updateTextBox,
+                {
+                    text: action.data.text,
+                },
+            )
+            break
+        case "SET_PREVIEW_IMAGE":
+            if (state.currentSlide)
+            {
+                newState = {
+                    ...state,
+                    presentation: {
+                        ...state.presentation,
+                        slides: {
+                            ...state.presentation.slides,
+                            [state.currentSlide]: {
+                                ...state.presentation.slides[state.currentSlide],
+                                previewImage: action.data.image
+                            }
+                        }
+                    }
+                }
             }
             break
         case "REPLACE_ELEMENT_TO_FRONT":
-            if (newState.currentSlide)
+            if (state.currentSlide)
             {
-                const elementsOrder = [...newState.presentation.slides[newState.currentSlide].elementsOrder]
-                newState.presentation.slides[newState.currentSlide].elementsOrder = elementsOrder.filter((elementId) => elementId !== action.data.elementId)
-                newState.presentation.slides[newState.currentSlide].elementsOrder.push(action.data.elementId)
+                let slide = {...state.presentation.slides[state.currentSlide]}
+                const elementsOrder = [...slide.elementsOrder]
+                slide.elementsOrder = elementsOrder.filter((elementId) => elementId !== action.data.elementId)
+                slide.elementsOrder.push(action.data.elementId)
+                return {
+                    ...state,
+                    presentation: {
+                        ...state.presentation,
+                        slides: {
+                            ...state.presentation.slides,
+                            [state.currentSlide]: slide,
+                        }
+                    }
+                }
             }
             break
         case "SELECT_SLIDE":
-            newState.currentSlide = action.data.slideId
-            newState.selectedSlideElements = []
-            newState.selectedSlides = [action.data.slideId]
+            newState = {
+                ...state,
+                currentSlide: action.data.slideId,
+                selectedSlideElements: [],
+                selectedSlides: [action.data.slideId],
+            }
             break
         case "ADD_ELEMENT_TO_SELECTED":
-            newState.selectedSlideElements.push(action.data.elementId)
+            newState = {
+                ...state,
+                selectedSlideElements: [
+                    ...state.selectedSlideElements,
+                    action.data.elementId,
+                ]
+            }
             break
         case "SELECT_ELEMENT":
-            newState.selectedSlideElements = [action.data.elementId]
+            newState = {
+                ...state,
+                selectedSlideElements: [action.data.elementId]
+            }
             break
         case "ADD_SLIDE_TO_SELECTED":
             const selectedSlides = [...state.selectedSlides]
@@ -277,14 +306,23 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
                 newSelectedSlides.push(action.data.slideId)
                 newCurrentSlide = action.data.slideId
             }
-            newState.currentSlide = newCurrentSlide
-            newState.selectedSlides = newSelectedSlides
+            newState = {
+                ...state,
+                currentSlide: newCurrentSlide,
+                selectedSlides: newSelectedSlides
+            }
             break
         case "DELETE_ELEMENT_SELECTION":
-            newState.selectedSlideElements = []
+            newState = {
+                ...newState,
+                selectedSlideElements: []
+            }
             break
         case "DELETE_SLIDE_SELECTION":
-            newState.selectedSlides = []
+            newState = {
+                ...newState,
+                selectedSlides: []
+            }
             break
         case "UPLOAD_PRESENTATION":
             newState = action.data.state

@@ -21,97 +21,151 @@ function generateSlideId(): number {
 function addSlide(state: PresentationType): PresentationType {
     let slideId = generateSlideId()
     const insertPosition = state.presentation.slidesOrder.findIndex(slideId => slideId === state.currentSlide)
-    state.presentation.slidesOrder.splice(insertPosition + 1, 0, slideId)
-    state.presentation.slides[slideId] = {
-        slideId,
-        elements: {},
-        elementsOrder: [],
-        background: '#ffffff',
-        previewImage: null,
+    const slidesOrder = [...state.presentation.slidesOrder]
+    slidesOrder.splice(insertPosition + 1, 0, slideId)
+    return {
+        ...state,
+        presentation: {
+            ...state.presentation,
+            slidesOrder,
+            slides: {
+                ...state.presentation.slides,
+                [slideId]: {
+                    slideId,
+                    elements: {},
+                    elementsOrder: [],
+                    background: '#ffffff',
+                    previewImage: null,
+                }
+            }
+        },
+        selectedSlides: [slideId],
+        currentSlide: slideId,
+        selectedSlideElements: [],
     }
-    state.selectedSlides = [slideId]
-    state.currentSlide = slideId
-    return state
 }
 
 function addImage(state: PresentationType, filepath: string, position: ElementPosition, size: ElementSize|undefined): PresentationType {
-    if (state.currentSlide)
-    {
-        const imageId = generateElementId()
-        state.presentation.slides[state.currentSlide].elements[imageId] = {
-            type: 'image',
-            dataElement: {
-                src: filepath,
-            },
-            elementId: imageId,
-            width: (size && size.w) ||  200,
-            height: (size && size.h) ||  200,
-            xPos: position.x,
-            yPos: position.y,
-            background: 'transparent',
-            borderWidth: '0',
-            borderColor: 'transparent',
-        }
-        state.presentation.slides[state.currentSlide].elementsOrder.push(imageId)
-        state.selectedSlideElements = [imageId]
+    const imageId = generateElementId()
+    return {
+        ...state,
+        presentation: {
+            ...state.presentation,
+            slides: {
+                ...state.presentation.slides,
+                [state.currentSlide!]: {
+                    ...state.presentation.slides[state.currentSlide!],
+                    elements: {
+                        ...state.presentation.slides[state.currentSlide!].elements,
+                        [imageId]: {
+                            type: 'image',
+                            dataElement: {
+                                src: filepath,
+                            },
+                            elementId: imageId,
+                            width: (size && size.w) ||  200,
+                            height: (size && size.h) ||  200,
+                            xPos: position.x,
+                            yPos: position.y,
+                            background: 'transparent',
+                            borderWidth: '0',
+                            borderColor: 'transparent',
+                        }
+                    },
+                    elementsOrder: [
+                        ...state.presentation.slides[state.currentSlide!].elementsOrder,
+                        imageId,
+                    ]
+                }
+            }
+        },
+        selectedSlideElements: [imageId]
     }
-    return state
 }
 
 function addShape(state: PresentationType, type: ShapeTypeType, position: ElementPosition, size: ElementSize|undefined): PresentationType {
-    if (state.currentSlide)
-    {
-        const shapeId = generateElementId()
-        state.presentation.slides[state.currentSlide].elements[shapeId] = {
-            type: 'shape',
-            dataElement: {
-                shapeType: type,
-            },
-            elementId: shapeId,
-            width: (size && size.w) ||  200,
-            height: (size && size.h) ||  200,
-            xPos: position.x,
-            yPos: position.y,
-            background: 'transparent',
-            borderWidth: '1',
-            borderColor: 'gray',
-        }
-        state.presentation.slides[state.currentSlide].elementsOrder.push(shapeId)
-        state.selectedSlideElements = [shapeId]
+    const shapeId = generateElementId()
+    return {
+        ...state,
+        presentation: {
+            ...state.presentation,
+            slides: {
+                ...state.presentation.slides,
+                [state.currentSlide!]: {
+                    ...state.presentation.slides[state.currentSlide!],
+                    elements: {
+                        ...state.presentation.slides[state.currentSlide!].elements,
+                        [shapeId]: {
+                            type: 'shape',
+                            dataElement: {
+                                shapeType: type,
+                            },
+                            elementId: shapeId,
+                            width: (size && size.w) ||  200,
+                            height: (size && size.h) ||  200,
+                            xPos: position.x,
+                            yPos: position.y,
+                            background: 'transparent',
+                            borderWidth: '1',
+                            borderColor: 'gray',
+                        },
+                    },
+                    elementsOrder: [
+                        ...state.presentation.slides[state.currentSlide!].elementsOrder,
+                        shapeId,
+                    ]
+                }
+            }
+        },
+        selectedSlideElements: [shapeId]
     }
-    return state
 }
 
 function addTextbox(state: PresentationType, position: ElementPosition, size: ElementSize|undefined): PresentationType {
-    if (state.currentSlide)
-    {
-        const textBoxId = generateElementId()
-        state.presentation.slides[state.currentSlide].elements[textBoxId] = {
-            type: 'textBox',
-            dataElement: {
-                font: {
-                    fontStyle: 'Times New Roman',
-                    fontSize: 20,
-                    fontColor: '#000000',
-                    bold: false,
-                    italic: false,
-                    underline: false,
-                },
-                text: '',
-            },
-            elementId: textBoxId,
-            width: (size && size.w) ||  200,
-            height: (size && size.h) ||  200,
-            xPos: position.x,
-            yPos: position.y,
-            background: 'transparent',
-            borderWidth: '0',
-            borderColor: 'transparent',
-        }
-        state.presentation.slides[state.currentSlide].elementsOrder.push(textBoxId)
-        state.selectedSlideElements = [textBoxId]
+    const textBoxId = generateElementId()
+
+    return {
+        ...state,
+        presentation: {
+            ...state.presentation,
+            slides: {
+                ...state.presentation.slides,
+                [state.currentSlide!]: {
+                    ...state.presentation.slides[state.currentSlide!],
+                    elements: {
+                        ...state.presentation.slides[state.currentSlide!].elements,
+                        [textBoxId]: {
+                            type: 'textBox',
+                            dataElement: {
+                                font: {
+                                    fontStyle: 'Times New Roman',
+                                    fontSize: 20,
+                                    fontColor: '#000000',
+                                    bold: false,
+                                    italic: false,
+                                    underline: false,
+                                },
+                                text: '',
+                            },
+                            elementId: textBoxId,
+                            width: (size && size.w) ||  200,
+                            height: (size && size.h) ||  200,
+                            xPos: position.x,
+                            yPos: position.y,
+                            background: 'transparent',
+                            borderWidth: '0',
+                            borderColor: 'transparent',
+                        },
+                    },
+                    elementsOrder: [
+                        ...state.presentation.slides[state.currentSlide!].elementsOrder,
+                        textBoxId,
+                    ]
+                }
+            }
+        },
+        selectedSlideElements: [textBoxId]
     }
-    return state
 }
 
 export {
