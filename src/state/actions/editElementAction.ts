@@ -126,6 +126,25 @@ function changeFont(
     return element
 }
 
+function switchTextBoxEdit(
+    element: SlideElementType,
+    data: {
+        canEdit: boolean,
+    }
+): SlideElementType {
+    if (isTextBox(element.dataElement))
+    {
+        return {
+            ...element,
+            dataElement: {
+                ...element.dataElement,
+                canEdit: data.canEdit,
+            }
+        }
+    }
+    return element
+}
+
 function changeFontSize(
     element: SlideElementType,
     data: {
@@ -337,5 +356,6 @@ export {
     changeFontColor,
     changeStrokeWidth,
     changeStrokeColor,
+    switchTextBoxEdit,
     setElementBackground,
 }

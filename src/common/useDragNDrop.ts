@@ -5,11 +5,12 @@ import {StoreType} from "../state/store";
 import {StoreContext} from "../state/storeContext";
 import {presentationInfoActions} from "../state/presentationInfoReducer";
 import {dispatchDecorator} from "../state/dispatchDecarator";
-import {useEventHandler} from "./useEventHandler";
+import {isTextBox} from "../Entity/TextBox";
 
 
 function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HTMLDivElement>) {
     const store: Readonly<StoreType> = useContext(StoreContext)
+    const {insertionMode} = store.getState()
     const [left, setLeft] = useState<number | null>(null)
     const [top, setTop] = useState<number | null>(null)
     const [offsetTop, setOffsetTop] = useState(0)
@@ -49,24 +50,28 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
         {
             store.dispatch(presentationInfoActions.selectElement(element.elementId))
             store.dispatch(presentationInfoActions.replaceElementToFront(element.elementId))
-            if (!event.defaultPrevented) {
-                const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, elementRef.current)
-                setOffsetLeft(cursorX)
-                setOffsetTop(cursorY)
-                document.addEventListener('mousemove', mouseMove);
-                document.addEventListener('mouseup', mouseUp);
+            if (element.type != 'textBox' || (isTextBox(element.dataElement) && !element.dataElement.canEdit))
+            {
+                if (!event.defaultPrevented) {
+                    const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, elementRef.current)
+                    setOffsetLeft(cursorX)
+                    setOffsetTop(cursorY)
+                    document.addEventListener('mousemove', mouseMove);
+                    document.addEventListener('mouseup', mouseUp);
+                }
             }
         }
     }
 
     useEffect(() => {
-        const element = elementRef.current
+        const elementHTML = elementRef.current
         slide = elementRef && elementRef.current && elementRef.current.parentElement
-        element && element.addEventListener('mousedown', mouseDown)
+
+        elementHTML && !insertionMode.on && elementHTML.addEventListener('mousedown', mouseDown)
         return () => {
-            element && element.removeEventListener('mousedown', mouseDown)
+            elementHTML && !insertionMode.on && elementHTML.removeEventListener('mousedown', mouseDown)
         }
-    }, [elementRef])
+    }, [elementRef, insertionMode.on, element])
 
     function calcLeft() {
         return left !== null

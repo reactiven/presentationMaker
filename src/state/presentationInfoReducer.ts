@@ -1,5 +1,4 @@
 import {BackgroundType, FontType, PresentationType, ShapeTypeType} from "../Entity/types";
-import {isTextBox} from "../Entity/TextBox";
 import {addImage, addShape, addSlide, addTextbox} from "./actions/addElements";
 import { moveSlides } from "./actions/moveSlides";
 import {saveStateForUndo, stateList} from "../Entity/State";
@@ -18,6 +17,7 @@ import {
     moveElement,
     resizeElement,
     setElementBackground,
+    switchTextBoxEdit,
     updateTextBox
 } from "./actions/editElementAction";
 
@@ -232,6 +232,16 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
                 {
                     text: action.data.text,
                 },
+            )
+            break
+        case "SWITCH_TEXTBOX_EDIT":
+            newState = changeElement(
+                state,
+                action.data.textBoxId,
+                switchTextBoxEdit,
+                {
+                    canEdit: action.data.canEdit,
+                }
             )
             break
         case "SET_PREVIEW_IMAGE":
@@ -561,6 +571,15 @@ const presentationInfoActions = {
             type: 'CHANGE_FONT_ITALIC',
             data: {
                 italic,
+            }
+        } as const
+    },
+    switchTextBoxEdit: (textBoxId: number,canEdit: boolean) => {
+        return {
+            type: 'SWITCH_TEXTBOX_EDIT',
+            data: {
+                textBoxId,
+                canEdit,
             }
         } as const
     },

@@ -146,6 +146,7 @@ function addTextbox(state: PresentationType, position: ElementPosition, size: El
                                     underline: false,
                                 },
                                 text: '',
+                                canEdit: false,
                             },
                             elementId: textBoxId,
                             width: (size && size.w) ||  200,

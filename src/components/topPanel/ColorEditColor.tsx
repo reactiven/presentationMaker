@@ -92,11 +92,11 @@ function ColorEditColor({
 
     return(
         <div className={styles.colorEditBlock}>
-            {<Button_WithColorPicker
+            <Button_WithColorPicker
                 img={fill}
                 onChange={changeBgColor}
                 value={background ? background : 'transparent'}
-            />}
+            />
             <Button_WithColorPicker
                 img={stroke}
                 onChange={changeStrokeColor}

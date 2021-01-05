@@ -76,6 +76,7 @@ type ShapeType = {
 type TextBoxType = {
     font: FontType,
     text: string,
+    canEdit: boolean,
 }
 
 type ElementStyleType = {

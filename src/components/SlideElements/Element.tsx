@@ -13,6 +13,8 @@ import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 import {dispatchDecorator} from "../../state/dispatchDecarator";
+import {useEventHandler} from "../../common/useEventHandler";
+import {preventDefault} from "../../common/preventDefault";
 
 type ElementPropsType = {
     element: SlideElementType,
@@ -23,6 +25,7 @@ function SlideElement({
     isSelected,
     element,
 }: ElementPropsType) {
+    const store: Readonly<StoreType> = useContext(StoreContext);
     const [height, setHeight] = useState<number|null>(null)
     const [width, setWidth] = useState<number|null>(null)
     const [left, setLeft] = useState<number|null>(null)
@@ -58,12 +61,19 @@ function SlideElement({
     }
     const className = `${styles.element} ${isSelected ? styles.elementSelected : ''}`
 
-    function onClick(event: any) {
-        event.preventDefault()
-    }
+    useEventHandler('click', elementRef, preventDefault)
+    useEventHandler(
+        'dblclick',
+        elementRef,
+        () => dispatchDecorator(store, () => presentationInfoActions.switchTextBoxEdit(element.elementId, true))
+    )
+
+    useEffect(() => {
+        !isSelected && dispatchDecorator(store, () => presentationInfoActions.switchTextBoxEdit(element.elementId, false))
+    }, [isSelected])
 
     return(
-        <div style={style} className={className} onClick={onClick} ref={elementRef}>
+        <div style={style} className={className} ref={elementRef}>
             {isSelected && <ResizeHandlers
                 element={element}
                 elementRef={elementRef}
