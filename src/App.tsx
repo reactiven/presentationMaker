@@ -1,54 +1,20 @@
-import React, {useContext, useEffect} from 'react';
-import styles from './App.module.css';
-import {SideBar} from './components/sidebar/Sidebar';
-import {TopPanel} from './components/topPanel/TopPanel';
-import {Workspace} from './components/workspace/Workspace';
+import React, {useContext} from 'react';
 import {StoreType} from './state/store';
 import { StoreContext } from './state/storeContext';
-import {presentationInfoActions} from "./state/presentationInfoReducer";
-import {dispatchDecorator} from "./state/dispatchDecarator";
+import {Editor} from "./components/editor/Editor";
+import {PreviewMode} from "./components/preview/PreviewMode";
 
 function App(): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
-    const {presentationInfo} = store.getState()
-
-    useEffect(() => {
-        document.title = presentationInfo.presentation.name
-    }, [presentationInfo])
-
-    useEffect(() => {
-        document.addEventListener("keydown", keydownHandler);
-        return () => {
-            document.removeEventListener("keydown", keydownHandler);
+    const {
+        preview: {
+            onPreview,
         }
-    })
+    } = store.getState()
 
-    const keydownHandler = (e: KeyboardEvent): void => {
-        if (e.keyCode === 46) {
-            if (!!presentationInfo.selectedSlides.length) {
-                dispatchDecorator(store, () => presentationInfoActions.deleteSlides())
-            }
-            else if (presentationInfo.currentSlide) {
-                dispatchDecorator(store, () => presentationInfoActions.deleteElements())
-            }
-        }
-        if (e.keyCode === 90 && e.ctrlKey) {
-            store.dispatch(presentationInfoActions.undo())
-        }
-        if (e.keyCode === 89 && e.ctrlKey) {
-            store.dispatch(presentationInfoActions.redo())
-        }
-    }
-
-    return (
-        <div className={styles.appLayout}>
-            <TopPanel />
-            <div className={styles.presentationBlock}>
-                <SideBar />
-                <Workspace />
-            </div>
-        </div>
-    )
+    return onPreview
+        ? <PreviewMode />
+        : <Editor />
 }
 
 export {

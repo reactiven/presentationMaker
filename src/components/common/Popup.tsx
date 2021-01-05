@@ -3,6 +3,8 @@ import { Button } from "./Button";
 import close from '../../images/close.png';
 
 import styles from './Popup.module.css'
+import {useEventHandler} from "../../common/useEventHandler";
+import {preventDefault} from "../../common/preventDefault";
 
 type PropsType = {
     headerText: string,
@@ -17,41 +19,32 @@ function Popup({
     headerText,
     content,
 }: PropsType) {
-    const layerRef = useRef<HTMLDivElement|null>(null)
     const popupRef = useRef<HTMLDivElement|null>(null)
 
-    function layerClick(event: any) {
-        if (!event.defaultPrevented) {
-            closePopup()
-        }
+    function popupMouseDown(event: any) {
+        event.stopPropagation()
     }
 
-    function popupClick(event: any) {
-        if (!event.defaultPrevented) {
-            event.preventDefault()
-        }
-    }
+    useEventHandler('mousedown', popupRef, popupMouseDown)
 
     return(
-        <div className={styles.popupLayer} ref={layerRef} onClick={layerClick}>
-            <div className={styles.popupContainer} ref={popupRef} onClick={popupClick}>
-                <div className={styles.popupHeader}>
-                    <div className={styles.popupTitle}>{headerText}</div>
-                    <Button
-                        type={'border-none'}
-                        onClick={closePopup}
-                        img={close}
-                    />
-                </div>
-                {content}
-                <div className={styles.popupFooter}>
-                    <Button
-                        onClick={closePopup}
-                        label={'Отмена'}
-                        type={'normal'}
-                    />
-                    {acceptButton}
-                </div>
+        <div className={styles.popupContainer} ref={popupRef}>
+            <div className={styles.popupHeader}>
+                <div className={styles.popupTitle}>{headerText}</div>
+                <Button
+                    type={'border-none'}
+                    onClick={closePopup}
+                    img={close}
+                />
+            </div>
+            {content}
+            <div className={styles.popupFooter}>
+                <Button
+                    onClick={closePopup}
+                    label={'Отмена'}
+                    type={'normal'}
+                />
+                {acceptButton}
             </div>
         </div>
     )

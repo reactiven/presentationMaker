@@ -1,6 +1,7 @@
 import tick from "../../images/tick.png";
-import React from "react";
+import React, {useRef} from "react";
 import styles from './SelectList.module.css';
+import {useEventHandler} from "../../common/useEventHandler";
 
 type ItemType = {
     id: string,
@@ -45,10 +46,14 @@ function SelectListItem({
     isSelected,
     onClick,
 }: SelectListItemProps) {
+    const ref = useRef<HTMLDivElement|null>(null)
+
+    useEventHandler('click', ref, () => onClick(item.id))
+
     return(
         <div
             className={styles.listItem}
-            onClick={() => onClick(item.id)}
+            ref={ref}
         >
             <div className={styles.itemBlockImage}>
                 {isSelected && <img src={tick} alt='button-logo' className={styles.itemImage}/>}

@@ -1,7 +1,8 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {useRef, useState} from "react";
 import {Button} from "./Button";
 import {Popover} from "./Popover";
+import {useExternalLayer} from "../../common/useExternalLayer";
 
 
 type Button_WithPopover = {
@@ -23,6 +24,17 @@ function Button_WithPopover({
         top: Number(buttonRef.current && buttonRef.current.getBoundingClientRect().top + 30),
     }
 
+    useExternalLayer({
+        layerType: 'popover',
+        binding: <Popover
+            style={popoverStyle}
+            content={popoverContent}
+            closePopover={() => setOpen(false)}
+        />,
+        show: open,
+        close: () => setOpen(false)
+    })
+
     return(
         <div>
             <Button
@@ -32,14 +44,11 @@ function Button_WithPopover({
                 img={img}
                 ref={buttonRef}
             />
-            {open && <Popover
-                style={popoverStyle}
-                content={popoverContent}
-                closePopover={() => setOpen(false)}
-            />}
         </div>
     )
 }
+
+
 
 export {
     Button_WithPopover,

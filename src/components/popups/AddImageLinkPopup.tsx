@@ -6,6 +6,7 @@ import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {insertionReducerActions} from "../../state/insertionModeReducer";
 import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
+import {useEventHandler} from "../../common/useEventHandler";
 
 type ContentProps = {
     inputInfo: any,
@@ -14,12 +15,12 @@ type ContentProps = {
 function Content({
     inputInfo
 }: ContentProps) {
-
     const inputUrlRef = useRef<HTMLInputElement | null>(null)
 
     function onInputChange() {
         inputInfo.current.value = inputUrlRef.current!.value
     }
+    useEventHandler('change', inputUrlRef, onInputChange)
 
     return (
         <div className={styles.addImageContentContainer}>
@@ -29,7 +30,6 @@ function Content({
                     <input
                         type='text'
                         ref={inputUrlRef}
-                        onChange={onInputChange}
                         defaultValue={inputInfo.current.value}
                     />
                 </div>
@@ -38,25 +38,18 @@ function Content({
     )
 }
 
+type PropsType = {
+    closePopup: () => void,
+    acceptChange: (value: string) => void,
+}
 
-function AddImageLinkPopup() {
-    const store: Readonly<StoreType> = useContext(StoreContext);
+function AddImageLinkPopup({
+    closePopup,
+    acceptChange,
+}: PropsType) {
     const inputInfo = useRef<any>({
         value: ''
     })
-    function closePopup() {
-        store.dispatch(popupOpenedReducerActions.setAddImageLinkPopupOpened(false))
-    }
-
-    function acceptChange() {
-        store.dispatch(insertionReducerActions.setInsertionMode({
-            on: true,
-            elementType: 'image',
-            filepath: inputInfo.current.value
-        }))
-        store.dispatch(popupOpenedReducerActions.setAddImageLinkPopupOpened(false))
-    }
-
     return (
         <Popup
             headerText={'Изображение из интернета'}
@@ -65,7 +58,7 @@ function AddImageLinkPopup() {
             />}
             acceptButton={<Button
                 type={'normal'}
-                onClick={acceptChange}
+                onClick={() => acceptChange(inputInfo.current.value)}
                 label={'Применить'}
             />}
             closePopup={closePopup}

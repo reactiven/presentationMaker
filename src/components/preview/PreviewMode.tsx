@@ -4,6 +4,7 @@ import React from "react";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {previewReducerActions} from "../../state/previewReducer";
+import {useEventHandler} from "../../common/useEventHandler";
 
 function PreviewMode() {
     const store: Readonly<StoreType> = useContext(StoreContext);
@@ -37,10 +38,7 @@ function PreviewMode() {
         }
     }
 
-    useEffect(() => {
-        document.addEventListener('keydown', keydownHandler)
-        return () => document.removeEventListener('keydown', keydownHandler)
-    })
+    useEventHandler('keydown', document, keydownHandler)
 
     return(
         <div className={styles.previewContainer} onClick={goToNextSlide}>

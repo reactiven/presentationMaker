@@ -7,18 +7,18 @@ import { toDataURL } from "../../common/toDataURL";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
 import {dispatchDecorator} from "../../state/dispatchDecarator";
+import {useEventHandler} from "../../common/useEventHandler";
 
 type ContentProps = {
     currentSlideInfo: SlideType,
+    setSlideBackground: (value: string) => void,
 }
 
 function Content({
     currentSlideInfo,
+    setSlideBackground,
 }: ContentProps) {
-    const store: Readonly<StoreType> = useContext(StoreContext);
-
     const [color, setColor] = useState<string>(currentSlideInfo.background)
     const inputColorRef = useRef<HTMLInputElement | null>(null)
     const inputFileRef = useRef<HTMLInputElement | null>(null)
@@ -28,7 +28,7 @@ function Content({
         if (event.target.files && event.target.files[0]) {
             let img = event.target.files[0]
             toDataURL(URL.createObjectURL(img), function(dataUrl: any) {
-                dispatchDecorator(store, () => presentationInfoActions.setSlideBackground(dataUrl))
+                setSlideBackground(dataUrl)
             })
         }
     }
@@ -37,7 +37,7 @@ function Content({
         if (inputColorRef.current) {
             setColor(inputColorRef.current.value)
             const value = inputColorRef.current.value
-            dispatchDecorator(store, () => presentationInfoActions.setSlideBackground(value))
+            setSlideBackground(value)
         }
     }
 
@@ -47,59 +47,50 @@ function Content({
         }
     }
 
-    function onInputClick(event: any) {
-        event.stopPropagation()
-    }
-
-    function findImageUrl(event: any) {
+    function findImageUrl() {
         if (inputUrlRef.current) {
             setColor(inputUrlRef.current.value)
             const value = inputUrlRef.current.value
-            dispatchDecorator(store, () => presentationInfoActions.setSlideBackground(value))
+            setSlideBackground(String(value))
         }
     }
+
+    useEventHandler('blur', inputUrlRef, findImageUrl)
+    useEventHandler('input', inputFileRef, onImageChange)
+    useEventHandler('input', inputColorRef, onInputColor)
 
     return (
         <div className={styles.contentContainer}>
             <div className={styles.contentRow}>
                 <div>Цвет</div>
-                <div onClick={onInputClick}>
-                    <input
-                        type='color'
-                        ref={inputColorRef}
-                        onInput={onInputColor}
-                        defaultValue={color}
-                    />
-                </div>
+                <input
+                    type='color'
+                    ref={inputColorRef}
+                    defaultValue={color}
+                />
             </div>
             <div className={styles.contentRow}>
                 <div>Изображение с компьютера</div>
-                <div onClick={onInputClick}>
-                    <Button
-                        type={'normal'}
-                        onClick={insertImageButton}
-                        label={'Вставить картинку'}
-                    />
-                    <input
-                        type='file'
-                        accept=".png, .jpg"
-                        ref={inputFileRef}
-                        onInput={onImageChange}
-                        className={styles.contentFileInput}
-                    />
-                </div>
+                <Button
+                    type={'normal'}
+                    onClick={insertImageButton}
+                    label={'Вставить картинку'}
+                />
+                <input
+                    type='file'
+                    accept=".png, .jpg"
+                    ref={inputFileRef}
+                    className={styles.contentFileInput}
+                />
             </div>
             <div className={styles.contentRow}>
                 <div>Изображение из интернета</div>
-                <div onClick={onInputClick}>
-                    <input
-                        type='text'
-                        ref={inputUrlRef}
-                        onBlur={findImageUrl}
-                        className={styles.contentUrlInput}
-                        placeholder={'Введите ссылку на изображение'}
-                    />
-                </div>
+                <input
+                    type='text'
+                    ref={inputUrlRef}
+                    className={styles.contentUrlInput}
+                    placeholder={'Введите ссылку на изображение'}
+                />
             </div>
         </div>
     )
@@ -107,25 +98,23 @@ function Content({
 
 type PropsType = {
     currentSlideInfo: SlideType,
+    closePopup: () => void,
+    acceptChange: () => void,
+    setSlideBackground: (value: string) => void,
 }
 
 function EditSlideBackgroundPopup({
     currentSlideInfo,
+    closePopup,
+    acceptChange,
+    setSlideBackground,
 }: PropsType) {
-    const store: Readonly<StoreType> = useContext(StoreContext);
-    function closePopup() {
-        store.dispatch(popupOpenedReducerActions.setEditSlideBackgroundPopupOpened(false))
-    }
-
-    function acceptChange() {
-        store.dispatch(popupOpenedReducerActions.setEditSlideBackgroundPopupOpened(false))
-    }
-
     return (
         <Popup
             headerText={'Фон слайда'}
             content={<Content
                 currentSlideInfo={currentSlideInfo}
+                setSlideBackground={setSlideBackground}
             />}
             acceptButton={<Button
                 type={'normal'}

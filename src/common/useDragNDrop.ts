@@ -5,6 +5,7 @@ import {StoreType} from "../state/store";
 import {StoreContext} from "../state/storeContext";
 import {presentationInfoActions} from "../state/presentationInfoReducer";
 import {dispatchDecorator} from "../state/dispatchDecarator";
+import {useEventHandler} from "./useEventHandler";
 
 
 function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HTMLDivElement>) {
@@ -16,7 +17,7 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
 
     let slide: HTMLElement|null
 
-    function mouseUp(event: MouseEvent) {
+    function mouseUp() {
         document.removeEventListener('mousemove', mouseMove)
         document.removeEventListener('mouseup', mouseUp)
         if (elementRef.current) {

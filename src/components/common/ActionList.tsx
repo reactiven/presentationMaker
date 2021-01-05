@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useRef } from "react";
 import styles from "./ActionList.module.css";
+import {useEventHandler} from "../../common/useEventHandler";
 
 type ItemType = {
     id: string,
@@ -40,8 +41,12 @@ function ActionListItem({
     item,
     onClick,
 }: SelectListItemProps) {
+    const ref = useRef<HTMLDivElement|null>(null)
+
+    useEventHandler('click', ref, () => onClick(item.id))
+
     return(
-        <div className={styles.listItem} onClick={() => onClick(item.id)}>
+        <div className={styles.listItem} ref={ref}>
             <div className={styles.itemBlockImage}>
                 {item.img && <img src={item.img} alt='button-logo' className={styles.itemImage}/>}
             </div>

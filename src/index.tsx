@@ -2,34 +2,24 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import {EditSlideBackgroundPopup} from './components/popups/EditSlideBackgroundPopup';
-import {AddImageLinkPopup} from "./components/popups/AddImageLinkPopup";
 import { store } from './state/store';
 import { StoreContext } from './state/storeContext';
-import { PreviewMode } from './components/preview/PreviewMode';
 import { App } from './App';
+import { initExternalLayer } from './common/externalLayers';
+
 
 function rerenderEntireTree() {
-    const {
-        preview,
-        popupsOpened,
-        presentationInfo,
-    } = store.getState()
-    const currentSlideInfo = presentationInfo.currentSlide
-        ? presentationInfo.presentation.slides[presentationInfo.currentSlide]
-        : null
-
     ReactDOM.render(
         <StoreContext.Provider value={store}>
-            {!preview.onPreview && <App/>}
-            {preview.onPreview && <PreviewMode/>}
-            {popupsOpened.editSlideBackgroundPopupOpened && currentSlideInfo && <EditSlideBackgroundPopup currentSlideInfo={currentSlideInfo}/>}
-            {popupsOpened.addImageLinkPopupOpened && <AddImageLinkPopup />}
+            <App/>
         </StoreContext.Provider>, document.getElementById("root")
     )
 }
 
-rerenderEntireTree();
+initExternalLayer("popup")
+initExternalLayer("popover")
+rerenderEntireTree()
+
 
 store.subscribe(() => {
     rerenderEntireTree();

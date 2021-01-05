@@ -1,5 +1,8 @@
 import styles from './Popover.module.css'
-import React from "react";
+import React, {useEffect, useRef} from "react";
+import ReactDOM from "react-dom";
+import { preventDefault } from '../../common/preventDefault';
+import {useEventHandler} from "../../common/useEventHandler";
 
 type PropsType = {
     style: any,
@@ -11,19 +14,17 @@ function Popover({
     content,
     closePopover,
 }: PropsType) {
+    const ref = useRef<HTMLDivElement|null>(null)
+
+    useEventHandler('mousedown', ref, event => event.stopPropagation())
+    useEventHandler('click', ref, closePopover)
     return(
         <div
-            className={styles.popoverLayer}
-            onMouseDown={event => !event.defaultPrevented && closePopover()}
+            className={styles.popoverContainer}
+            style={style}
+            ref={ref}
         >
-            <div
-                className={styles.popoverContainer}
-                style={style}
-                onClick={closePopover}
-                onMouseDown={event => event.preventDefault()}
-            >
-                {content}
-            </div>
+            {content}
         </div>
     )
 }
