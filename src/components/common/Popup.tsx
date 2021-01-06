@@ -38,6 +38,7 @@ function Popup({
                         type={'border-none'}
                         onClick={closePopup}
                         img={close}
+                        tooltipText={'Закрыть'}
                     />
                 </div>
                 {content}

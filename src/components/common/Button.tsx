@@ -1,5 +1,5 @@
 import React, {forwardRef, Ref, useRef} from 'react'
-import './Button.css'
+import styles from './Button.module.css'
 import {useTooltip} from "../../common/hooks/useTooltip";
 import {useEventHandler} from "../../common/hooks/useEventHandler";
 
@@ -22,7 +22,18 @@ function Button({
     disabled,
     tooltipText,
 }: ButtonProps): JSX.Element  {
-    const commonStyle = `standard-button standard-button_${type}`
+    let typeStyle
+    switch (type) {
+        case "border-none":
+            typeStyle = styles.standardButtonBorderNone
+            break
+        case "normal":
+            typeStyle = styles.standardButtonNormal
+            break
+        default:
+            typeStyle = ''
+    }
+
     const buttonRef = useRef<HTMLButtonElement|null>(null)
 
     useTooltip({
@@ -40,12 +51,12 @@ function Button({
 
     return (
         <button
-            className={`${className ? className : ''} ${commonStyle} `}
+            className={`${styles.standardButton} ${className || ''} ${typeStyle} `}
             disabled={!!disabled}
             ref={buttonRef}
         >
             {label}
-            {img && <img src={img} alt='button-logo' className='button-image'/>}
+            {img && <img src={img} alt='button-logo' className={styles.buttonImage}/>}
         </button>
     )
 }

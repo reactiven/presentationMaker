@@ -1,4 +1,4 @@
-.standard-button {
+.standardButton {
     height: 25px;
     padding: 2px 8px;
     background: none;
@@ -8,21 +8,21 @@
     transition: all 0.2s ease;
 }
 
-.standard-button_normal {
+.standardButtonNormal {
     border: 1px solid #000;
 }
 
-.standard-button_border-none {
+.standardButtonBorderNone {
     border: 1px solid transparent;
 }
 
-.standard-button:disabled {
+.standardButton:disabled {
     border: 1px solid gray;
     color: gray;
 }
 
-.standard-button:hover:not(:disabled),
-.standard-button:hover:not(:focus) {
+.standardButton:hover:not(:disabled),
+.standardButton:hover:not(:focus) {
     background: #F2F2F2;
     cursor: pointer;
 }
@@ -31,14 +31,14 @@
     background: none;
 } */
 
-.standard-button:focus {
+.standardButton:focus {
     border-radius: 5px;
     outline: none;
     border: 1px solid transparent;
     /*box-shadow: 0 0 0 2px #87CEFA;*/
 }
 
-.button-image {
+.buttonImage {
     height: 100%;
     width: auto;
 }
