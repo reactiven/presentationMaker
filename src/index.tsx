@@ -18,6 +18,7 @@ function rerenderEntireTree() {
 
 initExternalLayer("popup")
 initExternalLayer("popover")
+initExternalLayer("tooltip")
 rerenderEntireTree()
 
 

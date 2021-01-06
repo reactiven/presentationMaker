@@ -1,4 +1,7 @@
 import {PreviewInfoType} from "../Entity/types"
+import {cleanExternalLayer, getExternalLayer} from "../common/externalLayers";
+import React from "react";
+import ReactDOM from "react-dom";
 
 let initialState = {
     currentSlide: 0,
@@ -6,7 +9,7 @@ let initialState = {
 }
 
 const previewReducer = (state: PreviewInfoType = initialState, action: ActionTypes): PreviewInfoType => {
-    let newState: PreviewInfoType = JSON.parse(JSON.stringify(state))
+    let newState: PreviewInfoType = state
     switch (action.type) {
         case "PREV_SLIDE":
             newState = {
@@ -21,6 +24,7 @@ const previewReducer = (state: PreviewInfoType = initialState, action: ActionTyp
             }
             break
         case "SET_PREVIEW_OPENED":
+            cleanExternalLayer('tooltip')
             newState = {
                 currentSlide: 0,
                 onPreview: action.data.opened,

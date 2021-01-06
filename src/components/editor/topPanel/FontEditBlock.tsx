@@ -94,16 +94,19 @@ function FontEditBlock({
                 img={boldIcon}
                 onClick={changeFontBold}
                 checked={Boolean(bold)}
+                tooltipText={'Полужирный'}
             />
             <Button_TwoState
                 img={italicIcon}
                 onClick={changeFontItalic}
                 checked={Boolean(italic)}
+                tooltipText={'Курсив'}
             />
             <Button_TwoState
                 img={underlineIcon}
                 onClick={changeFontUnderline}
                 checked={Boolean(underline)}
+                tooltipText={'Подчеркнутый'}
             />
             <Button_WithPopover
                 text={fontFamily ? String(fontFamily) : 'Выберите стиль'}
@@ -112,6 +115,7 @@ function FontEditBlock({
                     selected={String(fontFamily)}
                     items={getFontStyleItems()}
                 />}
+                tooltipText={'Шрифт'}
             />
             <FontSizeSwitcher
                 fontSize={fontSize}

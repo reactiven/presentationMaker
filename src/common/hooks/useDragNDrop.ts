@@ -6,6 +6,7 @@ import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 import {dispatchDecorator} from "../../state/dispatchDecarator";
 import {isTextBox} from "../../Entity/TextBox";
+import {slideHTML} from "../../components/editor/workspace/Slide";
 
 
 function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HTMLDivElement>) {
@@ -16,14 +17,12 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
     const [offsetTop, setOffsetTop] = useState(0)
     const [offsetLeft, setOffsetLeft] = useState(0)
 
-    let slide: HTMLElement|null
-
     function mouseUp() {
         document.removeEventListener('mousemove', mouseMove)
         document.removeEventListener('mouseup', mouseUp)
         if (elementRef.current) {
             const elementBounds = elementRef.current.getBoundingClientRect()
-            const [cursorX, cursorY] = getParentRelativeCoordinates(elementBounds.left, elementBounds.top, slide)
+            const [cursorX, cursorY] = getParentRelativeCoordinates(elementBounds.left, elementBounds.top, slideHTML)
             dispatchDecorator(store, () => presentationInfoActions.moveElement(
                 element.elementId,
                 cursorX,
@@ -36,7 +35,7 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
 
     function mouseMove(event: MouseEvent) {
         event.preventDefault()
-        const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slide)
+        const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slideHTML)
         setLeft(cursorX)
         setTop(cursorY)
     }
@@ -65,8 +64,6 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
 
     useEffect(() => {
         const elementHTML = elementRef.current
-        slide = elementRef && elementRef.current && elementRef.current.parentElement
-
         elementHTML && !insertionMode.on && elementHTML.addEventListener('mousedown', mouseDown)
         return () => {
             elementHTML && !insertionMode.on && elementHTML.removeEventListener('mousedown', mouseDown)

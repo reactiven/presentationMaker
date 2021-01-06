@@ -32,6 +32,7 @@ function Rect({
             strokeWidth={style.strokeWidth
                 ? style.strokeWidth
                 : '1'}
+            // strokeDasharray={1}
           />
         </svg>
       )

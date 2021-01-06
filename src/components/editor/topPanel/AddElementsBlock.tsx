@@ -16,6 +16,7 @@ import {StoreContext} from "../../../state/storeContext";
 import {insertionReducerActions} from "../../../state/insertionModeReducer";
 import {popupOpenedReducerActions} from "../../../state/popupsOpenedReducers";
 import {useEventHandler} from "../../../common/hooks/useEventHandler";
+import {ShapeTypeType} from "../../../Entity/types";
 
 
 function AddElementsBlock() {
@@ -74,8 +75,7 @@ function AddElementsBlock() {
         store.dispatch(insertionReducerActions.setInsertionMode({
             on: true,
             elementType: 'shape',
-            // @ts-ignore
-            shapeType: id,
+            shapeType: id as ShapeTypeType,
         }))
     }
 
@@ -103,6 +103,7 @@ function AddElementsBlock() {
                 type={'border-none'}
                 img={textbox}
                 onClick={handleTextBox}
+                tooltipText={'Текстовое поле'}
             />
             <Button_WithPopover
                 img={shape}
@@ -110,6 +111,7 @@ function AddElementsBlock() {
                     items={getShapePopoverItems()}
                     onChange={handleAddShape}
                 />}
+                tooltipText={'Фигура'}
             />
             <div>
                 <Button_WithPopover
@@ -118,6 +120,7 @@ function AddElementsBlock() {
                         items={getImagePopoverItems()}
                         onChange={handleAddImage}
                     />}
+                    tooltipText={'Вставить изображение'}
                 />
                 <input
                     type='file'

@@ -7,6 +7,7 @@ import {EditSlideBackgroundPopup} from "./EditSlideBackgroundPopup";
 import {SlideType} from "../../../Entity/types";
 import {dispatchDecorator} from "../../../state/dispatchDecarator";
 import {presentationInfoActions} from "../../../state/presentationInfoReducer";
+import {usePopup} from "../../../common/hooks/usePopup";
 
 
 function useEditSlideBackgroundPopup() {
@@ -34,8 +35,7 @@ function useEditSlideBackgroundPopup() {
         dispatchDecorator(store, () => presentationInfoActions.setSlideBackground(value))
     }
 
-    useExternalLayer({
-        layerType: 'popup',
+    usePopup({
         binding: <EditSlideBackgroundPopup
             currentSlideInfo={currentSlideInfo as SlideType}
             acceptChange={acceptChange}

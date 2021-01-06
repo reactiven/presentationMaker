@@ -6,7 +6,7 @@ let initialState = {
 }
 
 const popupsOpenedReducer = (state: PopupOpenedReducerType = initialState, action: ActionTypes): PopupOpenedReducerType => {
-    let newState: PopupOpenedReducerType = JSON.parse(JSON.stringify(state))
+    let newState: PopupOpenedReducerType = state
     switch (action.type) {
         case "SET_EDIT_SLIDE_BACKGROUND_POPUP_OPENED":
             newState = {

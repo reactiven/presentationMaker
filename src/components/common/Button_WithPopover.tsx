@@ -1,47 +1,41 @@
-import React, {useMemo} from "react";
-import {useRef, useState} from "react";
+import React, {useRef, useState} from "react";
+import {usePopover} from "../../common/hooks/usePopover";
 import {Button} from "./Button";
-import {Popover} from "./Popover";
-import {useExternalLayer} from "../../common/hooks/useExternalLayer";
-
 
 type Button_WithPopover = {
     text?: string,
     img?: any,
     popoverContent: any,
+    tooltipText?: string,
 }
 
 function Button_WithPopover({
     text,
     img,
     popoverContent,
+    tooltipText,
 }: Button_WithPopover) {
-    const [open, setOpen] = useState(false)
-    const buttonRef = useRef<HTMLButtonElement>(null)
+    const [show, setShow] = useState(false)
+    const buttonRef = useRef<HTMLDivElement>(null)
 
-    const popoverStyle = useMemo(() => ({
-        left: Number(buttonRef.current && buttonRef.current.getBoundingClientRect().left + 10),
-        top: Number(buttonRef.current && buttonRef.current.getBoundingClientRect().top + 30),
-    }), [buttonRef.current])
-
-    useExternalLayer({
-        layerType: 'popover',
-        binding: <Popover
-            style={popoverStyle}
-            content={popoverContent}
-            closePopover={() => setOpen(false)}
-        />,
-        show: open,
-        close: () => setOpen(false)
+    usePopover({
+        elementRef: buttonRef,
+        content: popoverContent,
+        show,
+        setShow,
     })
 
-    return <Button
-        type={"border-none"}
-        onClick={() => setOpen(!open)}
-        label={text}
-        img={img}
-        ref={buttonRef}
-    />
+    return(
+        <div ref={buttonRef}>
+            <Button
+                type={"border-none"}
+                onClick={() => setShow(true)}
+                label={text}
+                img={img}
+                tooltipText={tooltipText}
+            />
+        </div>
+    )
 }
 
 

@@ -1,4 +1,4 @@
-import {PresentationType, ShapeTypeType} from "../../Entity/types";
+import {PresentationType, ShapeTypeType, SlideElementType} from "../../Entity/types";
 
 type ElementPosition = {
     x: number,
@@ -45,8 +45,9 @@ function addSlide(state: PresentationType): PresentationType {
     }
 }
 
-function addImage(state: PresentationType, filepath: string, position: ElementPosition, size: ElementSize|undefined): PresentationType {
-    const imageId = generateElementId()
+function addElement(state: PresentationType, fn: any, position: ElementPosition, size: ElementSize|undefined, data?: any)
+{
+    const elementId = generateElementId()
     return {
         ...state,
         presentation: {
@@ -57,121 +58,101 @@ function addImage(state: PresentationType, filepath: string, position: ElementPo
                     ...state.presentation.slides[state.currentSlide!],
                     elements: {
                         ...state.presentation.slides[state.currentSlide!].elements,
-                        [imageId]: {
-                            type: 'image',
-                            dataElement: {
-                                src: filepath,
-                            },
-                            elementId: imageId,
-                            width: (size && size.w) ||  200,
-                            height: (size && size.h) ||  200,
-                            xPos: position.x,
-                            yPos: position.y,
-                            background: 'transparent',
-                            borderWidth: '0',
-                            borderColor: 'transparent',
-                        }
+                        [elementId]: fn(elementId, position, size, data ? data : undefined)
                     },
                     elementsOrder: [
                         ...state.presentation.slides[state.currentSlide!].elementsOrder,
-                        imageId,
+                        elementId,
                     ]
                 }
             }
         },
-        selectedSlideElements: [imageId]
+        selectedSlideElements: [elementId]
     }
 }
 
-function addShape(state: PresentationType, type: ShapeTypeType, position: ElementPosition, size: ElementSize|undefined): PresentationType {
-    const shapeId = generateElementId()
+function addImage(
+    imageId: number,
+    position: ElementPosition,
+    size: ElementSize|undefined,
+    data: {
+        filepath: string,
+    }
+): SlideElementType {
     return {
-        ...state,
-        presentation: {
-            ...state.presentation,
-            slides: {
-                ...state.presentation.slides,
-                [state.currentSlide!]: {
-                    ...state.presentation.slides[state.currentSlide!],
-                    elements: {
-                        ...state.presentation.slides[state.currentSlide!].elements,
-                        [shapeId]: {
-                            type: 'shape',
-                            dataElement: {
-                                shapeType: type,
-                            },
-                            elementId: shapeId,
-                            width: (size && size.w) ||  200,
-                            height: (size && size.h) ||  200,
-                            xPos: position.x,
-                            yPos: position.y,
-                            background: 'transparent',
-                            borderWidth: '1',
-                            borderColor: 'gray',
-                        },
-                    },
-                    elementsOrder: [
-                        ...state.presentation.slides[state.currentSlide!].elementsOrder,
-                        shapeId,
-                    ]
-                }
-            }
+        type: 'image',
+        dataElement: {
+            src: data.filepath,
         },
-        selectedSlideElements: [shapeId]
+        elementId: imageId,
+        width: (size && size.w) ||  200,
+        height: (size && size.h) ||  200,
+        xPos: position.x,
+        yPos: position.y,
+        background: 'transparent',
+        borderWidth: '0',
+        borderColor: 'transparent',
     }
 }
 
-function addTextbox(state: PresentationType, position: ElementPosition, size: ElementSize|undefined): PresentationType {
-    const textBoxId = generateElementId()
-
+function addShape(
+    shapeId: number,
+    position: ElementPosition,
+    size: ElementSize|undefined,
+    data: {
+        type: ShapeTypeType,
+    }
+): SlideElementType {
     return {
-        ...state,
-        presentation: {
-            ...state.presentation,
-            slides: {
-                ...state.presentation.slides,
-                [state.currentSlide!]: {
-                    ...state.presentation.slides[state.currentSlide!],
-                    elements: {
-                        ...state.presentation.slides[state.currentSlide!].elements,
-                        [textBoxId]: {
-                            type: 'textBox',
-                            dataElement: {
-                                font: {
-                                    fontStyle: 'Times New Roman',
-                                    fontSize: 20,
-                                    fontColor: '#000000',
-                                    bold: false,
-                                    italic: false,
-                                    underline: false,
-                                },
-                                text: '',
-                                canEdit: false,
-                            },
-                            elementId: textBoxId,
-                            width: (size && size.w) ||  200,
-                            height: (size && size.h) ||  200,
-                            xPos: position.x,
-                            yPos: position.y,
-                            background: 'transparent',
-                            borderWidth: '0',
-                            borderColor: 'transparent',
-                        },
-                    },
-                    elementsOrder: [
-                        ...state.presentation.slides[state.currentSlide!].elementsOrder,
-                        textBoxId,
-                    ]
-                }
-            }
+        type: 'shape',
+        dataElement: {
+            shapeType: data.type,
         },
-        selectedSlideElements: [textBoxId]
+        elementId: shapeId,
+        width: (size && size.w) ||  200,
+        height: (size && size.h) ||  200,
+        xPos: position.x,
+        yPos: position.y,
+        background: 'transparent',
+        borderWidth: '1',
+        borderColor: 'gray',
+    }
+}
+
+function addTextbox(
+    textBoxId: number,
+    position: ElementPosition,
+    size: ElementSize|undefined
+): SlideElementType {
+    return {
+        type: 'textBox',
+        dataElement: {
+            font: {
+                fontStyle: 'Times New Roman',
+                fontSize: 20,
+                fontColor: '#000000',
+                bold: false,
+                italic: false,
+                underline: false,
+            },
+            text: '',
+            canEdit: false,
+        },
+        elementId: textBoxId,
+        width: (size && size.w) ||  200,
+        height: (size && size.h) ||  200,
+        xPos: position.x,
+        yPos: position.y,
+        background: 'transparent',
+        borderWidth: '0',
+        borderColor: 'transparent',
     }
 }
 
 export {
     addSlide,
     addImage,
+    addElement,
     addTextbox,
     addShape,
 }

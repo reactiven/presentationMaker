@@ -30,6 +30,7 @@ function Triangle({
                 strokeWidth={style.strokeWidth
                     ? style.strokeWidth
                     : '1'}
+                // strokeDasharray={3}
             />
         </svg>
     )

@@ -15,6 +15,7 @@ import {exportPresentation} from '../../../common/exportPresentation';
 import {savePresentation} from '../../../common/savePresentation';
 import {dispatchDecorator} from "../../../state/dispatchDecarator";
 import {useEventHandler} from "../../../common/hooks/useEventHandler";
+import {useTooltip} from "../../../common/hooks/useTooltip";
 
 function TopPanel() {
     const store: Readonly<StoreType> = useContext(StoreContext);
@@ -94,6 +95,12 @@ function TopPanel() {
     useEventHandler('input', inputFileRef, onFileChange)
     useEventHandler('blur', nameRef, onFileNameBlur)
 
+    useTooltip({
+        elementRef: nameRef,
+        showTooltip: true,
+        text: 'Переименовать',
+    })
+
     return(
         <div className={styles.topPanel}>
             <div className={styles.headerPanel}>
@@ -103,7 +110,8 @@ function TopPanel() {
                         type="text"
                         ref={nameRef}
                         defaultValue={presentationInfo.presentation.name}
-                        className={styles.presentationTitle}/>
+                        className={styles.presentationTitle}
+                    />
                     <div className="second-row">
                         <a
                             href={savePresentation(store.getState().presentationInfo)}
@@ -132,6 +140,7 @@ function TopPanel() {
                     label={'Preview'}
                     type={'normal'}
                     onClick={() => store.dispatch(previewReducerActions.setPreviewOpened(true))}
+                    tooltipText={'Перейти в режим превью'}
                 />
             </div>
             <ToolPanel

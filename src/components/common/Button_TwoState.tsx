@@ -6,12 +6,14 @@ type PropsType = {
     img: any,
     onClick: (value: boolean) => any,
     checked: boolean,
+    tooltipText?: string,
 }
 
 function Button_TwoState({
     img,
     checked,
     onClick,
+    tooltipText,
 }: PropsType) {
     const className = `${styles.button} ${checked ? styles.buttonChecked : ''}`
 
@@ -21,6 +23,7 @@ function Button_TwoState({
             onClick={() => onClick(!checked)}
             img={img}
             className={className}
+            tooltipText={tooltipText}
         />
     )
 }

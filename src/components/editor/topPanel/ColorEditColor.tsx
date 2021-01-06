@@ -96,16 +96,19 @@ function ColorEditColor({
                 img={fill}
                 onChange={changeBgColor}
                 value={background ? background : 'transparent'}
+                tooltipText={'Цвет заливки'}
             />
             <Button_WithColorPicker
                 img={stroke}
                 onChange={changeStrokeColor}
                 value={borderColor ? borderColor : 'transparent'}
+                tooltipText={'Цвет границ'}
             />
             {fontColor && <Button_WithColorPicker
                 img={word}
                 onChange={changeFontColor}
                 value={fontColor ? fontColor : 'transparent'}
+                tooltipText={'Цвет текста'}
             />}
             <Button_WithPopover
                 img={border}
@@ -114,6 +117,7 @@ function ColorEditColor({
                     selected={getSelectedBorderWidth(borderWidth)}
                     items={getBorderWidthItems()}
                 />}
+                tooltipText={'Толщина границ'}
             />
             <ToolSeparator />
         </div>

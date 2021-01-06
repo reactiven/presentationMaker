@@ -54,7 +54,13 @@ type SidebarItemType = {
     setMoveMode: (mode: boolean) => void,
 }
 
-function SideBarItem(props: SidebarItemType): JSX.Element {
+function SideBarItem({
+    isSelected,
+    setMoveMode,
+    setSeparatorTop,
+    slidesCount,
+    slide
+}: SidebarItemType): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const slideRef = useRef<HTMLDivElement|null>(null)
 
@@ -68,21 +74,21 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
             const cursorY = getScrollCoordinates(sidebar, event.clientX, event.clientY)
             const pos = findSepPosition(cursorY)
             dispatchDecorator(store, () => presentationInfoActions.moveSlides(pos -1))
-            props.setMoveMode(false)
-            props.setSeparatorTop(0)
+            setMoveMode(false)
+            setSeparatorTop(0)
             moveMode = false
         }
     }
 
     function mouseMove(event: MouseEvent) {
-        props.setMoveMode(true)
+        setMoveMode(true)
         moveMode = true
         const cursorY = getScrollCoordinates(sidebar, event.clientX, event.clientY)
         const pos = findSepPosition(cursorY)
-        const sepPos = pos - 1 > props.slidesCount
-            ? props.slidesCount + 1
+        const sepPos = pos - 1 > slidesCount
+            ? slidesCount + 1
             : pos
-        props.setSeparatorTop(5 + (sepPos - 1) * 110)
+        setSeparatorTop(5 + (sepPos - 1) * 110)
     }
 
     function mouseDown(event: MouseEvent) {
@@ -92,7 +98,7 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
                 () => (event.ctrlKey
                     ? presentationInfoActions.addSlideToSelected
                     : presentationInfoActions.selectSlide
-                )(props.slide.slideId)
+                )(slide.slideId)
             )
 
             if (!event.defaultPrevented) {
@@ -109,7 +115,7 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
         return () => {
             element && element.removeEventListener('mousedown', mouseDown)
         }
-    }, [slideRef, props.slidesCount])
+    }, [slideRef, slidesCount])
 
     function findSepPosition(posY: number) {
         const posNumber = Math.ceil(posY / 55)
@@ -118,13 +124,13 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
             : posNumber / 2 + 1
     }
 
-    const className = props.isSelected
+    const className = isSelected
         ? `${styles.sidebarItem} ${styles.sidebarItemSelected}`
         : `${styles.sidebarItem}`
 
     const styleBackground = {
-        background: props.slide.previewImage
-            ? `url(${props.slide.previewImage}) no-repeat center/100% 100%`
+        background: slide.previewImage
+            ? `url(${slide.previewImage}) no-repeat center/100% 100%`
             : 'transparent',
     }
     return (
@@ -140,10 +146,11 @@ type SepType = {
     style: any,
 }
 
-function SidebarSeparator(props: SepType) {
-
+function SidebarSeparator({
+    style,
+}: SepType) {
     return(
-        <div className={styles.sidebarSeparator} style={props.style}></div>
+        <div className={styles.sidebarSeparator} style={style}></div>
     )
 }
 

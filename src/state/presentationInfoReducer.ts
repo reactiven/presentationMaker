@@ -1,5 +1,5 @@
 import {BackgroundType, FontType, PresentationType, ShapeTypeType} from "../Entity/types";
-import {addImage, addShape, addSlide, addTextbox} from "./actions/addElements";
+import {addElement, addImage, addShape, addSlide, addTextbox} from "./actions/addElements";
 import { moveSlides } from "./actions/moveSlides";
 import {saveStateForUndo, stateList} from "../Entity/State";
 import {deleteSlides} from "./actions/deleteSlides";
@@ -20,6 +20,7 @@ import {
     switchTextBoxEdit,
     updateTextBox
 } from "./actions/editElementAction";
+import {position} from "html2canvas/dist/types/css/property-descriptors/position";
 
 
 let initialState: PresentationType = {
@@ -89,13 +90,34 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
             newState = moveSlides(state, action.data.newPosition)
             break
         case "ADD_IMAGE":
-            newState = addImage(state, action.data.filepath, action.data.position, action.data.size)
+            newState = addElement(
+                state,
+                addImage,
+                action.data.position,
+                action.data.size,
+                {
+                    filepath: action.data.filepath
+                }
+            )
             break
         case "ADD_SHAPE":
-            newState = addShape(state, action.data.type, action.data.position, action.data.size)
+            newState = addElement(
+                state,
+                addShape,
+                action.data.position,
+                action.data.size,
+                {
+                    type: action.data.type
+                }
+            )
             break
         case "ADD_TEXT_BOX":
-            newState = addTextbox(state, action.data.position, action.data.size)
+            newState = addElement(
+                state,
+                addTextbox,
+                action.data.position,
+                action.data.size,
+            )
             break
         case "DELETE_ELEMENTS":
             newState = deleteSlideElements(state)

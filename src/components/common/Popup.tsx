@@ -20,31 +20,35 @@ function Popup({
     content,
 }: PropsType) {
     const popupRef = useRef<HTMLDivElement|null>(null)
+    const popupLayerRef = useRef<HTMLDivElement|null>(null)
 
     function popupMouseDown(event: any) {
         event.stopPropagation()
     }
 
     useEventHandler('mousedown', popupRef, popupMouseDown)
+    useEventHandler('mousedown', popupLayerRef, closePopup)
 
     return(
-        <div className={styles.popupContainer} ref={popupRef}>
-            <div className={styles.popupHeader}>
-                <div className={styles.popupTitle}>{headerText}</div>
-                <Button
-                    type={'border-none'}
-                    onClick={closePopup}
-                    img={close}
-                />
-            </div>
-            {content}
-            <div className={styles.popupFooter}>
-                <Button
-                    onClick={closePopup}
-                    label={'Отмена'}
-                    type={'normal'}
-                />
-                {acceptButton}
+        <div ref={popupLayerRef} className={styles.popupLayer}>
+            <div className={styles.popupContainer} ref={popupRef}>
+                <div className={styles.popupHeader}>
+                    <div className={styles.popupTitle}>{headerText}</div>
+                    <Button
+                        type={'border-none'}
+                        onClick={closePopup}
+                        img={close}
+                    />
+                </div>
+                {content}
+                <div className={styles.popupFooter}>
+                    <Button
+                        onClick={closePopup}
+                        label={'Отмена'}
+                        type={'normal'}
+                    />
+                    {acceptButton}
+                </div>
             </div>
         </div>
     )

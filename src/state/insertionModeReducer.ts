@@ -7,7 +7,7 @@ let initialState = {
 }
 
 const insertionModeReducer = (state: InsertionModeType = initialState, action: ActionTypes): InsertionModeType => {
-    let newState: InsertionModeType = JSON.parse(JSON.stringify(state))
+    let newState: InsertionModeType = state
     switch (action.type) {
         case "SET_INSERTION_MODE":
             newState = {...action.data.payload}

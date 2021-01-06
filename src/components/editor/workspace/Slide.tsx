@@ -1,10 +1,12 @@
-import React, {useContext, useRef} from 'react';
+import React, {useContext, useEffect, useRef} from 'react';
 import {ElementsMapType} from "../../../Entity/types";
 import styles from './Slide.module.css';
 import { SlideElement } from './SlideElements/Element';
 import {StoreType} from "../../../state/store";
 import {StoreContext} from "../../../state/storeContext";
 
+
+let slideHTML: HTMLDivElement|null
 
 function Slide() {
     const store: Readonly<StoreType> = useContext(StoreContext);
@@ -23,8 +25,12 @@ function Slide() {
             : slideInfo.background
     }
 
+    useEffect(() => {
+        slideHTML = slideRef && slideRef.current
+    }, [slideRef])
+
     return(
-        <div className={styles.slide} id='slide' style={style} ref={slideRef}>
+        <div className={styles.slide} style={style} ref={slideRef}>
             {renderElements(slideInfo.elements, slideInfo.elementsOrder, presentationInfo.selectedSlideElements)}
         </div>
     )
@@ -49,4 +55,5 @@ function renderElements(elements: ElementsMapType, elementsOrder: Array<number>,
 
 export {
     Slide,
+    slideHTML,
 }

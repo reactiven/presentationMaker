@@ -1,4 +1,4 @@
-import React, {useContext} from 'react';
+import React, {useContext, useRef} from 'react';
 import styles from './ToolPanel.module.css';
 import {isTextBox} from "../../../Entity/TextBox";
 import {CommonToolBlock} from "./CommonToolBlock";
@@ -10,6 +10,7 @@ import {StoreType} from "../../../state/store";
 import {StoreContext} from "../../../state/storeContext";
 import {popupOpenedReducerActions} from "../../../state/popupsOpenedReducers";
 import {ElementsMapType, SlideType} from "../../../Entity/types";
+import {useTooltip} from "../../../common/hooks/useTooltip";
 
 
 function canEditFont(slideElements: ElementsMapType, selectedElements: Array<number>) {
@@ -26,6 +27,7 @@ function ToolPanel({
    selectedSlideElements,
 }: PropsType) {
     const store: Readonly<StoreType> = useContext(StoreContext);
+
     function openEditSlideBackgroundPopup() {
         store.dispatch(popupOpenedReducerActions.setEditSlideBackgroundPopupOpened(true))
     }
@@ -48,6 +50,7 @@ function ToolPanel({
                 type={'border-none'}
                 onClick={openEditSlideBackgroundPopup}
                 label={'Фон'}
+                tooltipText={'Изменить фон'}
             />}
             {currentSlide && <ToolSeparator/>}
         </div>

@@ -1,9 +1,13 @@
+.popupLayer {
+    width: 100vw;
+    height: 100vh;
+}
+
 .popupContainer {
     position: absolute;
-    left: 50%;
-    top: 50%;
+    left: 50vw;
+    top: 50vh;
     transform: translate(-50%, -50%);
-
     min-width: 400px;
     display: flex;
     flex-direction: column;

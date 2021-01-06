@@ -5,6 +5,7 @@ import {StoreContext} from "../../../state/storeContext";
 import {AddImageLinkPopup} from "./AddImageLinkPopup";
 import {popupOpenedReducerActions} from "../../../state/popupsOpenedReducers";
 import {insertionReducerActions} from "../../../state/insertionModeReducer";
+import {usePopup} from "../../../common/hooks/usePopup";
 
 
 function useAddImageLinkPopup() {
@@ -24,8 +25,7 @@ function useAddImageLinkPopup() {
         store.dispatch(popupOpenedReducerActions.setAddImageLinkPopupOpened(false))
     }
 
-    useExternalLayer({
-        layerType: 'popup',
+    usePopup({
         binding: <AddImageLinkPopup
             closePopup={closePopup}
             acceptChange={acceptChange}

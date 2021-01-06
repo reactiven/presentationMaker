@@ -8,6 +8,7 @@ import {presentationInfoActions} from "../../state/presentationInfoReducer";
 import {dispatchDecorator} from "../../state/dispatchDecarator";
 import {Button} from "./Button";
 import {useEventHandler} from "../../common/hooks/useEventHandler";
+import {useTooltip} from "../../common/hooks/useTooltip";
 
 type PropsType = {
     fontSize: number,
@@ -43,12 +44,19 @@ function FontSizeSwitcher({
 
     useEventHandler('input', inputRef, onInput)
 
+    useTooltip({
+        elementRef: inputRef,
+        text: 'Размер шрифта',
+        showTooltip: true,
+    })
+
     return(
         <div className={styles.switcherContainer}>
             <Button
                 type={"border-none"}
                 onClick={sizeDec}
                 img={minus}
+                tooltipText={'Уменьшить размер шрифта'}
             />
             <input
                 defaultValue={fontSize ? fontSize : ''}
@@ -59,6 +67,7 @@ function FontSizeSwitcher({
                 type={"border-none"}
                 onClick={sizeInc}
                 img={plus}
+                tooltipText={'Увеличить размер шрифта'}
             />
         </div>
     )
