@@ -1,10 +1,11 @@
 import React, {useContext, useRef} from 'react';
-import { TextBoxType } from '../../Entity/types';
+import { TextBoxType } from '../../../../Entity/types';
 import styles from './Textbox.module.css';
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {dispatchDecorator} from "../../state/dispatchDecarator";
+import {StoreType} from "../../../../state/store";
+import {StoreContext} from "../../../../state/storeContext";
+import {presentationInfoActions} from "../../../../state/presentationInfoReducer";
+import {dispatchDecorator} from "../../../../state/dispatchDecarator";
+import {useEventHandler} from "../../../../common/hooks/useEventHandler";
 
 type PropsType = {
     textboxId: number,
@@ -38,7 +39,7 @@ function Textbox({
         textDecoration: fontDecoration,
     }
 
-    function onChange(event: any) {
+    function onChange() {
         if(inputRef.current)
         {
             const value = inputRef.current.value
@@ -49,12 +50,13 @@ function Textbox({
         }
     }
 
+    useEventHandler('blur', inputRef, onChange)
+
     return(
         <textarea
             ref={inputRef}
             className={`${styles.textBoxBlock} ${styles.richtext}`}
             style={inputStyle}
-            onBlur={onChange}
             defaultValue={data.text || ''}
         >
         </textarea>

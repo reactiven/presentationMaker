@@ -1,7 +1,6 @@
 import * as htmlToImage from "html-to-image";
 import {presentationInfoActions} from "./presentationInfoReducer";
-import {saveStateForUndo, stateList} from "../Entity/State";
-
+import {saveStateForUndo} from "../Entity/State";
 
 function dispatchDecorator(store: any, action: () => void) {
     const {
@@ -12,9 +11,13 @@ function dispatchDecorator(store: any, action: () => void) {
     const slide = document.getElementById('slide')
     if (slide) {
         htmlToImage.toJpeg(slide, {
-            quality: 0.9,
+            quality: 1,
         }).then((dataUrl) => {
-            store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
+            const {preview} = store.getState()
+            if (!preview.onPreview)
+            {
+                store.dispatch(presentationInfoActions.setPreviewImage(dataUrl))
+            }
         });
     }
 }

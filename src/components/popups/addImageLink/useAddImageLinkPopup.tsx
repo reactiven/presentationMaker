@@ -1,12 +1,10 @@
-import {useExternalLayer} from "../../common/useExternalLayer";
-import {useContext} from "react";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {Popup} from "../common/Popup";
-import React from "react";
-import { AddImageLinkPopup } from "./AddImageLinkPopup";
-import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
-import {insertionReducerActions} from "../../state/insertionModeReducer";
+import {useExternalLayer} from "../../../common/hooks/useExternalLayer";
+import React, {useContext} from "react";
+import {StoreType} from "../../../state/store";
+import {StoreContext} from "../../../state/storeContext";
+import {AddImageLinkPopup} from "./AddImageLinkPopup";
+import {popupOpenedReducerActions} from "../../../state/popupsOpenedReducers";
+import {insertionReducerActions} from "../../../state/insertionModeReducer";
 
 
 function useAddImageLinkPopup() {

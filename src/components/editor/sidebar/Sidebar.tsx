@@ -1,11 +1,11 @@
 import React, {useContext, useEffect, useRef, useState} from 'react'
-import { SlideType } from '../../Entity/types'
+import {SlideType} from '../../../Entity/types'
 import styles from './Sidebar.module.css';
-import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordinates";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {dispatchDecorator} from "../../state/dispatchDecarator";
+import {getParentRelativeCoordinates} from "../../../common/getParentRelativeCoordinates";
+import {StoreType} from "../../../state/store";
+import {StoreContext} from "../../../state/storeContext";
+import {presentationInfoActions} from "../../../state/presentationInfoReducer";
+import {dispatchDecorator} from "../../../state/dispatchDecarator";
 
 
 function SideBar(): JSX.Element {
@@ -31,11 +31,9 @@ function SideBar(): JSX.Element {
                 key={slideId}
                 slide={slide}
                 isSelected={presentationInfo.currentSlide === slideId || !!selectedSlides.find(slide => slide === slideId)}
-                index={index}
                 slidesCount={slidesOrder.length}
                 setSeparatorTop={setSeparatorTop}
                 setMoveMode={setMoveMode}
-                moveMode={moveMode}
             />
         }
         return null
@@ -50,12 +48,10 @@ function SideBar(): JSX.Element {
 
 type SidebarItemType = {
     slide: SlideType,
-    index: number,
     slidesCount: number,
     isSelected: boolean,
     setSeparatorTop: (top: number) => void,
     setMoveMode: (mode: boolean) => void,
-    moveMode: boolean,
 }
 
 function SideBarItem(props: SidebarItemType): JSX.Element {
@@ -63,7 +59,6 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
     const slideRef = useRef<HTMLDivElement|null>(null)
 
     let sidebar: HTMLElement | null
-    let slidesCount
     let moveMode = false
 
     function mouseUp(event: MouseEvent) {
@@ -92,12 +87,13 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
 
     function mouseDown(event: MouseEvent) {
         if (slideRef.current) {
-            if (event.ctrlKey) {
-                store.dispatch(presentationInfoActions.addSlideToSelected(props.slide.slideId))
-            }
-            else {
-                dispatchDecorator(store, () => presentationInfoActions.selectSlide(props.slide.slideId))
-            }
+            dispatchDecorator(
+                store,
+                () => (event.ctrlKey
+                    ? presentationInfoActions.addSlideToSelected
+                    : presentationInfoActions.selectSlide
+                )(props.slide.slideId)
+            )
 
             if (!event.defaultPrevented) {
                 document.addEventListener('mousemove', mouseMove);
@@ -108,7 +104,6 @@ function SideBarItem(props: SidebarItemType): JSX.Element {
 
     useEffect(() => {
         const element = slideRef.current
-        slidesCount = props.slidesCount
         sidebar = slideRef && slideRef.current && slideRef.current.parentElement
         element && element.addEventListener('mousedown', mouseDown)
         return () => {

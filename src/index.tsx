@@ -2,10 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import * as serviceWorker from './serviceWorker';
-import { store } from './state/store';
-import { StoreContext } from './state/storeContext';
-import { App } from './App';
-import { initExternalLayer } from './common/externalLayers';
+import {store} from './state/store';
+import {StoreContext} from './state/storeContext';
+import {App} from './components/App';
+import {initExternalLayer} from './common/externalLayers';
 
 
 function rerenderEntireTree() {

@@ -1,19 +1,20 @@
 import React, {useContext, useEffect, useRef} from 'react';
 import styles from './TopPanel.module.css';
-import logo from '../../images/logo_tcaer.png';
-import { ToolPanel } from './ToolPanel';
-import {Button_WithPopover} from "../common/Button_WithPopover";
-import {ActionList} from "../common/ActionList";
-import {Button} from "../common/Button";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {previewReducerActions} from "../../state/previewReducer";
-import {insertionReducerActions} from "../../state/insertionModeReducer";
-import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
-import { exportPresentation } from '../../common/exportPresentation';
-import { savePresentation } from '../../common/savePresentation';
-import {dispatchDecorator} from "../../state/dispatchDecarator";
+import logo from '../../../images/logo_tcaer.png';
+import {ToolPanel} from './ToolPanel';
+import {Button_WithPopover} from "../../common/Button_WithPopover";
+import {ActionList} from "../../common/ActionList";
+import {Button} from "../../common/Button";
+import {StoreType} from "../../../state/store";
+import {StoreContext} from "../../../state/storeContext";
+import {presentationInfoActions} from "../../../state/presentationInfoReducer";
+import {previewReducerActions} from "../../../state/previewReducer";
+import {insertionReducerActions} from "../../../state/insertionModeReducer";
+import {popupOpenedReducerActions} from "../../../state/popupsOpenedReducers";
+import {exportPresentation} from '../../../common/exportPresentation';
+import {savePresentation} from '../../../common/savePresentation';
+import {dispatchDecorator} from "../../../state/dispatchDecarator";
+import {useEventHandler} from "../../../common/hooks/useEventHandler";
 
 function TopPanel() {
     const store: Readonly<StoreType> = useContext(StoreContext);
@@ -29,7 +30,7 @@ function TopPanel() {
         : null
     const selectedSlideElements = presentationInfo.selectedSlideElements
 
-    function onBlur(event: any) {
+    function onFileNameBlur(event: any) {
         dispatchDecorator(store, () => presentationInfoActions.changeName(event.currentTarget.value))
     }
 
@@ -88,7 +89,11 @@ function TopPanel() {
         if (nameRef.current) {
             nameRef.current.value = presentationInfo.presentation.name
         }
-    }, [presentationInfo])
+    }, [presentationInfo.presentation.name])
+
+    useEventHandler('input', inputFileRef, onFileChange)
+    useEventHandler('blur', nameRef, onFileNameBlur)
+
     return(
         <div className={styles.topPanel}>
             <div className={styles.headerPanel}>
@@ -98,7 +103,6 @@ function TopPanel() {
                         type="text"
                         ref={nameRef}
                         defaultValue={presentationInfo.presentation.name}
-                        onBlur={onBlur}
                         className={styles.presentationTitle}/>
                     <div className="second-row">
                         <a
@@ -120,7 +124,6 @@ function TopPanel() {
                             type='file'
                             accept=".json"
                             ref={inputFileRef}
-                            onInput={onFileChange}
                             className={styles.uploadFileInput}
                         />
                     </div>

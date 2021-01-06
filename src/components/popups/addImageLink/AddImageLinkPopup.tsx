@@ -1,12 +1,8 @@
 import styles from './AddImageLinkPopup.module.css';
-import {Popup} from "../common/Popup";
-import {Button} from "../common/Button";
-import React, {useContext, useRef} from "react";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {insertionReducerActions} from "../../state/insertionModeReducer";
-import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
-import {useEventHandler} from "../../common/useEventHandler";
+import {Popup} from "../../common/Popup";
+import {Button} from "../../common/Button";
+import React, {useRef} from "react";
+import {useEventHandler} from "../../../common/hooks/useEventHandler";
 
 type ContentProps = {
     inputInfo: any,

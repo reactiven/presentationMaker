@@ -1,20 +1,20 @@
 import React, {RefObject, useContext, useEffect, useLayoutEffect, useRef, useState} from 'react';
-import { ElementStyleType, SlideElementType } from '../../Entity/types';
+import { ElementStyleType, SlideElementType } from '../../../../Entity/types';
 import { ImageBlock } from './Image';
 import {ColorStyleType, Shape} from './Shape';
 import { Textbox } from './Textbox';
-import styles from'./Element.module.css';
-import { isImage } from '../../Entity/Image';
-import { isShape } from '../../Entity/Shape';
-import { isTextBox } from '../../Entity/TextBox';
-import {useElementsDragNDrop} from "../../common/useDragNDrop";
-import { getParentRelativeCoordinates } from '../../common/getParentRelativeCoordinates';
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {dispatchDecorator} from "../../state/dispatchDecarator";
-import {useEventHandler} from "../../common/useEventHandler";
-import {preventDefault} from "../../common/preventDefault";
+import styles from './Element.module.css';
+import { isImage } from '../../../../Entity/Image';
+import { isShape } from '../../../../Entity/Shape';
+import { isTextBox } from '../../../../Entity/TextBox';
+import {useElementsDragNDrop} from "../../../../common/hooks/useDragNDrop";
+import { getParentRelativeCoordinates } from '../../../../common/getParentRelativeCoordinates';
+import {StoreType} from "../../../../state/store";
+import {StoreContext} from "../../../../state/storeContext";
+import {presentationInfoActions} from "../../../../state/presentationInfoReducer";
+import {dispatchDecorator} from "../../../../state/dispatchDecarator";
+import {useEventHandler} from "../../../../common/hooks/useEventHandler";
+import {preventDefault} from "../../../../common/preventDefault";
 
 type ElementPropsType = {
     element: SlideElementType,
@@ -65,11 +65,11 @@ function SlideElement({
     useEventHandler(
         'dblclick',
         elementRef,
-        () => dispatchDecorator(store, () => presentationInfoActions.switchTextBoxEdit(element.elementId, true))
+        () => store.dispatch(presentationInfoActions.switchTextBoxEdit(element.elementId, true))
     )
 
     useEffect(() => {
-        !isSelected && dispatchDecorator(store, () => presentationInfoActions.switchTextBoxEdit(element.elementId, false))
+        !isSelected && store.dispatch(presentationInfoActions.switchTextBoxEdit(element.elementId, false))
     }, [isSelected])
 
     return(

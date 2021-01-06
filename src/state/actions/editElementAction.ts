@@ -27,20 +27,25 @@ function changeElements(state: PresentationType, fn: any, data?: any): Presentat
 }
 
 function changeElement(state: PresentationType, elementId: number, fn: any, data: any) {
-    const currentSlide = state.currentSlide as number
-    const slide = {...state.presentation.slides[currentSlide]}
-    const element = {...slide.elements[elementId]}
-    slide.elements[elementId] = fn(element, data)
-    return {
-        ...state,
-        presentation: {
-            ...state.presentation,
-            slides: {
-                ...state.presentation.slides,
-                [currentSlide]: slide,
+    if (state.currentSlide)
+    {
+        const slide = {...state.presentation.slides[state.currentSlide]}
+        const elements = {...slide.elements}
+        const element = {...elements[elementId]}
+        elements[elementId] = fn(element, data)
+        slide.elements = elements
+        return {
+            ...state,
+            presentation: {
+                ...state.presentation,
+                slides: {
+                    ...state.presentation.slides,
+                    [state.currentSlide]: slide,
+                }
             }
         }
     }
+   return state
 }
 
 

@@ -7,6 +7,7 @@ import {StoreContext} from "../../state/storeContext";
 import {presentationInfoActions} from "../../state/presentationInfoReducer";
 import {dispatchDecorator} from "../../state/dispatchDecarator";
 import {Button} from "./Button";
+import {useEventHandler} from "../../common/hooks/useEventHandler";
 
 type PropsType = {
     fontSize: number,
@@ -40,6 +41,8 @@ function FontSizeSwitcher({
         }
     }, [fontSize])
 
+    useEventHandler('input', inputRef, onInput)
+
     return(
         <div className={styles.switcherContainer}>
             <Button
@@ -51,7 +54,6 @@ function FontSizeSwitcher({
                 defaultValue={fontSize ? fontSize : ''}
                 className={styles.inputSize}
                 ref={inputRef}
-                onInput={onInput}
             />
             <Button
                 type={"border-none"}

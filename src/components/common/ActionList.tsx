@@ -1,6 +1,6 @@
-import React, { useRef } from "react";
+import React, {useRef} from "react";
 import styles from "./ActionList.module.css";
-import {useEventHandler} from "../../common/useEventHandler";
+import {useEventHandler} from "../../common/hooks/useEventHandler";
 
 type ItemType = {
     id: string,

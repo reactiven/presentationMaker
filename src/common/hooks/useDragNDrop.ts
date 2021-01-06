@@ -1,11 +1,11 @@
-import {getParentRelativeCoordinates} from "./getParentRelativeCoordinates";
+import {getParentRelativeCoordinates} from "../getParentRelativeCoordinates";
 import {RefObject, useContext, useEffect, useState} from "react";
-import {SlideElementType} from "../Entity/types";
-import {StoreType} from "../state/store";
-import {StoreContext} from "../state/storeContext";
-import {presentationInfoActions} from "../state/presentationInfoReducer";
-import {dispatchDecorator} from "../state/dispatchDecarator";
-import {isTextBox} from "../Entity/TextBox";
+import {SlideElementType} from "../../Entity/types";
+import {StoreType} from "../../state/store";
+import {StoreContext} from "../../state/storeContext";
+import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {dispatchDecorator} from "../../state/dispatchDecarator";
+import {isTextBox} from "../../Entity/TextBox";
 
 
 function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HTMLDivElement>) {
@@ -50,7 +50,7 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
         {
             store.dispatch(presentationInfoActions.selectElement(element.elementId))
             store.dispatch(presentationInfoActions.replaceElementToFront(element.elementId))
-            if (element.type != 'textBox' || (isTextBox(element.dataElement) && !element.dataElement.canEdit))
+            if (element.type !== 'textBox' || (isTextBox(element.dataElement) && !element.dataElement.canEdit))
             {
                 if (!event.defaultPrevented) {
                     const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, elementRef.current)

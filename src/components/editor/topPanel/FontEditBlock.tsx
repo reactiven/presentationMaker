@@ -1,19 +1,19 @@
-import {ElementsMapType, SlideType} from "../../Entity/types";
-import {isTextBox} from "../../Entity/TextBox";
-import {Button_TwoState} from "../common/Button_TwoState";
-import {FontSizeSwitcher} from "../common/FontSizeSwitcher";
+import {ElementsMapType, SlideType} from "../../../Entity/types";
+import {isTextBox} from "../../../Entity/TextBox";
+import {Button_TwoState} from "../../common/Button_TwoState";
+import {FontSizeSwitcher} from "../../common/FontSizeSwitcher";
 import React, {useContext} from "react";
 import styles from './FontEditBlock.module.css';
-import boldIcon from "../../images/bold.png";
-import italicIcon from "../../images/italic.png";
-import underlineIcon from "../../images/underline.png";
+import boldIcon from "../../../images/bold.png";
+import italicIcon from "../../../images/italic.png";
+import underlineIcon from "../../../images/underline.png";
 import {ToolSeparator} from "./ToolPanel";
-import { SelectList } from "../common/SelectList";
-import { Button_WithPopover } from "../common/Button_WithPopover";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {dispatchDecorator} from "../../state/dispatchDecarator";
+import { SelectList } from "../../common/SelectList";
+import { Button_WithPopover } from "../../common/Button_WithPopover";
+import {StoreType} from "../../../state/store";
+import {StoreContext} from "../../../state/storeContext";
+import {presentationInfoActions} from "../../../state/presentationInfoReducer";
+import {dispatchDecorator} from "../../../state/dispatchDecarator";
 
 
 function getFontInfo(elements: ElementsMapType, selectedElements: Array<number>) {

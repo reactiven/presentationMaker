@@ -1,20 +1,21 @@
-import {Button} from "../common/Button";
-import textbox from  '../../images/textbox.png';
-import shape from '../../images/shape.png';
-import image from '../../images/image-logo.png'
+import {Button} from "../../common/Button";
+import textbox from '../../../images/textbox.png';
+import shape from '../../../images/shape.png';
+import image from '../../../images/image-logo.png'
 import React, {useContext, useRef} from "react";
-import {Button_WithPopover} from "../common/Button_WithPopover";
-import {ActionList} from "../common/ActionList";
-import circle from '../../images/circle.png';
-import rect from '../../images/rect.png';
-import triangle from '../../images/triangle.png';
+import {Button_WithPopover} from "../../common/Button_WithPopover";
+import {ActionList} from "../../common/ActionList";
+import circle from '../../../images/circle.png';
+import rect from '../../../images/rect.png';
+import triangle from '../../../images/triangle.png';
 import styles from './AddElementsBlock.module.css';
 import {ToolSeparator} from "./ToolPanel";
-import {toDataURL} from "../../common/toDataURL";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {insertionReducerActions} from "../../state/insertionModeReducer";
-import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
+import {toDataURL} from "../../../common/toDataURL";
+import {StoreType} from "../../../state/store";
+import {StoreContext} from "../../../state/storeContext";
+import {insertionReducerActions} from "../../../state/insertionModeReducer";
+import {popupOpenedReducerActions} from "../../../state/popupsOpenedReducers";
+import {useEventHandler} from "../../../common/hooks/useEventHandler";
 
 
 function AddElementsBlock() {
@@ -94,6 +95,8 @@ function AddElementsBlock() {
         }
     }
 
+    useEventHandler('input', inputFileRef, onImageChange)
+
     return(
         <div className={styles.addElementsBlock}>
             <Button
@@ -120,7 +123,6 @@ function AddElementsBlock() {
                     type='file'
                     accept=".png, .jpg"
                     ref={inputFileRef}
-                    onInput={onImageChange}
                     className={styles.addImageInput}
                 />
             </div>

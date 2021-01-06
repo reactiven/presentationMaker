@@ -1,15 +1,15 @@
 import React, {useContext} from 'react';
 import styles from './ToolPanel.module.css';
-import {isTextBox} from "../../Entity/TextBox";
+import {isTextBox} from "../../../Entity/TextBox";
 import {CommonToolBlock} from "./CommonToolBlock";
 import { ColorEditColor } from './ColorEditColor';
 import {FontEditBlock} from "./FontEditBlock";
 import { AddElementsBlock } from './AddElementsBlock';
-import {Button} from "../common/Button";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
-import {ElementsMapType, SlideType} from "../../Entity/types";
+import {Button} from "../../common/Button";
+import {StoreType} from "../../../state/store";
+import {StoreContext} from "../../../state/storeContext";
+import {popupOpenedReducerActions} from "../../../state/popupsOpenedReducers";
+import {ElementsMapType, SlideType} from "../../../Entity/types";
 
 
 function canEditFont(slideElements: ElementsMapType, selectedElements: Array<number>) {

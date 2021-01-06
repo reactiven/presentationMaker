@@ -1,10 +1,9 @@
 import styles from './PreviewMode.module.css';
-import {useContext, useEffect} from "react";
-import React from "react";
+import React, {useContext} from "react";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
 import {previewReducerActions} from "../../state/previewReducer";
-import {useEventHandler} from "../../common/useEventHandler";
+import {useEventHandler} from "../../common/hooks/useEventHandler";
 
 function PreviewMode() {
     const store: Readonly<StoreType> = useContext(StoreContext);

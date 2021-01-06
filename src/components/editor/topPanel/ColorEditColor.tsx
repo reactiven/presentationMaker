@@ -1,19 +1,19 @@
-import {Button_WithColorPicker} from "../common/Button_WithColorPicker";
-import fill from "../../images/fill.png";
-import stroke from "../../images/stroke.png";
-import {isTextBox} from "../../Entity/TextBox";
-import word from "../../images/word.png";
+import {Button_WithColorPicker} from "../../common/Button_WithColorPicker";
+import fill from "../../../images/fill.png";
+import stroke from "../../../images/stroke.png";
+import {isTextBox} from "../../../Entity/TextBox";
+import word from "../../../images/word.png";
 import React, {useContext} from "react";
 import styles from './ColorEditColor.module.css';
 import { ToolSeparator } from "./ToolPanel";
-import border from "../../images/border.png";
-import { Button_WithPopover } from "../common/Button_WithPopover";
-import { SelectList } from "../common/SelectList";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {ElementsMapType, SlideType} from "../../Entity/types";
-import {dispatchDecorator} from "../../state/dispatchDecarator";
+import border from "../../../images/border.png";
+import { Button_WithPopover } from "../../common/Button_WithPopover";
+import { SelectList } from "../../common/SelectList";
+import {StoreType} from "../../../state/store";
+import {StoreContext} from "../../../state/storeContext";
+import {presentationInfoActions} from "../../../state/presentationInfoReducer";
+import {ElementsMapType, SlideType} from "../../../Entity/types";
+import {dispatchDecorator} from "../../../state/dispatchDecarator";
 
 
 function getColorInfo(elements: ElementsMapType, selectedElements: Array<number>) {

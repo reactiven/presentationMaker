@@ -1,7 +1,7 @@
 import tick from "../../images/tick.png";
 import React, {useRef} from "react";
 import styles from './SelectList.module.css';
-import {useEventHandler} from "../../common/useEventHandler";
+import {useEventHandler} from "../../common/hooks/useEventHandler";
 
 type ItemType = {
     id: string,

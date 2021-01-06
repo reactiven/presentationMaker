@@ -1,9 +1,9 @@
 import React, {useContext, useRef} from 'react';
-import {ElementsMapType} from "../../Entity/types";
+import {ElementsMapType} from "../../../Entity/types";
 import styles from './Slide.module.css';
-import { SlideElement } from '../SlideElements/Element';
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
+import { SlideElement } from './SlideElements/Element';
+import {StoreType} from "../../../state/store";
+import {StoreContext} from "../../../state/storeContext";
 
 
 function Slide() {

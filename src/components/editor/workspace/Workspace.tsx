@@ -1,12 +1,12 @@
 import React, {useContext, useRef, useState} from 'react';
 import { Slide } from './Slide';
 import styles from './WorkSpace.module.css';
-import {getParentRelativeCoordinates} from "../../common/getParentRelativeCoordinates";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {insertionReducerActions} from "../../state/insertionModeReducer";
-import {dispatchDecorator} from "../../state/dispatchDecarator";
+import {getParentRelativeCoordinates} from "../../../common/getParentRelativeCoordinates";
+import {StoreType} from "../../../state/store";
+import {StoreContext} from "../../../state/storeContext";
+import {presentationInfoActions} from "../../../state/presentationInfoReducer";
+import {insertionReducerActions} from "../../../state/insertionModeReducer";
+import {dispatchDecorator} from "../../../state/dispatchDecarator";
 
 function Workspace() {
     const store: Readonly<StoreType> = useContext(StoreContext);

@@ -1,8 +1,8 @@
-import React from "react";
+import React, {useMemo} from "react";
 import {useRef, useState} from "react";
 import {Button} from "./Button";
 import {Popover} from "./Popover";
-import {useExternalLayer} from "../../common/useExternalLayer";
+import {useExternalLayer} from "../../common/hooks/useExternalLayer";
 
 
 type Button_WithPopover = {
@@ -19,10 +19,10 @@ function Button_WithPopover({
     const [open, setOpen] = useState(false)
     const buttonRef = useRef<HTMLButtonElement>(null)
 
-    const popoverStyle = {
+    const popoverStyle = useMemo(() => ({
         left: Number(buttonRef.current && buttonRef.current.getBoundingClientRect().left + 10),
         top: Number(buttonRef.current && buttonRef.current.getBoundingClientRect().top + 30),
-    }
+    }), [buttonRef.current])
 
     useExternalLayer({
         layerType: 'popover',
@@ -35,17 +35,13 @@ function Button_WithPopover({
         close: () => setOpen(false)
     })
 
-    return(
-        <div>
-            <Button
-                type={"border-none"}
-                onClick={() => setOpen(!open)}
-                label={text}
-                img={img}
-                ref={buttonRef}
-            />
-        </div>
-    )
+    return <Button
+        type={"border-none"}
+        onClick={() => setOpen(!open)}
+        label={text}
+        img={img}
+        ref={buttonRef}
+    />
 }
 
 

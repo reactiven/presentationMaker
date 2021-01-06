@@ -1,12 +1,12 @@
-import {useExternalLayer} from "../../common/useExternalLayer";
-import {popupOpenedReducerActions} from "../../state/popupsOpenedReducers";
+import {useExternalLayer} from "../../../common/hooks/useExternalLayer";
+import {popupOpenedReducerActions} from "../../../state/popupsOpenedReducers";
 import React, {useContext} from "react";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
+import {StoreType} from "../../../state/store";
+import {StoreContext} from "../../../state/storeContext";
 import {EditSlideBackgroundPopup} from "./EditSlideBackgroundPopup";
-import {SlideType} from "../../Entity/types";
-import {dispatchDecorator} from "../../state/dispatchDecarator";
-import {presentationInfoActions} from "../../state/presentationInfoReducer";
+import {SlideType} from "../../../Entity/types";
+import {dispatchDecorator} from "../../../state/dispatchDecarator";
+import {presentationInfoActions} from "../../../state/presentationInfoReducer";
 
 
 function useEditSlideBackgroundPopup() {

@@ -1,8 +1,6 @@
 import styles from './Popover.module.css'
-import React, {useEffect, useRef} from "react";
-import ReactDOM from "react-dom";
-import { preventDefault } from '../../common/preventDefault';
-import {useEventHandler} from "../../common/useEventHandler";
+import React, {useRef} from "react";
+import {useEventHandler} from "../../common/hooks/useEventHandler";
 
 type PropsType = {
     style: any,

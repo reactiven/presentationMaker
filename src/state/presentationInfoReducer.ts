@@ -49,7 +49,7 @@ if (localStorage.getItem("state") !== null) {
 }
 
 const presentationInfoReducer = (state: PresentationType = initialState, action: ActionTypes): PresentationType => {
-    let newState: PresentationType = {...state}
+    let newState: PresentationType = state
     switch (action.type) {
         case "CHANGE_NAME":
             newState = {
@@ -80,25 +80,25 @@ const presentationInfoReducer = (state: PresentationType = initialState, action:
 
             break
         case "ADD_SLIDE":
-            newState = {...addSlide(state)}
+            newState = addSlide(state)
             break
         case "DELETE_SLIDES":
-            newState = {...deleteSlides(state)}
+            newState = deleteSlides(state)
             break
         case "MOVE_SLIDES":
-            newState = {...moveSlides(state, action.data.newPosition)}
+            newState = moveSlides(state, action.data.newPosition)
             break
         case "ADD_IMAGE":
-            newState = {...addImage(state, action.data.filepath, action.data.position, action.data.size)}
+            newState = addImage(state, action.data.filepath, action.data.position, action.data.size)
             break
         case "ADD_SHAPE":
-            newState = {...addShape(state, action.data.type, action.data.position, action.data.size)}
+            newState = addShape(state, action.data.type, action.data.position, action.data.size)
             break
         case "ADD_TEXT_BOX":
-            newState = {...addTextbox(state, action.data.position, action.data.size)}
+            newState = addTextbox(state, action.data.position, action.data.size)
             break
         case "DELETE_ELEMENTS":
-            newState = {...deleteSlideElements(state)}
+            newState = deleteSlideElements(state)
             break
         case "MOVE_ELEMENT":
             newState = changeElement(

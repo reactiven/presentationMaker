@@ -1,14 +1,10 @@
-import React, {useContext, useRef, useState} from "react"
-import {Popup} from "../common/Popup"
-import {Button} from "../common/Button";
-import {SlideType} from "../../Entity/types";
+import React, {useRef, useState} from "react"
+import {Popup} from "../../common/Popup"
+import {Button} from "../../common/Button";
+import {SlideType} from "../../../Entity/types";
 import styles from './EditSlideBackgroundPopup.module.css';
-import { toDataURL } from "../../common/toDataURL";
-import {StoreType} from "../../state/store";
-import {StoreContext} from "../../state/storeContext";
-import {presentationInfoActions} from "../../state/presentationInfoReducer";
-import {dispatchDecorator} from "../../state/dispatchDecarator";
-import {useEventHandler} from "../../common/useEventHandler";
+import {toDataURL} from "../../../common/toDataURL";
+import {useEventHandler} from "../../../common/hooks/useEventHandler";
 
 type ContentProps = {
     currentSlideInfo: SlideType,

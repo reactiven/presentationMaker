@@ -1,5 +1,5 @@
 import React from 'react';
-import { ImageType } from '../../Entity/types';
+import { ImageType } from '../../../../Entity/types';
 import styles from './Image.module.css';
 
 type PropsType = {

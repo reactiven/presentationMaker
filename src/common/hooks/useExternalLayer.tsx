@@ -1,7 +1,7 @@
 import {useEffect} from "react";
 import ReactDOM from "react-dom";
 import {useEventHandler} from "./useEventHandler";
-import {getExternalLayer} from "./externalLayers";
+import {getExternalLayer} from "../externalLayers";
 
 type PropsType = {
     layerType: 'popup' | 'popover',
@@ -26,13 +26,13 @@ function useExternalLayer({
 
     useEffect(() => {
         show && ReactDOM.render(binding, layer)
-    }, [show, binding])
+    }, [show, binding, layer])
 
     useEffect(() => {
         layer.style.display = show
             ? 'block'
             : 'none'
-    }, [show])
+    }, [show, layer])
 }
 
 export {
