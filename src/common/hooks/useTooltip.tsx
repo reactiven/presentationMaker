@@ -16,15 +16,20 @@ function useTooltip({
 }: PropsType) {
     const [show, setShow] = useState(false)
 
+    let appearTimer: NodeJS.Timeout
+
     function appearTooltip() {
-        const timer = setTimeout(() => setShow(true), 800)
-        elementRef.current.addEventListener('mouseout', () => {
-            clearTimeout(timer)
-            setShow(false)
-        })
+        appearTimer = setTimeout(() => setShow(true), 800)
     }
 
-    useEventHandler('mouseover', elementRef, appearTooltip)
+    function closeTooltip() {
+        clearTimeout(appearTimer)
+        setShow(false)
+    }
+
+    useEventHandler('mouseenter', elementRef, appearTooltip)
+    useEventHandler('mouseleave', elementRef, closeTooltip)
+    useEventHandler('click', elementRef, closeTooltip)
 
     useExternalLayer({
         layerType: 'tooltip',
