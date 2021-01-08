@@ -20,7 +20,7 @@ function ImageBlock({
     }
 
     return(
-        <div className={styles.slideElementImage} style={style}></div>
+        <div className={styles.slideElementImage} style={style}/>
     )
 }
 

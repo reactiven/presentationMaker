@@ -118,7 +118,7 @@ function TopPanel() {
                             download={`${presentationInfo.presentation.name}.json`}
                             className={styles.ref}
                             ref={saveRef}
-                        ></a>
+                        />
                         <Button_WithPopover
                             text={'Файл'}
                             popoverContent={

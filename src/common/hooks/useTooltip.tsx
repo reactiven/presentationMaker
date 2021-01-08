@@ -1,9 +1,7 @@
 import {useEventHandler} from "./useEventHandler";
 import {useExternalLayer} from "./useExternalLayer";
-import {Ref, RefObject, useEffect, useState} from "react";
+import React, {RefObject, useState} from "react";
 import {Tooltip} from "../../components/common/Tooltip";
-import React from "react";
-import {getExternalLayer} from "../externalLayers";
 
 type PropsType = {
     elementRef: RefObject<any>,
@@ -19,14 +17,14 @@ function useTooltip({
     const [show, setShow] = useState(false)
 
     function appearTooltip() {
-        const timer = setTimeout(() => setShow(true), 500)
-        elementRef.current.addEventListener('mouseleave', () => {
+        const timer = setTimeout(() => setShow(true), 800)
+        elementRef.current.addEventListener('mouseout', () => {
             clearTimeout(timer)
             setShow(false)
         })
     }
 
-    useEventHandler('mouseenter', elementRef, appearTooltip)
+    useEventHandler('mouseover', elementRef, appearTooltip)
 
     useExternalLayer({
         layerType: 'tooltip',

@@ -1,7 +1,7 @@
 import React, {useContext, useEffect, useRef} from 'react';
 import {ElementsMapType} from "../../../Entity/types";
 import styles from './Slide.module.css';
-import { SlideElement } from './SlideElements/Element';
+import {SlideElement} from './SlideElements/Element';
 import {StoreType} from "../../../state/store";
 import {StoreContext} from "../../../state/storeContext";
 
@@ -37,10 +37,9 @@ function Slide() {
 }
 
 function renderElements(elements: ElementsMapType, elementsOrder: Array<number>, selectedElements: Array<number>) {
-    const elementsList = elementsOrder.map((elementId, index) => {
+    return elementsOrder.map((elementId) => {
         const element = elements[elementId]
-        if (!!element)
-        {
+        if (!!element) {
             const isSelected = selectedElements.findIndex(slideId => slideId === element.elementId) !== -1
             return <SlideElement
                 key={elementId}
@@ -50,7 +49,6 @@ function renderElements(elements: ElementsMapType, elementsOrder: Array<number>,
         }
         return null
     })
-    return elementsList
 }
 
 export {

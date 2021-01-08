@@ -1,4 +1,4 @@
-import React, {RefObject, useEffect, useMemo, useState} from 'react'
+import React, {RefObject, useMemo} from 'react'
 import styles from './Tooltip.module.css'
 
 
@@ -16,7 +16,7 @@ function Tooltip({
         const bounds = element.getBoundingClientRect()
         return {
             left: bounds.left + 0.5 * bounds.width,
-            top: bounds.top + bounds.height + 10 ,
+            top: bounds.bottom + 10 ,
         }
     }, [elementRef])
 

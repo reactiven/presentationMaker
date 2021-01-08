@@ -1,7 +1,5 @@
 import {PreviewInfoType} from "../Entity/types"
-import {cleanExternalLayer, getExternalLayer} from "../common/externalLayers";
-import React from "react";
-import ReactDOM from "react-dom";
+import {cleanExternalLayer} from "../common/externalLayers";
 
 let initialState = {
     currentSlide: 0,

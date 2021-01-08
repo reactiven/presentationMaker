@@ -109,7 +109,7 @@ function Workspace() {
     function onClick(event: any) {
         if (!event.defaultPrevented && presentationInfo.selectedSlideElements.length)
         {
-            dispatchDecorator(store, () => presentationInfoActions.deleteElementSelection())
+            dispatchDecorator(store, presentationInfoActions.deleteElementSelection)
         }
     }
 
@@ -137,7 +137,7 @@ function Workspace() {
                 && insertionAreaH
                 && insertionAreaY
                 && insertionAreaW
-                && <div className={styles.insertionArea} style={insertionStyle}></div>}
+                && <div className={styles.insertionArea} style={insertionStyle}/>}
                 {!!slideInfo && <Slide />}
             </div>
         </div>

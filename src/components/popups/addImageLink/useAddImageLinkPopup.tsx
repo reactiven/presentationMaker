@@ -1,4 +1,3 @@
-import {useExternalLayer} from "../../../common/hooks/useExternalLayer";
 import React, {useContext} from "react";
 import {StoreType} from "../../../state/store";
 import {StoreContext} from "../../../state/storeContext";

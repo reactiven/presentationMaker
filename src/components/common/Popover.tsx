@@ -19,10 +19,25 @@ function Popover({
     useEventHandler('click', ref, closePopover)
     useEventHandler('mousedown', popoverLayerRef, closePopover)
 
-    const popoverStyle = useMemo(() => ({
-        left: Number(control.current && control.current.getBoundingClientRect().left + 10),
-        top: Number(control.current && control.current.getBoundingClientRect().top + 30),
-    }), [control])
+    const popoverStyle = useMemo(() => {
+        const controlHTML = control.current as HTMLElement
+        const controlBounds = controlHTML.getBoundingClientRect()
+        return {
+            left: controlBounds.left + 5,
+            top: controlBounds.bottom + 5,
+        }
+    }, [control])
+
+    const controlLayerStyle = useMemo(() => {
+        const controlHTML = control.current as HTMLElement
+        const controlBounds = controlHTML.getBoundingClientRect()
+        return {
+            left: controlBounds.left,
+            top: controlBounds.top,
+            height: controlBounds.height,
+            width: controlBounds.width,
+        }
+    }, [control])
 
     return(
         <div className={styles.popoverLayer} ref={popoverLayerRef}>
@@ -33,6 +48,7 @@ function Popover({
             >
                 {content}
             </div>
+            <div style={controlLayerStyle} className={styles.controlLayer}/>
         </div>
     )
 }

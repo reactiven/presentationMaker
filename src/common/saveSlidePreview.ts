@@ -1,11 +1,12 @@
 import * as htmlToImage from "html-to-image";
+import {slideHTML} from "../components/editor/workspace/Slide";
 
 
 function saveSlidePreview(fn: (dataUrl: string) => void) {
-    const slide = document.getElementById('slide')
+    const slide = slideHTML
     if (slide) {
         htmlToImage.toJpeg(slide, {
-            quality: 0.9,
+            quality: 1,
         }).then(fn);
     }
 }

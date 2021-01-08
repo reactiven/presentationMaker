@@ -1,6 +1,6 @@
 import {BackgroundType, FontType, PresentationType, ShapeTypeType} from "../Entity/types";
 import {addElement, addImage, addShape, addSlide, addTextbox} from "./actions/addElements";
-import { moveSlides } from "./actions/moveSlides";
+import {moveSlides} from "./actions/moveSlides";
 import {saveStateForUndo, stateList} from "../Entity/State";
 import {deleteSlides} from "./actions/deleteSlides";
 import {deleteSlideElements} from "./actions/deleteSlideElements";
@@ -8,10 +8,14 @@ import {
     changeElement,
     changeElements,
     changeFont,
-    changeFontBold, changeFontColor,
+    changeFontBold,
+    changeFontColor,
     changeFontItalic,
     changeFontSize,
-    changeFontStyle, changeFontUnderline, changeStrokeColor, changeStrokeWidth,
+    changeFontStyle,
+    changeFontUnderline,
+    changeStrokeColor,
+    changeStrokeWidth,
     decFontSize,
     incFontSize,
     moveElement,
@@ -20,8 +24,6 @@ import {
     switchTextBoxEdit,
     updateTextBox
 } from "./actions/editElementAction";
-import {position} from "html2canvas/dist/types/css/property-descriptors/position";
-
 
 let initialState: PresentationType = {
     currentSlide: null,
@@ -43,7 +45,6 @@ type ElementSize = {
     h: number
 }
 
-//TODO: Вынести в функцию
 if (localStorage.getItem("state") !== null) {
     let storageState: PresentationType = JSON.parse(String(localStorage.getItem("state")))
     initialState = {...storageState}

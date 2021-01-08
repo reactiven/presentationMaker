@@ -21,11 +21,11 @@ function FontSizeSwitcher({
     const inputRef = useRef<HTMLInputElement>(null)
 
     function sizeInc() {
-        dispatchDecorator(store, () => presentationInfoActions.incFontSize())
+        dispatchDecorator(store, presentationInfoActions.incFontSize)
     }
 
     function sizeDec() {
-        dispatchDecorator(store, () => presentationInfoActions.decFontSize())
+        dispatchDecorator(store, presentationInfoActions.decFontSize)
     }
 
     function onInput() {

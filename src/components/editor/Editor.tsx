@@ -25,10 +25,10 @@ function Editor(): JSX.Element {
     const keydownHandler = (e: KeyboardEvent): void => {
         if (e.keyCode === 46) {
             if (!!presentationInfo.selectedSlides.length) {
-                dispatchDecorator(store, () => presentationInfoActions.deleteSlides())
+                dispatchDecorator(store, presentationInfoActions.deleteSlides)
             }
             else if (presentationInfo.currentSlide) {
-                dispatchDecorator(store, () => presentationInfoActions.deleteElements())
+                dispatchDecorator(store, presentationInfoActions.deleteElements)
             }
         }
         if (e.keyCode === 90 && e.ctrlKey) {

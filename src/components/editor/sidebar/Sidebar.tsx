@@ -138,7 +138,7 @@ function SideBarItem({
             className={className}
             ref={slideRef}
             style={styleBackground}
-        ></div>
+        />
     )
 }
 
@@ -150,7 +150,7 @@ function SidebarSeparator({
     style,
 }: SepType) {
     return(
-        <div className={styles.sidebarSeparator} style={style}></div>
+        <div className={styles.sidebarSeparator} style={style}/>
     )
 }
 

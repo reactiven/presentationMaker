@@ -14,7 +14,7 @@ function CommonToolBlock() {
     const store: Readonly<StoreType> = useContext(StoreContext);
 
     function addSlide() {
-        dispatchDecorator(store, () => presentationInfoActions.addSlide())
+        dispatchDecorator(store, presentationInfoActions.addSlide)
     }
 
     return(
@@ -24,21 +24,18 @@ function CommonToolBlock() {
                 img={plusIcon}
                 onClick={addSlide}
                 tooltipText={'Новый слайд'}
-                className={styles.button}
             />
             <Button
                 type={'border-none'}
                 img={arrowLeft}
                 onClick={() => store.dispatch(presentationInfoActions.undo())}
                 tooltipText={'Отменить'}
-                className={styles.button}
             />
             <Button
                 type={'border-none'}
                 img={arrowRight}
                 onClick={() => store.dispatch(presentationInfoActions.redo())}
                 tooltipText={'Повторить'}
-                className={styles.button}
             />
             <ToolSeparator/>
         </div>

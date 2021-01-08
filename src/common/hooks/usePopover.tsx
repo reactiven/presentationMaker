@@ -1,5 +1,4 @@
 import {useEventHandler} from "./useEventHandler";
-import {getExternalLayer} from "../externalLayers";
 import {useExternalLayer} from "./useExternalLayer";
 import React, {RefObject} from "react";
 import {Popover} from "../../components/common/Popover";
@@ -17,13 +16,9 @@ function usePopover({
     setShow,
     content,
 }: PropsType) {
-    const layer = getExternalLayer('popover')
+    const root = document.getElementById('root')
 
-    function overlayClick(event: Event) {
-        !event.defaultPrevented && setShow(false)
-    }
-
-    useEventHandler('mousedown', layer, overlayClick)
+    useEventHandler('mousedown', root,  () => setShow(false))
 
     useExternalLayer({
         layerType: 'popover',

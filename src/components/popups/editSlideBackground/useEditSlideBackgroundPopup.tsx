@@ -1,4 +1,3 @@
-import {useExternalLayer} from "../../../common/hooks/useExternalLayer";
 import {popupOpenedReducerActions} from "../../../state/popupsOpenedReducers";
 import React, {useContext} from "react";
 import {StoreType} from "../../../state/store";

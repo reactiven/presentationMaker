@@ -1,10 +1,9 @@
 import React, {useRef} from "react";
-import { Button } from "./Button";
+import {Button} from "./Button";
 import close from '../../images/close.png';
 
 import styles from './Popup.module.css'
 import {useEventHandler} from "../../common/hooks/useEventHandler";
-import {preventDefault} from "../../common/preventDefault";
 
 type PropsType = {
     headerText: string,

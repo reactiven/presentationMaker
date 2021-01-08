@@ -290,14 +290,14 @@ function ResizeHandlers({
 
     return(
         <div>
-            <div className={`${styles.resizeHandle} ${styles.resizeHandleTl}`} ref={tlRef}></div>
-            <div className={`${styles.resizeHandle} ${styles.resizeHandleTr}`} ref={trRef}></div>
-            <div className={`${styles.resizeHandle} ${styles.resizeHandleBl}`} ref={blRef}></div>
-            <div className={`${styles.resizeHandle} ${styles.resizeHandleBr}`} ref={brRef}></div>
-            <div className={`${styles.resizeHandle} ${styles.resizeHandleTs}`} ref={tsRef}></div>
-            <div className={`${styles.resizeHandle} ${styles.resizeHandleRs}`} ref={rsRef}></div>
-            <div className={`${styles.resizeHandle} ${styles.resizeHandleBs}`} ref={bsRef}></div>
-            <div className={`${styles.resizeHandle} ${styles.resizeHandleLs}`} ref={lsRef}></div>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleTl}`} ref={tlRef}/>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleTr}`} ref={trRef}/>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleBl}`} ref={blRef}/>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleBr}`} ref={brRef}/>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleTs}`} ref={tsRef}/>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleRs}`} ref={rsRef}/>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleBs}`} ref={bsRef}/>
+            <div className={`${styles.resizeHandle} ${styles.resizeHandleLs}`} ref={lsRef}/>
         </div>
     )
 }

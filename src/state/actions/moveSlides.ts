@@ -5,11 +5,11 @@ function moveSlides(state: PresentationType, newPosition: number): PresentationT
     const selectedSlideId = [...state.selectedSlides][0]
     const selectedSlideIndex = state.presentation.slidesOrder.findIndex(id => selectedSlideId === id)
     let finalArray
-    if (newPosition == 0) {
+    if (newPosition === 0) {
         let newSlidesOrder = state.presentation.slidesOrder.filter(slideId => slideId !== selectedSlideId)
         finalArray = [selectedSlideId].concat(newSlidesOrder)
     }
-    else if (newPosition == state.presentation.slidesOrder.length) {
+    else if (newPosition === state.presentation.slidesOrder.length) {
         let newSlidesOrder = state.presentation.slidesOrder.filter(slideId => slideId !== selectedSlideId)
         finalArray = newSlidesOrder.concat([selectedSlideId])
     }
