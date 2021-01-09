@@ -286,7 +286,7 @@ function ResizeHandlers({
             br && br.removeEventListener('mousedown', bsMouseDown)
             br && br.removeEventListener('mousedown', rsMouseDown)
         }
-    }, [tsRef, elementRef])
+    }, [elementRef])
 
     return(
         <div>
