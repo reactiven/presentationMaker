@@ -33,11 +33,12 @@ function useTooltip({
 
     useExternalLayer({
         layerType: 'tooltip',
-        show: show && showTooltip,
-        binding: <Tooltip
-            text={text}
-            elementRef={elementRef}
-        />,
+        binding: show && showTooltip
+            ? () => <Tooltip
+                text={text}
+                elementRef={elementRef}
+            />
+            : null,
     })
 }
 

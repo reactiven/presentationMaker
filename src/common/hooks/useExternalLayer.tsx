@@ -4,22 +4,20 @@ import {getExternalLayer, LayerType, hideLowerLayers, cleanExternalLayer} from "
 
 type PropsType = {
     layerType: LayerType,
-    binding: any,
-    show: boolean,
+    binding: ((() => any )| null),
 }
 
 function useExternalLayer({
     layerType,
     binding,
-    show,
 }: PropsType) {
     useEffect(() => {
         const layer = getExternalLayer(layerType)
         hideLowerLayers(layerType)
-        show
-            ? ReactDOM.render(binding, layer)
+        binding
+            ? ReactDOM.render(binding(), layer)
             : cleanExternalLayer(layerType)
-    }, [show, binding, layerType])
+    }, [binding, layerType])
 }
 
 export {

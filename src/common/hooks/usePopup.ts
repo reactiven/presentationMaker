@@ -23,8 +23,7 @@ function usePopup({
 
     useExternalLayer({
         layerType: 'popup',
-        show,
-        binding,
+        binding: show ? () => binding : null,
     })
 }
 

@@ -42,17 +42,17 @@ function AddElementsBlock() {
         return [
             {
                 id: 'rect',
-                text: 'rectangle',
+                text: 'Прямоугольник',
                 img: rect,
             },
             {
                 id: 'circle',
-                text: 'circle',
+                text: 'Овал',
                 img: circle,
             },
             {
                 id: 'triangle',
-                text: 'triangle',
+                text: 'Треугольник',
                 img: triangle,
             },
         ]

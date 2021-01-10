@@ -1,5 +1,5 @@
 import {getParentRelativeCoordinates} from "../getParentRelativeCoordinates";
-import {RefObject, useContext, useEffect, useState} from "react";
+import {RefObject, useCallback, useContext, useEffect, useState} from "react";
 import {SlideElementType} from "../../Entity/types";
 import {StoreType} from "../../state/store";
 import {StoreContext} from "../../state/storeContext";
@@ -17,7 +17,14 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
     const [offsetTop, setOffsetTop] = useState(0)
     const [offsetLeft, setOffsetLeft] = useState(0)
 
-    function mouseUp() {
+    const mouseMove = useCallback((event) => {
+        event.preventDefault()
+        const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slideHTML)
+        setLeft(cursorX)
+        setTop(cursorY)
+    }, [])
+
+    const mouseUp = useCallback(() => {
         document.removeEventListener('mousemove', mouseMove)
         document.removeEventListener('mouseup', mouseUp)
         if (elementRef.current) {
@@ -31,16 +38,9 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
             setLeft(null)
             setTop(null)
         }
-    }
+    }, [element, store, elementRef, mouseMove])
 
-    function mouseMove(event: MouseEvent) {
-        event.preventDefault()
-        const [cursorX, cursorY] = getParentRelativeCoordinates(event.clientX, event.clientY, slideHTML)
-        setLeft(cursorX)
-        setTop(cursorY)
-    }
-
-    function mouseDown(event: MouseEvent) {
+    const mouseDown = useCallback((event) => {
         if (event.ctrlKey)
         {
             store.dispatch(presentationInfoActions.addElementToSelected(element.elementId))
@@ -60,7 +60,7 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
                 }
             }
         }
-    }
+    }, [element, store, elementRef, mouseUp, mouseMove])
 
     useEffect(() => {
         const elementHTML = elementRef.current
@@ -68,7 +68,7 @@ function useElementsDragNDrop(element: SlideElementType,elementRef: RefObject<HT
         return () => {
             elementHTML && !insertionMode.on && elementHTML.removeEventListener('mousedown', mouseDown)
         }
-    }, [elementRef, insertionMode.on, element])
+    }, [elementRef, insertionMode.on, element, mouseDown])
 
     function calcLeft() {
         return left !== null

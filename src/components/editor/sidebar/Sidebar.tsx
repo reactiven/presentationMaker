@@ -8,6 +8,8 @@ import {presentationInfoActions} from "../../../state/presentationInfoReducer";
 import {dispatchDecorator} from "../../../state/dispatchDecarator";
 
 
+let sidebarHTML: HTMLDivElement|null
+
 function SideBar(): JSX.Element {
     const store: Readonly<StoreType> = useContext(StoreContext);
     const {presentationInfo} = store.getState()
@@ -23,7 +25,7 @@ function SideBar(): JSX.Element {
     const slides = {...presentationInfo.presentation.slides}
     const selectedSlides = [...presentationInfo.selectedSlides]
     const slidesOrder = [...presentationInfo.presentation.slidesOrder]
-    const listItems = slidesOrder.map((slideId, index) => {
+    const listItems = slidesOrder.map((slideId) => {
         const slide = slides[slideId]
         if (!!slide)
         {
@@ -38,6 +40,11 @@ function SideBar(): JSX.Element {
         }
         return null
     })
+
+    useEffect(() => {
+        sidebarHTML = sidebarRef && sidebarRef.current
+    }, [sidebarRef])
+
     return (
         <div className={styles.sideBar} ref={sidebarRef}>
             {moveMode && <SidebarSeparator style={separatorStyle}/>}
@@ -64,14 +71,13 @@ function SideBarItem({
     const store: Readonly<StoreType> = useContext(StoreContext);
     const slideRef = useRef<HTMLDivElement|null>(null)
 
-    let sidebar: HTMLElement | null
     let moveMode = false
 
     function mouseUp(event: MouseEvent) {
         document.removeEventListener('mousemove', mouseMove)
         document.removeEventListener('mouseup', mouseUp)
         if (moveMode) {
-            const cursorY = getScrollCoordinates(sidebar, event.clientX, event.clientY)
+            const cursorY = getScrollCoordinates(sidebarHTML, event.clientX, event.clientY)
             const pos = findSepPosition(cursorY)
             dispatchDecorator(store, () => presentationInfoActions.moveSlides(pos -1))
             setMoveMode(false)
@@ -83,7 +89,7 @@ function SideBarItem({
     function mouseMove(event: MouseEvent) {
         setMoveMode(true)
         moveMode = true
-        const cursorY = getScrollCoordinates(sidebar, event.clientX, event.clientY)
+        const cursorY = getScrollCoordinates(sidebarHTML, event.clientX, event.clientY)
         const pos = findSepPosition(cursorY)
         const sepPos = pos - 1 > slidesCount
             ? slidesCount + 1
@@ -110,12 +116,11 @@ function SideBarItem({
 
     useEffect(() => {
         const element = slideRef.current
-        sidebar = slideRef && slideRef.current && slideRef.current.parentElement
         element && element.addEventListener('mousedown', mouseDown)
         return () => {
             element && element.removeEventListener('mousedown', mouseDown)
         }
-    }, [slideRef, slidesCount])
+    }, [slideRef, mouseDown])
 
     function findSepPosition(posY: number) {
         const posNumber = Math.ceil(posY / 55)
@@ -158,8 +163,7 @@ function getScrollCoordinates(sidebar: HTMLElement|null, eventX: number, eventY:
     if (sidebar) {
         const [left, top] = getParentRelativeCoordinates(eventX, eventY, sidebar)
         const scrollTop = sidebar.scrollTop
-        const posY = top + scrollTop
-        return posY
+        return top + scrollTop
     }
     return 0
 }

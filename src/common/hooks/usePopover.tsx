@@ -22,12 +22,13 @@ function usePopover({
 
     useExternalLayer({
         layerType: 'popover',
-        show,
-        binding: <Popover
-            control={elementRef}
-            content={content}
-            closePopover={() => setShow(false)}
-        />,
+        binding: show
+            ? () => <Popover
+                control={elementRef}
+                content={content}
+                closePopover={() => setShow(false)}
+            />
+            : null,
     })
 }
 

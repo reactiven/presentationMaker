@@ -137,7 +137,7 @@ function TopPanel() {
                     </div>
                 </div>
                 <Button
-                    label={'Preview'}
+                    label={'Предпросмотр'}
                     type={'normal'}
                     onClick={() => store.dispatch(previewReducerActions.setPreviewOpened(true))}
                     tooltipText={'Перейти в режим превью'}
